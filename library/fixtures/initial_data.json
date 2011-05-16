@@ -1,0 +1,91 @@
+[
+    {
+        "model": "library.DieRoll",
+        "pk": 1,
+        "fields": {
+            "number_of_dice" : 1,
+            "sides_on_die": 4
+        }
+    },
+    {
+        "model": "library.DieRoll",
+        "pk": 2,
+        "fields": {
+            "number_of_dice" : 1,
+            "sides_on_die": 6
+        }
+    },
+    {
+        "model": "library.DieRoll",
+        "pk": 3,
+        "fields": {
+            "number_of_dice" : 1,
+            "sides_on_die": 8
+        }
+    },
+    {
+        "model": "library.DieRoll",
+        "pk": 4,
+        "fields": {
+            "number_of_dice" : 1,
+            "sides_on_die": 10
+        }
+    },
+    {
+        "model": "library.DieRoll",
+        "pk": 5,
+        "fields": {
+            "number_of_dice" : 1,
+            "sides_on_die": 12
+        }
+    },
+    {
+        "model": "library.DieRoll",
+        "pk": 6,
+        "fields": {
+            "number_of_dice" : 1,
+            "sides_on_die": 20
+        }
+    },
+    {
+        "model": "library.DieRoll",
+        "pk": 7,
+        "fields": {
+            "number_of_dice" : 2,
+            "sides_on_die": 6
+        }
+    },
+    {
+        "model": "library.DieRoll",
+        "pk": 8,
+        "fields": {
+            "number_of_dice" : 2,
+            "sides_on_die": 8
+        }
+    },
+    
+    
+    
+    {
+        "model": "library.Material",
+        "pk": 1,
+        "fields": {
+            "name" : "Iron",
+            "price" : "10000",
+            "hardness": 10,
+            "density": 8,
+            "hp_per_thickness": 8
+        }
+    },
+    {
+        "model": "library.Material",
+        "pk": 2,
+        "fields": {
+            "name" : "Silver",
+            "price" : "10000",
+            "hardness": 10,
+            "density": 8,
+            "hp_per_thickness": 8
+        }
+    }
+]

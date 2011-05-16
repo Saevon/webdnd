@@ -1,0 +1,31 @@
+[
+    {
+        "model": "game.Character",
+        "pk": 1,
+        "fields": {
+            "name": "Dmitry"
+        }
+    },
+    {
+        "model": "game.Character",
+        "pk": 2,
+        "fields": {
+            "name": "Serghei"
+        }
+    },
+    {
+        "model": "game.CharacterSheet",
+        "pk": 1,
+        "fields": {
+            "owner_character": "1"
+        }
+    },
+    {
+        "model": "game.CharacterSheet",
+        "pk": 2,
+        "fields": {
+            "owner_character": "2"
+        }
+    }
+]
+

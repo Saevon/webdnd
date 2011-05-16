@@ -1,0 +1,37 @@
+<html>
+<head>
+    <title>{% block page_title %}{% endblock %}</title>
+    
+    <!-- META -->
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	{% block meta_includes %}{% endblock %}
+    
+    <!-- CSS -->
+    <link href="{{MEDIA_URL}}css/base.css" rel="stylesheet" type="text/css">
+    {% block css_includes %}{% endblock %}
+    
+    <!-- JavaScript -->
+    {% block js_includes %}{% endblock %}
+
+</head>
+<body>
+    
+    <div class="header_wrapper">
+        <div class="main header">
+            
+        </div>
+    </div>
+    
+    <div class="content_wrapper">
+        <div class="main content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    
+    <div class="footer_wrapper">
+        <div class="main footer">
+            
+        </div>
+    </div>
+</body>
+</html>

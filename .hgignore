@@ -1,0 +1,6 @@
+syntax:glob
+
+*.pyc
+*.out
+*.DS_Store
+localsettings.py
