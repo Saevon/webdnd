@@ -4,3 +4,4 @@ syntax:glob
 *.out
 *.DS_Store
 localsettings.py
+*.sqlite3
