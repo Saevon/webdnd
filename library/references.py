@@ -10,15 +10,8 @@ class Rule(AbstractLibraryEntity):
     * may "spawn" Terms
     """
     
-    examples = models.ManyToManyField("Example", related_name='rules', blank=True)
+    examples = models.ManyToManyField("Example", related_name="rules", blank=True)
     body = models.TextField(blank=False)
-    
-    class Admin:
-        list_display = ("",)
-        search_fields = ("",)
-
-    def __unicode__(self):
-        return self.title
 
 class Term(AbstractLibraryEntity):
     """
@@ -26,38 +19,16 @@ class Term(AbstractLibraryEntity):
     """
     
     short_description = models.TextField(blank=False)
-    examples = models.ManyToManyField("Example", related_name='terms', blank=True)
+    examples = models.ManyToManyField("Example", related_name="terms", blank=True)
 
-    class Admin:
-        list_display = ('',)
-        search_fields = ('',)
-
-    def __unicode__(self):
-        return u"Term"
-
-class Article(models.Model):
+class Article(AbstractLibraryEntity):
     """
     An article about various D&D stuff, NOT a Rule.
     """
     
-    examples = models.ManyToManyField("Example", related_name='articles', blank=True)
-
-    class Admin:
-        list_display = ('',)
-        search_fields = ('',)
-
-    def __unicode__(self):
-        return u"Article"
-
+    examples = models.ManyToManyField("Example", related_name="articles", blank=True)
 
 class Example(AbstractLibraryEntity):
     """
     An example of a rule.
     """
-    
-    class Admin:
-        list_display = ("",)
-        search_fields = ("",)
-
-    def __unicode__(self):
-        return self.title

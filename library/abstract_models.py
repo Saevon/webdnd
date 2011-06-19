@@ -6,15 +6,12 @@ class LibraryAccount(models.Model):
     """
     A webdnd library account.
     """
-
-    # TODO: make this
-
-    class Admin:
-        list_display = ('',)
-        search_fields = ('',)
+    
+    name = models.CharField(blank=False, max_length=STND_CHAR_LIMIT)
+    # TODO: finish making this
 
     def __unicode__(self):
-        return u"Account"
+        return u"%s" %(self.name)
 
 class AbstractLibraryEntity(models.Model):
     """
@@ -29,24 +26,16 @@ class AbstractLibraryEntity(models.Model):
     description = models.TextField(blank=True)
     creator = models.ForeignKey("LibraryAccount", blank=False)
 
-    class Admin:
-        list_display = ('',)
-        search_fields = ('',)
-
     def __unicode__(self):
-        return u'%s' %(self.title)
+        return u"%s" %(self.title)
 
 class Source(models.Model):
     """
     A D&D reference.
     """
     
-    kind = models.CharField(choices=REFERENCE_KINDS, blank=False, max_length=STND_ID_CHAR_LIMIT)
+    reference_type = models.CharField(choices=REFERENCE_TYPES, blank=False, max_length=STND_ID_CHAR_LIMIT)
     citation = models.TextField(blank=False)
-    
-    class Admin:
-        list_display = ("",)
-        search_fields = ("",)
     
     def __unicode__(self):
         return self.citation[:20]
@@ -60,24 +49,16 @@ class DieRoll(models.Model):
     number_of_dice = models.PositiveIntegerField()
     sides_on_die = models.PositiveIntegerField()
 
-    class Admin:
-        list_display = ('',)
-        search_fields = ('',)
-
     def __unicode__(self):
-        return u'%sd%s' %(self.number_of_dice, self.sides_on_die)
+        return u"%sd%s" %(self.number_of_dice, self.sides_on_die)
         
 class Modifier(models.Model):
-    dieroll = models.ForeignKey('DieRoll', null=True, blank=True)
+    dieroll = models.ForeignKey("DieRoll", null=True, blank=True)
     amount = models.PositiveIntegerField(null=True, blank=True)
     property_modified = models.CharField(max_length=STND_CHAR_LIMIT, blank=True)
     is_bonus = models.BooleanField(default=True)
     text = models.TextField(blank=True)
-
-    class Admin:
-        list_display = ('',)
-        search_fields = ('',)
-
+    
     def __unicode__(self):
         return_string = ""
         if self.is_bonus:
