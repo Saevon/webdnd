@@ -14,15 +14,15 @@ FEAT_CLASSES = {
 }
 
 REFERENCE_TYPES = (
-    ("home", "homebrew"),
-    ("book", "book"),
-    ("mag", "magazine"),
+    ("home", "Homebrew"),
+    ("book", "Book"),
+    ("mag", "Magazine"),
     # TODO: add other types
 )
 
 SKILL_SAMPLE_TYPES = (
     ("dc", "DC"),
-    ("mod", "modifier"),
+    ("mod", "Modifier"),
 )
 
 ACTION_TYPES = (
@@ -103,7 +103,7 @@ POISON_TYPES = (
 	("injr", "Injury"),
 )
 
-SAVING_THROWS = (
+SAVE_TYPES = (
    ("fort", "Fortitude"),
    ("ref", "Reflex"),
    ("will", "Will"),
@@ -119,6 +119,15 @@ SCHOOLS_OF_MAGIC = (
    ("necro", "Necromancy"),
    ("trans", "Transmutation"),
    ("uni", "Universal"),
+)
+
+SPELL_RANGES = (
+    ("pers", "Personal"),
+    ("touch", "Touch"),
+    ("close", "Close"),
+    ("med", "Medium"),
+    ("lng", "Long"),
+    ("unlim", "Unlimited"),
 )
 
 SIZES = (

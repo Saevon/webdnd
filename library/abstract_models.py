@@ -53,8 +53,8 @@ class DieRoll(models.Model):
         return u"%sd%s" %(self.number_of_dice, self.sides_on_die)
         
 class Modifier(models.Model):
-    dieroll = models.ForeignKey("DieRoll", null=True, blank=True)
-    amount = models.PositiveIntegerField(null=True, blank=True)
+    dieroll = models.ForeignKey("DieRoll", blank=True)
+    amount = models.PositiveIntegerField(blank=True)
     property_modified = models.CharField(max_length=STND_CHAR_LIMIT, blank=True)
     is_bonus = models.BooleanField(default=True)
     text = models.TextField(blank=True)
@@ -66,3 +66,27 @@ class Modifier(models.Model):
         else:
             return_string += "-("
         return "%s%s to %s)" %(return_string, formatted_num_and_roll(self.amount, self.dieroll, 1), self.property_modified)
+
+class ActionTimeDuration(models.Model):
+    """
+    A length of time in actions.
+    """
+    
+    time = models.IntegerField(blank=False)
+
+class SavingThrow(models.Model):
+    """
+    A saving throw.
+    """
+
+    save_type = models.CharField(blank=False, max_length=STND_ID_CHAR_LIMIT, choices=SAVE_TYPES)
+    save_dc = models.IntegerField(blank=False)
+    save_fraction_numerator = models.IntegerField(blank=False)
+    save_fraction_denominator = models.IntegerField(blank=False)
+
+# TODO: Make a measurement module:
+#   - mass
+#   - time
+#   - distance
+#   - volume
+#   - cost

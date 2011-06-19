@@ -14,7 +14,7 @@ class AbstractItem(AbstractLibraryEntity):
         abstract = True
 
     base_price = models.PositiveIntegerField(blank=True, default=0)
-    dieroll_price = models.ForeignKey('DieRoll', null=True, blank=True)
+    dieroll_price = models.ForeignKey('DieRoll', blank=True)
     dieroll_price_multiplier = models.PositiveIntegerField(blank=True, default=1)
     trading_units = models.CharField(max_length=STND_ID_CHAR_LIMIT, choices=TRADING_MEASURING_UNITS)
 
@@ -67,14 +67,14 @@ class ArtObject(AbstractItem):
     num_material_slots = models.PositiveIntegerField(blank=True, default=1)
 
 class MagicArtObject(ArtObject, AbstractMagicItem):
-    modifiers = models.ManyToManyField('Modifier', null=True, blank=True)
+    modifiers = models.ManyToManyField('Modifier', blank=True)
 
 class PhysicalEnhancement(AbstractEnhancement):
-    modifiers = models.ManyToManyField('Modifier', null=True, blank=True)
+    modifiers = models.ManyToManyField('Modifier', blank=True)
 
 class MagicEnhancement(AbstractEnhancement, AbstractMagicItem):
     equivalent_bonus = models.PositiveIntegerField(blank=True, default=1)
-    modifiers = models.ManyToManyField('Modifier', null=True, blank=True)
+    modifiers = models.ManyToManyField('Modifier', blank=True)
 
 class Weapon(AbstractItem):
     is_melee = models.BooleanField()
@@ -90,15 +90,15 @@ class Weapon(AbstractItem):
     critical_multiplier = models.PositiveIntegerField(blank=True, default=2)
 
     range_increment = models.PositiveIntegerField(blank=True, default=0)
-    reload_time = models.CharField(max_length=STND_ID_CHAR_LIMIT, null=True, blank=True, choices=ACTION_TYPES)
+    reload_time = models.CharField(max_length=STND_ID_CHAR_LIMIT, blank=True, choices=ACTION_TYPES)
     reach = models.PositiveIntegerField(blank=True, default=5)
 
     double_weapon = models.BooleanField()
-    works_with_specific_ammunition = models.ManyToManyField('Ammunition', null=True, blank=True)
+    works_with_specific_ammunition = models.ManyToManyField('Ammunition', blank=True)
 
 class MagicWeapon(Weapon, AbstractMagicItem):
     magical_properties = models.TextField(blank=True)
-    modifiers = models.ManyToManyField('Modifier', null=True, blank=True)
+    modifiers = models.ManyToManyField('Modifier', blank=True)
 
 class Armor(AbstractItem):
     armor_type = models.CharField(max_length=STND_ID_CHAR_LIMIT, choices=ARMOR_TYPES)
@@ -113,7 +113,7 @@ class Armor(AbstractItem):
 
 class MagicArmor(Armor, AbstractMagicItem):
     magical_properties = models.TextField(blank=True)
-    modifiers = models.ManyToManyField('Modifier', null=True, blank=True)
+    modifiers = models.ManyToManyField('Modifier', blank=True)
 
 class Shield(AbstractItem):
     armor_type = models.CharField(max_length=STND_ID_CHAR_LIMIT, choices=ARMOR_TYPES)
@@ -128,34 +128,33 @@ class Shield(AbstractItem):
 
 class MagicShield(Shield, AbstractMagicItem):
     magical_properties = models.TextField(blank=True)
-    modifiers = models.ManyToManyField('Modifier', null=True, blank=True)
+    modifiers = models.ManyToManyField('Modifier', blank=True)
 
 class WondrousMagicItem(AbstractItem, AbstractMagicItem):
-    modifiers = models.ManyToManyField('Modifier', null=True, blank=True)
+    modifiers = models.ManyToManyField('Modifier', blank=True)
 
 class Poison(AbstractItem):
     description_of_use = models.TextField(blank=True)
     poison_type = models.CharField(max_length=STND_ID_CHAR_LIMIT, choices=POISON_TYPES)
-    save_type = models.CharField(max_length=STND_ID_CHAR_LIMIT, choices=SAVING_THROWS)
-    save_dc = models.PositiveIntegerField()
-    initial_effects = models.ManyToManyField('Modifier', null=True, blank=True, related_name='initial_modifiers')
-    secondary_effects = models.ManyToManyField('Modifier', null=True, blank=True, related_name='secondary_modifiers')
+    saving_throw = models.ForeignKey("SavingThrow", blank=False)
+    initial_effects = models.ManyToManyField('Modifier', blank=True, related_name='initial_modifiers')
+    secondary_effects = models.ManyToManyField('Modifier', blank=True, related_name='secondary_modifiers')
     other_effects = models.TextField(blank=True)
 
 class Ammunition(AbstractItem):
-    works_with_weapon_type = models.CharField(max_length=STND_ID_CHAR_LIMIT, null=True, blank=True, choices=WEAPON_TYPES)
-    works_with_specific_weapons = models.ManyToManyField('Weapon', null=True, blank=True)
+    works_with_weapon_type = models.CharField(max_length=STND_ID_CHAR_LIMIT, blank=True, choices=WEAPON_TYPES)
+    works_with_specific_weapons = models.ManyToManyField('Weapon', blank=True)
     description_of_use = models.TextField(blank=True)
 
 class MagicAmmunition(Ammunition, AbstractMagicItem):
-    modifiers = models.ManyToManyField('Modifier', null=True, blank=True)
+    modifiers = models.ManyToManyField('Modifier', blank=True)
 
 class Vehicle(AbstractItem):
     pass
 
 class Container(AbstractItem):
     volume = models.PositiveIntegerField(blank=True, default=0)
-    max_mass = models.PositiveIntegerField(null=True, blank=True)
+    max_mass = models.PositiveIntegerField(blank=True)
 
 class AdventuringGear(AbstractItem):
     description_of_use = models.TextField(blank=True)
