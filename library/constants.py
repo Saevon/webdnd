@@ -7,6 +7,18 @@ STND_LENGTH_UNIT = 'm'
 STND_THICKNESS_UNIT = 'in'
 STND_TIME_UNIT = 'sec'
 
+REFERENCE_KINDS = (
+    ('home', 'homebrew'),
+    ('book', 'book'),
+    ('mag', 'magazine'),
+    # TODO: add other types
+)
+
+SKILL_SAMPLE_TYPES = (
+    ('dc', 'DC'),
+    ('mod', 'modifier'),
+)
+
 ACTION_TYPES = (
     ('free', 'Free'),
     ('part', 'Partial'),

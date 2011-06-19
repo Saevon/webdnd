@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
 
-from game.views import *
+# from game.views import *
 from library.views import *
 
 # Uncomment the next two lines to enable the admin:
@@ -15,8 +15,8 @@ urlpatterns = patterns('',
     # Uncomment the admin/doc line below to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     
-    (r'^$', homepage),
-    (r'^charsheet/([A-Za-z]*)$', display_sheet), 
+    # (r'^game/$', homepage),
+    # (r'^charsheet/([A-Za-z]*)$', display_sheet), 
     (r'^library/$', library_home), 
 
     # Uncomment the next line to enable the admin:

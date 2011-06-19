@@ -1,12 +1,23 @@
 from django.contrib import admin
-
 from library.models import *
 
+# General
+admin.site.register(Source)
+admin.site.register(DieRoll)
+admin.site.register(LibraryAccount)
+
+# Rules
+admin.site.register(Rule)
+admin.site.register(Term)
+admin.site.register(Article)
+admin.site.register(Example)
+
+#Items
 class MaterialAdmin(admin.ModelAdmin):
-    list_display = ('name','hardness','density')
+	list_display = ('title','hardness','density')
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('name','formatted_price')
+	list_display = ('title','formatted_price')
 
 admin.site.register(Material, MaterialAdmin)
 admin.site.register(Gem, ItemAdmin)
@@ -27,5 +38,4 @@ admin.site.register(MagicAmmunition, ItemAdmin)
 admin.site.register(Vehicle, ItemAdmin)
 admin.site.register(Container, ItemAdmin)
 admin.site.register(AdventuringGear, ItemAdmin)
-admin.site.register(DieRoll)
 admin.site.register(Modifier)

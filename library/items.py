@@ -1,40 +1,28 @@
 from django.db import models
 from datetime import *
-
+from library.abstract_models import *
 from library.constants import *
-
-class AbstractLibraryEntity(models.Model):
-    class Meta:
-        abstract = True
-    
-    name = models.CharField(max_length=STND_CHAR_LIMIT)
-    reference = models.CharField(max_length=STND_CHAR_LIMIT, blank=True)
-    description = models.TextField(blank=True)
-    # TODO: add image field
-    
-    def __unicode__(self):
-        return self.name
 
 class AbstractEnhancement(AbstractLibraryEntity):
     class Meta:
         abstract = True
-    
+
     prerequisites = models.TextField(blank=True)
 
 class AbstractItem(AbstractLibraryEntity):
     class Meta:
         abstract = True
-    
+
     base_price = models.PositiveIntegerField(blank=True, default=0)
     dieroll_price = models.ForeignKey('DieRoll', null=True, blank=True)
     dieroll_price_multiplier = models.PositiveIntegerField(blank=True, default=1)
     trading_units = models.CharField(max_length=STND_ID_CHAR_LIMIT, choices=TRADING_MEASURING_UNITS)
-    
+
     base_hp = models.PositiveIntegerField(blank=True, default=1)
     base_mass = models.FloatField(blank=True, default=0)
-    
+
     base_material = models.ForeignKey('Material')
-    
+
     def formatted_price(self):
         formatted_string = formatted_num_and_roll(self.base_price, self.dieroll_price, self.dieroll_price_multiplier)
         return "%s cp per %s" %(formatted_string, self.trading_units)
@@ -46,9 +34,9 @@ class AbstractMagicItem(models.Model):
 
     class Meta:
         abstract = True
-    
+
     # TODO: look over magical items
-    
+
     aura_strength = models.CharField(max_length=STND_ID_CHAR_LIMIT, choices=AURA_STRENGTHS)
     aura_type = models.CharField(max_length=STND_ID_CHAR_LIMIT, choices=SCHOOLS_OF_MAGIC)
     item_strength = models.CharField(max_length=STND_ID_CHAR_LIMIT, choices=MAGIC_ITEM_STRENGTHS)
@@ -59,7 +47,7 @@ class Material(AbstractLibraryEntity):
     hardness = models.PositiveIntegerField(blank=True, default=10)
     density = models.FloatField(blank=True, default=7.874)
     hp_per_thickness = models.FloatField(blank=True, default=30)
-    
+
     # TODO: add bonuses
     """
     main_bonuses
@@ -91,20 +79,20 @@ class MagicEnhancement(AbstractEnhancement, AbstractMagicItem):
 class Weapon(AbstractItem):
     is_melee = models.BooleanField()
     is_ranged = models.BooleanField()
-    
+
     weapon_type = models.CharField(max_length=STND_ID_CHAR_LIMIT, choices=WEAPON_TYPES)
     weapon_class = models.CharField(max_length=STND_ID_CHAR_LIMIT, choices=WEAPON_CLASSES)
-    
+
     damage = models.ForeignKey('DieRoll', related_name="%(app_label)s_%(class)s_related")
     damage_type = models.CharField(max_length=STND_ID_CHAR_LIMIT, choices=DAMAGE_TYPES)
-    
+
     critical_low = models.PositiveIntegerField(blank=True, default=20)
     critical_multiplier = models.PositiveIntegerField(blank=True, default=2)
-    
+
     range_increment = models.PositiveIntegerField(blank=True, default=0)
     reload_time = models.CharField(max_length=STND_ID_CHAR_LIMIT, null=True, blank=True, choices=ACTION_TYPES)
     reach = models.PositiveIntegerField(blank=True, default=5)
-    
+
     double_weapon = models.BooleanField()
     works_with_specific_ammunition = models.ManyToManyField('Ammunition', null=True, blank=True)
 
@@ -118,7 +106,7 @@ class Armor(AbstractItem):
     armor_check_penalty = models.PositiveIntegerField()
     max_dexterity = models.PositiveIntegerField()
     spell_fail = models.PositiveIntegerField(blank=True, default=0)
-    
+
     time_to_equip = models.PositiveIntegerField(blank=True, default=0)
     time_to_don_hastily = models.PositiveIntegerField(blank=True, default=0)
     time_to_remove = models.PositiveIntegerField(blank=True, default=0)
@@ -133,7 +121,7 @@ class Shield(AbstractItem):
     armor_check_penalty = models.PositiveIntegerField()
     max_dexterity = models.PositiveIntegerField()
     spell_fail = models.PositiveIntegerField(blank=True, default=0)
-    
+
     weapon_class = models.CharField(max_length=STND_ID_CHAR_LIMIT, choices=WEAPON_CLASSES)
     damage = models.ForeignKey('DieRoll', related_name="%(app_label)s_%(class)s_related")
     damage_type = models.CharField(max_length=STND_ID_CHAR_LIMIT, choices=DAMAGE_TYPES)
