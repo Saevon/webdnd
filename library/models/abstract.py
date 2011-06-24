@@ -1,7 +1,6 @@
 from django.db import models
 
-from library.config import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
-from library.models.abstract import AbstractLibraryEntity
+from lib.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from library.models.sources import Source
 from library.models.accounts import LibraryAccount
 

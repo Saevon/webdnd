@@ -1,6 +1,6 @@
 from django.db import models
 
-from library.config import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
+from lib.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from library.config.skills import SKILL_SAMPLE_TYPES
 from library.models.abstract import AbstractLibraryEntity
 
@@ -24,4 +24,4 @@ class SkillSample(models.Model):
         blank=False,
         max_length=STND_ID_CHAR_LIMIT,
         choices=SKILL_SAMPLE_TYPES,
-        default=SKILL_SAMPLE_TYPES[0]))
+        default=SKILL_SAMPLE_TYPES[0])

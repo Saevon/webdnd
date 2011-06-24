@@ -2,6 +2,7 @@ from django.db import models
 
 from library.models import *
 from game.constants import *
+from lib.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 
 class Character(models.Model):
     name = models.CharField(max_length=STND_CHAR_LIMIT)

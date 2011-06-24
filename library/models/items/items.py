@@ -1,7 +1,11 @@
 from django.db import models
 from datetime import *
-from library.abstract_models import *
-from library.constants import *
+
+from library.config import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
+from library.config.sources import 
+from library.models.abstract import AbstractLibraryEntity
+from library.models.modifiers import Modifier
+from library.models.unknown import *
 
 class AbstractEnhancement(AbstractLibraryEntity):
     class Meta:

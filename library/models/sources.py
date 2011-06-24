@@ -1,6 +1,6 @@
 from django.db import models
 
-from library.config import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
+from lib.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from library.config.sources import REFERENCE_TYPES
 
 class Source(models.Model):

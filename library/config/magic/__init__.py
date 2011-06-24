@@ -2,11 +2,6 @@
 Magic related Constants
 """
 
-__all__ = [
-    AURA_STRENGTHS,
-    SCHOOLS_OF_MAGIC,
-]
-
 AURA_STRENGTHS = (
    ("dim", "Dim"),
    ("fnt", "Faint"),
@@ -26,4 +21,9 @@ SCHOOLS_OF_MAGIC = (
    ("trans", "Transmutation"),
    ("uni", "Universal"),
 )
+
+__all__ = [
+    AURA_STRENGTHS,
+    SCHOOLS_OF_MAGIC,
+]
 

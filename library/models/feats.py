@@ -1,10 +1,10 @@
 from django.db import models
 
-from library.config import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
+from lib.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from library.config.feats import FEAT_CLASSES
 from library.models.abstract import AbstractLibraryEntity
 from library.models.modifiers import Modifier
-from library.models. import SavingThrow
+from library.models.unknown import SavingThrow
 
 class Feat(AbstractLibraryEntity):
     """

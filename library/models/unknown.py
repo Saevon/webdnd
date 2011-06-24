@@ -4,10 +4,10 @@ Non sorted models
 #TODO: move any existing models to a fitting module
 from django.db import models
 
-from library.config import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
+from lib.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from library.config.unknown import SAVE_TYPES
 from library.models.abstract import AbstractLibraryEntity
-from library.models.modifier import Modifier
+from library.models.modifiers import Modifier
 
 class DieRoll(models.Model):
     
