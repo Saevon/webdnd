@@ -5,3 +5,4 @@ syntax:glob
 *.DS_Store
 localsettings.py
 *.sqlite3
+*.orig
