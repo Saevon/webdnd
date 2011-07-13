@@ -3,9 +3,9 @@ from django.db import models
 from lib.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from library.config.magic import SCHOOLS_OF_MAGIC
 from library.config.magic.spells import SPELL_RANGES
-from library.models.abstract import AbstractLibraryEntity
-from library.models.modifiers import Modifier
-from library.models.unknown import ActionTimeDuration, DnDClass, SavingThrow
+from library.models.library_entities.abstract import AbstractLibraryEntity
+from library.models.modifiers.modifiers import Modifier
+from library.models.library_entities.unknown import ActionTimeDuration, DnDClass, SavingThrow
 
 class Spell(AbstractLibraryEntity):
     """

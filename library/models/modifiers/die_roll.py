@@ -7,6 +7,7 @@ class DieRoll(models.Model):
     """
     A D&D die roll.
     """
+    # TODO: Check that this class still works with 'New ideas'
     
     number_of_dice = models.PositiveIntegerField()
     sides_on_die = models.PositiveIntegerField()

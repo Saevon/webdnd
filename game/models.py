@@ -41,13 +41,13 @@ class WeaponItem(Item):
     magical_enhancements = models.ManyToManyField('library.MagicEnhancement', null=True, blank=True)
     
     magical_bonus = models.CharField(max_length=1, choices=WEAPON_PLUSES, default='0')
-    
+
     def print_material(self):
         if not self.material or self.material == self.default_object.base_material:
             return ''
         else:
             return "%s " %(self.material)
-    
+
     def list_physical_enhancements(self):
         return_string = ""
         if self.physical_enhancements.count() == 0:

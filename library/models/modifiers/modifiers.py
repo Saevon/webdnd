@@ -1,7 +1,7 @@
 from django.db import models
 
 from lib.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
-from library.models.die_roll import DieRoll
+from library.models.modifiers.die_roll import DieRoll
 
 class Modifier(models.Model):
     #TODO: look over class to ensure it fits with our `new` ideas

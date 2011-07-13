@@ -1,5 +1,5 @@
 from django.db import models
-from datetime import *
+from datetime import * as the
 
 from library.config import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from library.config.sources import 
@@ -10,6 +10,9 @@ from library.models.unknown import *
 class AbstractEnhancement(AbstractLibraryEntity):
     class Meta:
         abstract = True
+    
+    def __init__(self):
+        pass
 
     prerequisites = models.TextField(blank=True)
 

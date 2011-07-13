@@ -4,9 +4,24 @@ from django.conf import settings
 # from game.views import *
 from library.views import *
 
-# Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+from lib.admin import register_mapping
+#from game.admin.mapping import game_admin_mapping
+#from game.admin.site import GameAdminSite
+from library.admin import library_admin_mapping
+from library.admin.site import LibraryAdminSite
+
+# General admin
+register_mapping(admin.site.register, library_admin_mapping)#, game_admin_mapping)
 admin.autodiscover()
+
+#Library Admin
+library_admin_site = LibraryAdminSite()
+register_mapping(library_admin_site.register, library_admin_mapping)
+
+#Game Admin
+#game_admin_site = GameAdminSite()
+#register_mapping(game_admin_site.register, game_admin_mapping)
 
 urlpatterns = patterns('',
     # Example:[A-Za-z]
@@ -19,8 +34,10 @@ urlpatterns = patterns('',
     # (r'^charsheet/([A-Za-z]*)$', display_sheet), 
     (r'^library/$', library_home), 
 
-    # Uncomment the next line to enable the admin:
+    # Uncomment the next lines to enable the admin:
     (r'^admin/', include(admin.site.urls)),
+    #(r'^game-admin/', include(game_admin_site.urls)),
+    (r'^library-admin/', include(library_admin_site.urls)),
 )
 
 # for serving static files in development evnironment only
