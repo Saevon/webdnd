@@ -9,8 +9,13 @@ class SavingThrow(AbstractLibraryModel):
     A saving throw.
     """
 
-    save_type = models.CharField(blank=False, max_length=STND_ID_CHAR_LIMIT, choices=SAVE_TYPES)
+    save_type = models.CharField(
+        max_length=STND_ID_CHAR_LIMIT,
+        choices=SAVE_TYPES,
+        blank=False)
     save_dc = models.IntegerField(blank=False)
-    save_fraction_numerator = models.IntegerField(blank=False)
-    save_fraction_denominator = models.IntegerField(blank=False)
+    save_reduction = models.Decimal(
+        max_digits=4,
+        decimal_places=3,
+        blank=False)
 
