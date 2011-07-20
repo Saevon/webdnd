@@ -8,14 +8,18 @@ class Modifier(AbstractLibraryModel):
     #TODO: look over class to ensure it fits with our `new` ideas
     dieroll = models.ForeignKey(DieRoll, blank=True)
     amount = models.PositiveIntegerField(blank=True)
-    property_modified = models.CharField(max_length=STND_CHAR_LIMIT, blank=True)
+    property_modified = models.CharField(
+        max_length=STND_CHAR_LIMIT,
+        blank=True)
     is_bonus = models.BooleanField(default=True)
     text = models.TextField(blank=True)
     
     def __unicode__(self):
-        return_string = ""
         if self.is_bonus:
-            return_string += "+("
+            prefix = "+"
         else:
-            return_string += "-("
-        return "%s%s to %s)" %(return_string, formatted_num_and_roll(self.amount, self.dieroll, 1), self.property_modified)
+            prefix = "-"
+        return "(%(prefix)s%(value)s to %(property)s)" % {
+            'prefix':prefix,
+            'value':formatted_num_and_roll(self.amount, self.dieroll, 1),
+            'property':self.property_modified}
