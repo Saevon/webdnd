@@ -23,5 +23,5 @@ class SkillSample(models.Model):
     type = models.CharField(
         max_length=STND_ID_CHAR_LIMIT,
         choices=SKILL_SAMPLE_TYPES,
-        default=SKILL_SAMPLE_TYPES[0],
+        default='dc',
         blank=True)
