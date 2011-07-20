@@ -4,7 +4,7 @@ from lib.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from library.config.feats import FEAT_CLASSES
 from library.models.library_entities.abstract import AbstractLibraryEntity
 from library.models.modifiers.modifiers import Modifier
-from library.models.library_entities.unknown import SavingThrow
+from library.models.modifiers.saving_throws import SavingThrow
 
 class Feat(AbstractLibraryEntity):
     """
