@@ -21,7 +21,7 @@ class SkillSample(models.Model):
 
     description = models.TextField(blank=True)
     type = models.CharField(
-        blank=False,
         max_length=STND_ID_CHAR_LIMIT,
         choices=SKILL_SAMPLE_TYPES,
-        default=SKILL_SAMPLE_TYPES[0])
+        default=SKILL_SAMPLE_TYPES[0],
+        blank=True)

@@ -13,10 +13,13 @@ class AbstractLibraryEntity(AbstractLibraryModel):
     class Meta(AbstractLibraryModel.Meta):
         abstract = True
 
-    title = models.CharField(max_length=STND_CHAR_LIMIT, blank=False, unique=True)
+    title = models.CharField(
+        max_length=STND_CHAR_LIMIT,
+        blank=False,
+        unique=True)
     reference = models.ForeignKey(Source, blank=False)
     description = models.TextField(blank=True)
     creator = models.ForeignKey(LibraryAccount, blank=False)
 
     def __unicode__(self):
-        return u"%s" %(self.title)
+        return unicode(self.title)

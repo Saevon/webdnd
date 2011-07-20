@@ -9,7 +9,10 @@ class Source(AbstractLibraryModel):
     A D&D reference.
     """
     
-    reference_type = models.CharField(choices=REFERENCE_TYPES, blank=False, max_length=STND_ID_CHAR_LIMIT)
+    reference_type = models.CharField(
+        max_length=STND_ID_CHAR_LIMIT,
+        choices=REFERENCE_TYPES,
+        blank=False)
     citation = models.TextField(blank=False)
     
     def __unicode__(self):

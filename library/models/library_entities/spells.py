@@ -14,13 +14,24 @@ class Spell(AbstractLibraryEntity):
     Spell
     """
     
-    school = models.CharField(max_length=STND_ID_CHAR_LIMIT, choices=SCHOOLS_OF_MAGIC, blank=False)
+    school = models.CharField(
+        max_length=STND_ID_CHAR_LIMIT,
+        choices=SCHOOLS_OF_MAGIC,
+        blank=False)
     sub_school = models.ForeignKey('SpellSubSchool', blank=True)
-    descriptors = models.ManyToManyField('SpellDescriptor', related_name="spells", blank=True)
+    descriptors = models.ManyToManyField(
+        'SpellDescriptor',
+        related_name="spells",
+        blank=True)
     levels = models.ManyToManyField('CastingLevelClassPair', blank=False)
-    short_description = models.CharField(max_length=STND_CHAR_LIMIT, blank=True)
+    short_description = models.CharField(
+        max_length=STND_CHAR_LIMIT,
+        blank=True)
     saving_throw = models.ForeignKey(SavingThrow, blank=True)
-    modifiers = models.ManyToManyField(Modifier, related_name="spells", blank=True)
+    modifiers = models.ManyToManyField(
+        Modifier,
+        related_name="spells",
+        blank=True)
     range = models.CharField(blank=True, max_length=100)
     
     # components
@@ -57,6 +68,9 @@ class SpellRange(AbstractLibraryEntity):
     A range of a spell. FFUUUUUUU!
     """
     
-    range_type = models.CharField(blank=True, max_length=STND_ID_CHAR_LIMIT, choices=SPELL_RANGES)
+    range_type = models.CharField(
+        max_length=STND_ID_CHAR_LIMIT,
+        choices=SPELL_RANGES,
+        blank=True)
     
 

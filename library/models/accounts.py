@@ -8,7 +8,7 @@ class LibraryAccount(AbstractLibraryModel):
     A webdnd library account.
     """
     
-    name = models.CharField(blank=False, max_length=STND_CHAR_LIMIT)
+    name = models.CharField(max_length=STND_CHAR_LIMIT, blank=False)
     # TODO: finish making this
 
     def __unicode__(self):

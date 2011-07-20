@@ -14,7 +14,7 @@ class SavingThrow(AbstractLibraryModel):
         choices=SAVE_TYPES,
         blank=False)
     save_dc = models.IntegerField(blank=False)
-    save_reduction = models.Decimal(
+    save_reduction = models.DecimalField(
         max_digits=4,
         decimal_places=3,
         blank=False)

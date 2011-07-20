@@ -9,5 +9,10 @@ class Condition(AbstractLibraryEntity):
     A condition in which something can be.
     """
     
-    modifiers = models.ManyToManyField(Modifier, related_name="conditions", blank=True)
-    short_description = models.CharField(blank=True, max_length=STND_CHAR_LIMIT)
+    modifiers = models.ManyToManyField(
+        Modifier,
+        related_name="conditions",
+        blank=True)
+    short_description = models.CharField(
+        max_length=STND_CHAR_LIMIT,
+        blank=True)

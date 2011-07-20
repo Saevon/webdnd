@@ -10,8 +10,8 @@ class DieRoll(AbstractLibraryModel):
     """
     # TODO: Check that this class still works with 'New ideas'
     
-    number_of_dice = models.PositiveIntegerField()
-    sides_on_die = models.PositiveIntegerField()
+    number_of_dice = models.PositiveIntegerField(blank=False)
+    sides_on_die = models.PositiveIntegerField(blank=False)
 
     def __unicode__(self):
-        return u"%sd%s" %(self.number_of_dice, self.sides_on_die)
+        return u"%sd%s" % (self.number_of_dice, self.sides_on_die)
