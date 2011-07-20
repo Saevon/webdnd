@@ -5,7 +5,7 @@ from library.models.modifiers.die_roll import DieRoll
 
 class Modifier(models.Model):
     #TODO: look over class to ensure it fits with our `new` ideas
-    dieroll = models.ForeignKey("DieRoll", blank=True)
+    dieroll = models.ForeignKey(DieRoll, blank=True)
     amount = models.PositiveIntegerField(blank=True)
     property_modified = models.CharField(max_length=STND_CHAR_LIMIT, blank=True)
     is_bonus = models.BooleanField(default=True)

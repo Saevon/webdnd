@@ -13,9 +13,9 @@ class AbstractLibraryEntity(models.Model):
         abstract = True
 
     title = models.CharField(max_length=STND_CHAR_LIMIT, blank=False, unique=True)
-    reference = models.ForeignKey("Source", blank=False)
+    reference = models.ForeignKey(Source, blank=False)
     description = models.TextField(blank=True)
-    creator = models.ForeignKey("LibraryAccount", blank=False)
+    creator = models.ForeignKey(LibraryAccount, blank=False)
 
     def __unicode__(self):
         return u"%s" %(self.title)

@@ -16,7 +16,7 @@ class SkillSample(models.Model):
     A sample skill DC or modifier that shows DC
     """
     
-    skill = models.ForeignKey('Skill', blank=False)
+    skill = models.ForeignKey(Skill, blank=False)
     difficulty_class = models.IntegerField(blank=False, null=False)
 
     description = models.TextField(blank=True)

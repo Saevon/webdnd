@@ -10,10 +10,10 @@ from library.models.library_entities.references import Article, Example, Rule, T
 from library.models.library_entities.skills import Skill, SkillSample
 from library.models.library_entities.spells import CastingLevelClassPair, Spell, SpellDescriptor, SpellRange, SpellSubSchool
 from library.models.library_entities.unknown import ActionTimeDuration, DnDClass, SavingThrow
-from library.models.modifiers.modifiers import 
+from library.models.modifiers.modifiers import Modifier
 from library.models.sources import Source
 
-DEFAULT = LibraryAdmin 
+DEFAULT = LibraryAdmin
 
 library_admin_mapping = (
     (ActionTimeDuration, DEFAULT),

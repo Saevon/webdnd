@@ -1,4 +1,4 @@
-from django.models import ModelAdmin
+from django.contrib.admin import ModelAdmin
 
 class LibraryAdmin(ModelAdmin):
     """
