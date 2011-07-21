@@ -10,6 +10,12 @@ AURA_STRENGTHS = (
    ("op", "Overpowering"),
 )
 
+MAGIC_SOURCES = (
+    ('arc', 'Arcane'),
+    ('div', 'Divine'),
+    ('spl', 'Spell Like'),
+)
+
 SCHOOLS_OF_MAGIC = (
    ("abj", "Abjuration"),
    ("conj", "Conjuration"),
