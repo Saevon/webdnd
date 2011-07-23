@@ -1,7 +1,7 @@
 from django.db import models
 
 from lib.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
-from library.config.classes import CLASS_SKILL_TYPES
+from library.config.classes import CLASS_CATEGORIES, CLASS_SKILL_TYPES
 from library.config.magic import MAGIC_SOURCES
 from library.config.unknown import ATTRIBUTES
 from library.models.abstract import AbstractLibraryModel
@@ -18,12 +18,19 @@ class DnDClass(AbstractLibraryEntity):
         verbose_name_plural = "DnD Classes"
 
     class_abv = models.CharField(
+        primary_key=True, #Not sure if this will break since parent has PK
+        unique=True, #in case the above breaks
         max_length=STND_ID_CHAR_LIMIT,
+        blank=False)
+    class_category = models.CharField(
+        max_length=STND_ID_CHAR_LIMIT,
+        choices=CLASS_CATEGORIES,
         blank=False)
     save_progression = models.ForeignKey('SaveProgression')
     hit_die = models.PositiveIntegerField(blank=False, null=False)
     base_attack_bonus = models.ForeignKey('BABProgression')
     skill_points = models.PositiveIntegerField(blank=False, null=False)
+    # Spell Related
     spell_stat = models.CharField(
         max_length=STND_ID_CHAR_LIMIT,
         choices=ATTRIBUTES,
@@ -37,8 +44,6 @@ class DnDClass(AbstractLibraryEntity):
 
     # TODO: finish this
     # Proficiencies
-    # Domain Spells
-    # Spell List
     # Requiremnent and Prohibitions
 
 class SaveProgression(AbstractLibraryEntity):
@@ -75,6 +80,11 @@ class ClassSkill(AbstractLibraryModel):
     """
     Class Specific Abilities
     """
+    class Meta(AbstractLibraryModel):
+        unique_together = (
+            ('dnd_class', 'skill'),
+        )
+
     dnd_class = models.ForeignKey(
         DnDClass,
         related_field='class_skills',
@@ -92,6 +102,11 @@ class ClassSpellLevel(AbstractLibraryModel):
     """
     Class Spells of a certain type at a certain level
     """
+    class Meta(AbstractLibraryModel):
+        unique_together = (
+            ('dnd_class','spell_level', 'type', 'level'),
+        )
+
     dnd_class = models.ForeignKey(
         DnDClass,
         related_field='class_spells',
