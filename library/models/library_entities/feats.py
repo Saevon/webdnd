@@ -22,6 +22,7 @@ class Feat(AbstractLibraryEntity):
         Modifier,
         related_name="feats",
         blank=True)
+    #uses per day/week/ rnd etc
 
 class FeatType(AbstractLibraryEntity):
     """
