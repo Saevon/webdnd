@@ -9,6 +9,7 @@ class DieRoll(AbstractLibraryModel):
     A D&D die roll.
     """
     # TODO: Check that this class still works with 'New ideas'
+    # TODO: add math between dice
     
     number_of_dice = models.PositiveIntegerField(blank=False)
     sides_on_die = models.PositiveIntegerField(blank=False)
