@@ -1,2 +1,6 @@
+# CharField
 STND_CHAR_LIMIT = 100
 STND_ID_CHAR_LIMIT = 5
+
+#DecimalField
+STND_DECIMAL_PLACES = 3
