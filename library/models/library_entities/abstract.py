@@ -20,6 +20,7 @@ class AbstractLibraryEntity(AbstractLibraryModel):
     reference = models.ForeignKey(Source, blank=False)
     description = models.TextField(blank=True)
     creator = models.ForeignKey(LibraryAccount, blank=False)
+    copyrighted = models.Boolean(default=False)
 
     def __unicode__(self):
         return unicode(self.title)
