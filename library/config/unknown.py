@@ -12,12 +12,6 @@ ATTRIBUTES = (
 	("cha", "Charisma"),
 )
 
-DAMAGE_TYPES = (
-   ("b", "Bludgeoning"),
-   ("s", "Slashing"),
-   ("p", "Piercing"),
-)
-
 SAVE_TYPES = (
    ("fort", "Fortitude"),
    ("ref", "Reflex"),
