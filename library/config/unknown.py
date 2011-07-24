@@ -12,12 +12,6 @@ ATTRIBUTES = (
 	("cha", "Charisma"),
 )
 
-SAVE_TYPES = (
-   ("fort", "Fortitude"),
-   ("ref", "Reflex"),
-   ("will", "Will"),
-)
-
 SIZES = (
     ("f", "Fine"),
     ("d", "Diminuitive"),
