@@ -22,6 +22,9 @@ class AbstractWeaponInfo(AbstractLibraryModel):
         DamageType,
         related_name='%(class)s',
         blank=False)
+    touch_attack = models.BooleanField(
+        deafult=False,
+        blank=True)
 
     critical_range = models.PositiveIntegerField(
         blank=False,
