@@ -7,6 +7,8 @@ from library.config.unknown import ATTRIBUTES
 from library.models.abstract import AbstractLibraryModel
 from library.models.library_entities.abstract import AbstractLibraryEntity
 from library.models.library_entities.abilities import Ability
+from library.models.library_entities.combat.proficiencies import ProficiencyGroup
+from library.models.library_entities.items.abstract import AbstractItem
 from library.models.library_entities.skills import Skill
 
 class DnDClass(AbstractLibraryEntity):
@@ -30,6 +32,14 @@ class DnDClass(AbstractLibraryEntity):
     hit_die = models.PositiveIntegerField(blank=False, null=False)
     base_attack_bonus = models.ForeignKey('BABProgression')
     skill_points = models.PositiveIntegerField(blank=False, null=False)
+    proficiencies = models.ManyToManyField(
+        ProficiencyGroup,
+        related_field='class_proficiencies',
+        blank=True)
+    specific_proficiencies = models.ManyToManyField(
+        AbstractItem,
+        related_field='class_proficiencies',
+        blank=True)
     # Spell Related
     spell_stat = models.CharField(
         max_length=STND_ID_CHAR_LIMIT,
