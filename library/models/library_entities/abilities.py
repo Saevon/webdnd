@@ -12,7 +12,7 @@ class Ability(AbstractLibraryEntity):
     """
     
     saving_throw = models.ForeignKey(SavingThrow, blank=True)
-    ablity_type = models.ForeignKey("AbilityType", blank=False)
+    type = models.ForeignKey("AbilityType", blank=False)
     ability_class = models.CharField(
         max_length=STND_ID_CHAR_LIMIT,
         choices=ABILITY_CLASSES,

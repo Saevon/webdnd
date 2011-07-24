@@ -6,7 +6,7 @@ SAVE_AFFECTS = {
     'disb':'Disbelief',
 }
 
-SAVE_TYPES = (
+SAVE_STATS = (
    ("fort", "Fortitude"),
    ("ref", "Reflex"),
    ("will", "Will"),

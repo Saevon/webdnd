@@ -119,7 +119,7 @@ class ClassSpellLevel(AbstractLibraryModel):
     spell_level_increase = models.IntegerField(
         blank=False,
         null=False)
-    type = dnd_class = models.ForeignKey(
+    type = models.ForeignKey(
         'ClassSpellType',
         related_field='class_spell_level',
         blank=False)
