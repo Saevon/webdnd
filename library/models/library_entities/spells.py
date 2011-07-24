@@ -7,6 +7,7 @@ from library.models.abstract import AbstractLibraryModel
 from library.models.combat.spell_info import TouchAttackInfo
 from library.models.library_entities.abstract import AbstractLibraryEntity
 from library.models.library_entities.classes import DnDClass
+from library.models.library_entities.conditions import Condition
 from library.models.modifiers.modifiers import Modifier
 from library.models.modifiers.saving_throws import SavingThrow
 from library.models.units import ActionTimeDuration
@@ -38,6 +39,10 @@ class Spell(AbstractLibraryEntity):
     #range = models.CharField(blank=True, max_length=100)
     touch_attack = models.ForeignKey(
         TouchAttackInfo,
+        related_field='spells',
+        blank=True)
+    conditions = models.ManyToMany(
+        Condition,
         related_field='spells',
         blank=True)
     # All Effects are in the description

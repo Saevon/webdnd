@@ -16,3 +16,5 @@ class Condition(AbstractLibraryEntity):
     short_description = models.CharField(
         max_length=STND_CHAR_LIMIT,
         blank=True)
+    #if this condition is a one-off
+    specific = models.BooleanField(default=False)
