@@ -41,7 +41,7 @@ class Spell(AbstractLibraryEntity):
         TouchAttackInfo,
         related_field='spells',
         blank=True)
-    conditions = models.ManyToMany(
+    conditions = models.ManyToManyField(
         Condition,
         related_field='spells',
         blank=True)
@@ -64,11 +64,11 @@ class Spell(AbstractLibraryEntity):
     casting_time = models.ForeignKey("ActionTimeDuration", blank=False)
     resistable = models.BooleanField(default=True)
 
-    negates = models.ManyToMany(
+    negates = models.ManyToManyField(
         'self',
         related_feld='negated_by',
         blank=True)
-    versions = models.ManyToMany(
+    versions = models.ManyToManyField(
         'self',
         blank=True)
     #upgraded spells? cure moderate -> serious -> critical
