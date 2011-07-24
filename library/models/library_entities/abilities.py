@@ -6,25 +6,25 @@ from library.models.library_entities.abstract import AbstractLibraryEntity
 from library.models.modifiers.modifiers import Modifier
 from library.models.modifiers.saving_throws import SavingThrow
 
-class Feat(AbstractLibraryEntity):
+class Ability(AbstractLibraryEntity):
     """
-    Feats.
+    Ability
     """
     
     saving_throw = models.ForeignKey(SavingThrow, blank=True)
-    feat_type = models.ForeignKey("FeatType", blank=False)
-    feat_class = models.CharField(
+    ablity_type = models.ForeignKey("AbilityType", blank=False)
+    ability_class = models.CharField(
         max_length=STND_ID_CHAR_LIMIT,
-        choices=FEAT_CLASSES,
+        choices=ABILITY_CLASSES,
         blank=False)
     prerequisites = models.ManyToManyField("self", blank=True)
     modifiers = models.ManyToManyField(
         Modifier,
-        related_name="feats",
+        related_name="abilities",
         blank=True)
     #uses per day/week/ rnd etc
 
-class FeatType(AbstractLibraryEntity):
+class AbilityType(AbstractLibraryEntity):
     """
-    A type of a feat.
+    A type of a ability.
     """

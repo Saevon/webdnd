@@ -6,7 +6,7 @@ from library.config.magic import MAGIC_SOURCES
 from library.config.unknown import ATTRIBUTES
 from library.models.abstract import AbstractLibraryModel
 from library.models.library_entities.abstract import AbstractLibraryEntity
-from library.models.library_entities.feats import Feat
+from library.models.library_entities.abilities import Ability
 from library.models.library_entities.skills import Skill
 
 class DnDClass(AbstractLibraryEntity):
@@ -72,7 +72,7 @@ class ClassAbility(AbstractLibraryModel):
         related_field='class_abilities',
         blank=False)
     ability = models.ForeignKey(
-        Feat,
+        Ability,
         blank=False)
     level = models.IntegerField(blank=False, null=False)
 
@@ -90,7 +90,7 @@ class ClassSkill(AbstractLibraryModel):
         related_field='class_skills',
         blank=False)
     skill = models.ForeignKey(
-        Feat,
+        Skill,
         blank=False)
     type = models.CharField(
         max_length=STND_ID_CHAR_LIMIT,
