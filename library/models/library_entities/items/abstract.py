@@ -3,9 +3,9 @@ from django.db import models
 from library.config import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from library.config.items.weapons import WEAPON_CLASSES
 from library.config.unknown import SIZES
-from library.models.abstract import AbstractLibraryEntity
 from library.models.combat.weapon_info import MeleeWeaponInfo, RangedWeaponInfo, ThrownWeaponInfo
 from library.models.items.item_groups import ItemCategory
+from library.models.library_entities.abstract import AbstractLibraryEntity
 
 class AbstractItem(AbstractLibraryEntity):
     """
