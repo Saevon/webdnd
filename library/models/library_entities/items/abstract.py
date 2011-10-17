@@ -6,6 +6,7 @@ from library.config.unknown import SIZES
 from library.models.combat.weapon_info import MeleeWeaponInfo, RangedWeaponInfo, ThrownWeaponInfo
 from library.models.items.item_groups import ItemCategory
 from library.models.library_entities.abstract import AbstractLibraryEntity
+from library.models.library_entities.items.materials import Material
 
 class AbstractItem(AbstractLibraryEntity):
     """
