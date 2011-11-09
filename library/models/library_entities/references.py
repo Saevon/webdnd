@@ -19,12 +19,16 @@ class Rule(AbstractLibraryEntity):
 
 class Term(AbstractLibraryEntity):
     """
-    A glossary term.
+    A glossary term. Usually spawned from a Rule
     """
     
     short_description = models.TextField(blank=False)
     examples = models.ManyToManyField(
         'Example',
+        related_name="terms",
+        blank=True)
+    rule = models.ForeignKey(
+        Rule,
         related_name="terms",
         blank=True)
 
