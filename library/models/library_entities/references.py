@@ -32,6 +32,20 @@ class Term(AbstractLibraryEntity):
         related_name="terms",
         blank=True)
 
+class Alias(AbstractLibraryModel):
+    """
+    An alias for a Term.
+    """
+
+    name = models.CharField(
+        max_length=STND_CHAR_LIMIT,
+        blank=False,
+        unique=True)
+    term = models.ForeignKey(
+        Term,
+        related_field="aliases",
+        blank=False)
+
 class Article(AbstractLibraryEntity):
     """
     An article about various D&D stuff, NOT a Rule.
