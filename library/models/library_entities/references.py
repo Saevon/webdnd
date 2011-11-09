@@ -31,6 +31,14 @@ class Term(AbstractLibraryEntity):
         Rule,
         related_name="terms",
         blank=True)
+    # Note when adding a new term we should ensure it gets an alias added
+    # This way we only have to search aliases for the different terms
+
+    def get_aliases(self):
+        """
+        Returns all the ames for this term.
+        """
+        return [alias.name for alias in self.aliases]
 
 class Alias(AbstractLibraryModel):
     """
