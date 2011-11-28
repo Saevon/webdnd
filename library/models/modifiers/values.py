@@ -9,7 +9,7 @@ class Value(AbstractLibraryModel):
     """
     A Value including Decimals and Die Rolls
     """
-    die_roll = models.ManytoManyField(
+    die_roll = models.ManyToManyField(
         DieRoll,
         related_field='values',
         blank=False)
