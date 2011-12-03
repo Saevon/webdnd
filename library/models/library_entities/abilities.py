@@ -23,6 +23,8 @@ class Ability(AbstractLibraryEntity):
         related_name="abilities",
         blank=True)
     #uses per day/week/ rnd etc
+    #Also ensure a difference between passive/active abilities aka qualities and abiities
+    #Automatic use abilities e.g. swarm attacks
 
 class AbilityType(AbstractLibraryEntity):
     """
