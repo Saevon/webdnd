@@ -1,6 +1,6 @@
 from django.db import models
 
-from library.config import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
+from lib.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from library.config.items.armor import SHIELD_SIZES
 from library.models.combat.armor_info import ArmorInfo
 from library.models.items.abstract import AbstractItem
@@ -15,7 +15,7 @@ class AbstractArmor(AbstractItem):
 
     armor = models.ForeignKey(
         ArmorInfo,
-        related_field='item_%(class)s',
+        related_name='item_%(class)s',
         blank=False)
 
 class BodyArmor(AbstractArmor):

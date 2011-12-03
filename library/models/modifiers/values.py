@@ -11,8 +11,9 @@ class Value(AbstractLibraryModel):
     """
     die_roll = models.ManyToManyField(
         DieRoll,
-        related_field='values',
-        blank=False)
+        related_name='values',
+        blank=False
+    )
     modifier = models.IntegerField(blank=False, null=False)
 
 class Multiplier(AbstractLibraryModel):

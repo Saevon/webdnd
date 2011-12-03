@@ -9,7 +9,7 @@ class DamageType(AbstractLibraryEntity):
     """
     damage_group = models.ForeignKey(
         'DamageGroup',
-        related_field='damage_types',
+        related_name='damage_types',
         blank=False)
 
 class DamageGroup(AbstractLibraryEntity):

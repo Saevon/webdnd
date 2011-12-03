@@ -52,7 +52,7 @@ class Alias(AbstractLibraryModel):
         unique=True)
     term = models.ForeignKey(
         Term,
-        related_field="aliases",
+        related_name="aliases",
         blank=False)
 
 class Article(AbstractLibraryEntity):

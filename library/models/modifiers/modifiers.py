@@ -22,16 +22,14 @@ class Modifier(AbstractLibraryModel):
     # Change
     value = models.ForeignKey(
         Value,
-        related_field='modifiers',
+        related_name='modifiers',
         blank=False)
     change_type = models.CharField(
-        max_length=STND_CHAR_ID_LIMIT,
+        max_length=STND_ID_CHAR_LIMIT,
         choices=STAT_UPDATE_TYPES,
         blank=False)
-    # blank string == no conditions
-    conditions = models.TextField(blank = True)
     bonus_type = models.ForeignKey(
         Bonus,
-        related_field='modifiers',
+        related_name='modifiers',
         blank=False)
 

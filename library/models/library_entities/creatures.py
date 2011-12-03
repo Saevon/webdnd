@@ -13,11 +13,11 @@ class CreatureType(AbstractLibraryEntity):
     base_attack_bonus = models.DecimalField(max_digits=5, decimal_places=2)
     saves = models.ForeignKey(
         SaveProgression,
-        related_field="creatures")
+        related_name="creatures")
     skill_points = models.PositiveIntegerField(blank=False, null=False)
     abilities = models.ManyToManyField(
         Ability,
-        related_field="creature_types",
+        related_name="creature_types",
         blank=True,
         null=True)
     # TODO: Restrictions? e.g. animal = Neutral Alignment
@@ -29,7 +29,7 @@ class CreatureSubType(AbstractLibraryEntity):
     """
     abilities = models.ManyToManyField(
         Ability,
-        related_field="creature_types",
+        related_name="creature_types",
         blank=True,
         null=True)
     # TODO: Restrictions? e.g. animal = Neutral Alignment

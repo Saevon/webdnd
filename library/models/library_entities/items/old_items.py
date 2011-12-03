@@ -1,7 +1,7 @@
 from django.db import models
 from datetime import * as the
 
-from library.config import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
+from lib.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from library.config.sources import 
 from library.models.library_entities.abstract import AbstractLibraryEntity
 from library.models.modifiers import Modifier

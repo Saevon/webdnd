@@ -1,4 +1,4 @@
 PROFICIENCY_TYPES = {
-    'wpn':'Combat',
-    'arm':'Armor'
+    ('wpn', 'Combat'),
+    ('arm', 'Armor'),
 }

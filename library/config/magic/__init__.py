@@ -18,23 +18,26 @@ MAGIC_SOURCES = (
 
 SCHOOLS_OF_MAGIC = (
     ("abj", "Abjuration"),
-    ("Conjuration",
-        ('creat', 'Creation),
-        ('heal', 'Healing'),
-        ('sum', 'Summoning'),
+    ("Conjuration", (
+            ('creat', 'Creation'),
+            ('heal', 'Healing'),
+            ('sum', 'Summoning'),
+        )
      ),
     ("div", "Divination"),
-    ("Enchantment"
-        ('charm', 'Charm'),
-        ('comp', 'Compulsion'),
+    ("Enchantment", (
+            ('charm', 'Charm'),
+            ('comp', 'Compulsion'),
+        )
      ),
     ("evo", "Evocation"),
-    ("Illusion"
-        ('fig','Figment'),
-        ('glam','Glamor'),
-        ('pat','Pattern'),
-        ('phant','Phantasm'),
-        ('shdw','Shadow'),
+    ("Illusion", (
+            ('fig','Figment'),
+            ('glam','Glamor'),
+            ('pat','Pattern'),
+            ('phant','Phantasm'),
+            ('shdw','Shadow'),
+        )
     ),
     ("necro", "Necromancy"),
     ("trans", "Transmutation"),

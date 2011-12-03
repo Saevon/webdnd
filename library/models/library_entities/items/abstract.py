@@ -1,10 +1,10 @@
 from django.db import models
 
-from library.config import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
+from lib.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from library.config.items.weapons import WEAPON_CLASSES
 from library.config.unknown import SIZES
 from library.models.combat.weapon_info import MeleeWeaponInfo, RangedWeaponInfo, ThrownWeaponInfo
-from library.models.items.item_groups import ItemCategory
+from library.models.library_entities.items.item_groups import ItemCategory
 from library.models.library_entities.abstract import AbstractLibraryEntity
 from library.models.library_entities.items.materials import Material
 
@@ -18,7 +18,7 @@ class AbstractItem(AbstractLibraryEntity):
     # Info needed to Buy the Item
     item_category = models.ForeignKey(
         ItemCategory,
-        related_field='item_%(class)s',
+        related_name='item_%(class)s',
         blank=False)
 
     #base_price = models.PositiveIntegerField(blank=True, default=0)
@@ -30,8 +30,8 @@ class AbstractItem(AbstractLibraryEntity):
     #base_mass = models.FloatField(blank=True, default=0)
 
     base_material = models.ForeignKey(
-        Material
-        related_field='%(class)s_item',
+        Material,
+        related_name='%(class)s_item',
         blank=False)
     size = models.CharField(
         max_length=STND_ID_CHAR_LIMIT,
@@ -45,7 +45,7 @@ class AbstractItem(AbstractLibraryEntity):
     # Melee
     melee = models.ForeignKey(
         MeleeWeaponInfo,
-        related_field='%(class)s_item',
+        related_name='%(class)s_item',
         blank=True,
         null=True)
     #is this made to be used as a melee weapon?
@@ -53,7 +53,7 @@ class AbstractItem(AbstractLibraryEntity):
     # Thrown
     thrown = models.ForeignKey(
         ThrownWeaponInfo,
-        related_field='%(class)s_item',
+        related_name='%(class)s_item',
         blank=True,
         null=True)
     #is this made to be used as a thrown weapon?

@@ -4,9 +4,9 @@ CLASS_SKILL_TYPES = (
     ('restr', 'Restricted')
 )
 
-CLASS_CATEGORIES = {
-    'base':'Base',
-    'prst':'Prestige',
-    'modb':'Modded Base',
-    'misc':'Other',
-}
+CLASS_CATEGORIES = (
+    ('base', 'Base'),
+    ('prst', 'Prestige'),
+    ('modb', 'Modded Base'),
+    ('misc', 'Other'),
+)

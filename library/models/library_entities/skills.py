@@ -19,7 +19,7 @@ class SkillSample(AbstractLibraryModel):
     
     skill = models.ForeignKey(
         Skill,
-        related_field='skill_samples',
+        related_name='skill_samples',
         blank=False)
     difficulty_class = models.IntegerField(blank=False, null=False)
 

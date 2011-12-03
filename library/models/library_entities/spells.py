@@ -6,6 +6,7 @@ from library.config.magic.spells import SPELL_RANGES
 from library.models.abstract import AbstractLibraryModel
 from library.models.combat.spell_info import TouchAttackInfo
 from library.models.library_entities.abstract import AbstractLibraryEntity
+from library.models.library_entities.abilities import Ability
 from library.models.library_entities.classes import DnDClass
 from library.models.library_entities.conditions import Condition
 from library.models.modifiers.modifiers import Modifier
@@ -25,7 +26,6 @@ class Spell(AbstractLibraryEntity):
         'SpellDescriptor',
         related_name="spells",
         blank=True)
-    levels = models.ManyToManyField('CastingLevelClassPair', blank=False)
     short_description = models.CharField(
         max_length=STND_CHAR_LIMIT,
         blank=True)
@@ -39,11 +39,11 @@ class Spell(AbstractLibraryEntity):
     #range = models.CharField(blank=True, max_length=100)
     touch_attack = models.ForeignKey(
         TouchAttackInfo,
-        related_field='spells',
+        related_name='spells',
         blank=True)
     conditions = models.ManyToManyField(
         Condition,
-        related_field='spells',
+        related_name='spells',
         blank=True)
     # All Effects are in the description
     
@@ -66,7 +66,7 @@ class Spell(AbstractLibraryEntity):
 
     negates = models.ManyToManyField(
         'self',
-        related_feld='negated_by',
+        related_name='negated_by',
         blank=True)
     versions = models.ManyToManyField(
         'self',
@@ -78,8 +78,8 @@ class Domain(AbstractLibraryEntity):
     A Domain
     """
     granted_power = models.ForeignKey(
-        Feat,
-        related_field='domains',
+        Ability,
+        related_name='domains',
         blank=False)
 
 class DomainSpellLevel(AbstractLibraryModel):
@@ -93,12 +93,12 @@ class DomainSpellLevel(AbstractLibraryModel):
 
     domain = models.ForeignKey(
         Domain,
-        related_field='spells',
+        related_name='spells',
         blank=False)
     level = models.PositiveIntegerField(null=False, blank=False)
     spell = models.ForeignKey(
         Spell,
-        related_field='domain_spells',
+        related_name='domain_spells',
         blank=False)
 
 class SpellDescriptor(AbstractLibraryEntity):
@@ -117,12 +117,11 @@ class CastingLevelClassPair(AbstractLibraryModel):
 
     dnd_class = models.ForeignKey(
         DnDClass,
-        related_field='spell_list',
+        related_name='spell_list',
         blank=False)
     #Or is it? related to class.py spell/day class
     casting_level = models.PositiveSmallIntegerField(blank=False)
     spell = models.ForeignKey(
         Spell,
-        related_field='class_spell_list',
+        related_name='spell_levels',
         blank=False)
-

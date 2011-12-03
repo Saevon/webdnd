@@ -1,9 +1,9 @@
 from django.db import models
 
-from library.config import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
+from lib.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from library.models.abstract import AbstractLibraryModel
-from library.models.combat.damage import DamageType
-from library.models.combat.proficiencies import ProficiencyGroup
+from library.models.library_entities.combat.damage import DamageType
+from library.models.library_entities.combat.proficiencies import ProficiencyGroup
 
 class AbstractWeaponInfo(AbstractLibraryModel):
     """
@@ -16,14 +16,14 @@ class AbstractWeaponInfo(AbstractLibraryModel):
         ProficiencyGroup,
         related_name='%(class)s',
         blank=False)
-    weapon_class = #sword, bow, etc
-    damage = #
+    # weapon_class = #sword, bow, etc
+    # damage = #
     damage_type = models.ForeignKey(
         DamageType,
         related_name='%(class)s',
         blank=False)
     touch_attack = models.BooleanField(
-        deafult=False,
+        default=False,
         blank=True)
 
     critical_range = models.PositiveIntegerField(
