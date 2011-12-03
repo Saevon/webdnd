@@ -28,9 +28,11 @@ class DnDClass(AbstractLibraryEntity):
         max_length=STND_ID_CHAR_LIMIT,
         choices=CLASS_CATEGORIES,
         blank=False)
-    save_progression = models.ForeignKey('SaveProgression')
+    saves = models.ForeignKey(
+        'SaveProgression',
+        related_field="classes")
     hit_die = models.PositiveIntegerField(blank=False, null=False)
-    base_attack_bonus = models.ForeignKey('BABProgression')
+    base_attack_bonus = models.DecimalField(max_digits=5, decimal_places=2)
     skill_points = models.PositiveIntegerField(blank=False, null=False)
     proficiencies = models.ManyToManyField(
         ProficiencyGroup,
@@ -60,17 +62,9 @@ class SaveProgression(AbstractLibraryEntity):
     """
     The amount a Characters Base Save Increases per Level
     """
-    
     fort = models.DecimalField(max_digits=5, decimal_places=2)
     ref = models.DecimalField(max_digits=5, decimal_places=2)
     will = models.DecimalField(max_digits=5, decimal_places=2)
-
-class BABProgression(AbstractLibraryEntity):
-    """
-    The amount a Characters Base Attack Bonus Increase per Level
-    """
-
-    increase = models.DecimalField(max_digits=5, decimal_places=2)
 
 class ClassAbility(AbstractLibraryModel):
     """
