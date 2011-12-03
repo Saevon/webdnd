@@ -15,23 +15,23 @@ class CreatureType(AbstractLibraryEntity):
         SaveProgression,
         related_field="creatures")
     skill_points = models.PositiveIntegerField(blank=False, null=False)
-    # Restrictions? e.g. animal = Neutral Alignment
     abilities = models.ManyToManyField(
         Ability,
         related_field="creature_types",
         blank=True,
         null=True)
-    # Stat Changes?
+    # TODO: Restrictions? e.g. animal = Neutral Alignment
+    # TODO: Stat Changes?
 
 class CreatureSubType(AbstractLibraryEntity):
     """
     A Creature's Subtype
     """
-    # Restrictions? e.g. animal = Neutral Alignment
     abilities = models.ManyToManyField(
         Ability,
         related_field="creature_types",
         blank=True,
         null=True)
-    # Stat Changes?
+    # TODO: Restrictions? e.g. animal = Neutral Alignment
+    # TODO: Stat Changes?
 
