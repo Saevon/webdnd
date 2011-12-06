@@ -12,6 +12,23 @@ class Skill(AbstractLibraryEntity):
 
     short_description = models.TextField(blank=False)
 
+class SkillSubType(AbstractLibraryEntity):
+    """
+    a subtype for a skill
+        e.g. Nature for the Knowledge skill
+    """
+
+    class Meta(AbstractLibraryEntity.Meta):
+        unique_together = (
+            ('title','skill'),
+        )
+
+    skill = models.ForeignKey(
+        Skill,
+        related_field="subtypes",
+        blank=False,
+        null=False)
+
 class SkillSample(AbstractLibraryModel):
     """
     A sample skill DC or modifier that shows DC
