@@ -49,3 +49,9 @@ class SkillSample(AbstractLibraryModel):
         choices=SKILL_SAMPLE_TYPES,
         default='dc',
         blank=True)
+
+class Language(AbstractLibraryEntity]):
+     """docstring for Language"""
+
+     alphabet = models.CharField(blank=False)
+          
