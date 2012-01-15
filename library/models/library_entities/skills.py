@@ -11,6 +11,7 @@ class Skill(AbstractLibraryEntity):
     """
 
     short_description = models.TextField(blank=False)
+    subtypes = models.BooleanField(blank=False)
 
 class SkillSubType(AbstractLibraryEntity):
     """
