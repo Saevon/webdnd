@@ -16,5 +16,9 @@ class Condition(AbstractLibraryEntity):
     short_description = models.CharField(
         max_length=STND_CHAR_LIMIT,
         blank=True)
-    #if this condition is a one-off
+    #if this condition is a one-off, e.g from a spell (and only from that)
     specific = models.BooleanField(default=False)
+    prev = models.ForeignKey(
+        "Condition",
+        related_name="next".
+        blank=True)
