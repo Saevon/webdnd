@@ -29,6 +29,8 @@ class SkillSubType(AbstractLibraryEntity):
         related_field="subtypes",
         blank=False,
         null=False)
+    // (if True) always put this in the skill tree
+    main = models.BooleanField(blank=False)
 
 class SkillSample(AbstractLibraryModel):
     """
