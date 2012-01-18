@@ -11,7 +11,7 @@ class Skill(AbstractLibraryEntity):
     """
 
     short_description = models.TextField(blank=False)
-    subtypes = models.BooleanField(blank=False,unique=True)
+    has_subtypes = models.BooleanField(blank=False)
 
 class SkillSubType(AbstractLibraryEntity):
     """
@@ -26,7 +26,7 @@ class SkillSubType(AbstractLibraryEntity):
 
     skill = models.ForeignKey(
         Skill,
-        to_field="subtypes",
+        related_name='Skill.has_subtypes',
         blank=False,
         null=False)
     # (if True) always put this in the skill tree
