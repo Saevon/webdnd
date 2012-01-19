@@ -26,7 +26,7 @@ class SkillSubType(AbstractLibraryEntity):
 
     skill = models.ForeignKey(
         Skill,
-        related_name='Skill.has_subtypes',
+        related_name='Skill.subtypes',
         blank=False,
         null=False)
     # (if True) always put this in the skill tree
