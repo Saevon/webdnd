@@ -9,7 +9,9 @@ from library.models.library_entities.abilities import Ability, AbilityType
 from library.models.library_entities.references import Article, Example, Rule, Term
 from library.models.library_entities.skills import Skill, SkillSample
 from library.models.library_entities.spells import CastingLevelClassPair, Spell, SpellDescriptor
-from library.models.library_entities.unknown import ActionTimeDuration, DnDClass, SavingThrow
+from library.models.library_entities.classes import DnDClass
+from library.models.units import ActionTimeDuration
+from library.models.modifiers.saving_throws import SavingThrow
 from library.models.modifiers.modifiers import Modifier
 from library.models.sources import Source
 

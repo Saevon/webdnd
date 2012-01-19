@@ -20,5 +20,5 @@ class Condition(AbstractLibraryEntity):
     specific = models.BooleanField(default=False)
     prev = models.ForeignKey(
         "Condition",
-        related_name="next".
+        related_name="next",
         blank=True)

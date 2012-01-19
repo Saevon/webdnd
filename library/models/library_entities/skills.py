@@ -11,7 +11,7 @@ class Skill(AbstractLibraryEntity):
     """
 
     short_description = models.TextField(blank=False)
-    subtypes = models.BooleanField(blank=False)
+    has_subtypes = models.BooleanField(blank=False)
 
 class SkillSubType(AbstractLibraryEntity):
     """
@@ -26,10 +26,10 @@ class SkillSubType(AbstractLibraryEntity):
 
     skill = models.ForeignKey(
         Skill,
-        related_field="subtypes",
+        related_name='Skill.subtypes',
         blank=False,
         null=False)
-    // (if True) always put this in the skill tree
+    # (if True) always put this in the skill tree
     main = models.BooleanField(blank=False)
 
 class SkillSample(AbstractLibraryModel):
@@ -50,8 +50,9 @@ class SkillSample(AbstractLibraryModel):
         default='dc',
         blank=True)
 
-class Language(AbstractLibraryEntity]):
+class Language(AbstractLibraryEntity):
      """docstring for Language"""
 
-     alphabet = models.CharField(blank=False)
+     alphabet = models.CharField(max_length=STND_ID_CHAR_LIMIT,
+                                 blank=False)
           
