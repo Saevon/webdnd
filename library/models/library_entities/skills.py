@@ -36,7 +36,7 @@ class SkillSample(AbstractLibraryModel):
     """
     A sample skill DC or modifier that shows DC
     """
-    
+
     skill = models.ForeignKey(
         Skill,
         related_name='skill_samples',
@@ -53,6 +53,6 @@ class SkillSample(AbstractLibraryModel):
 class Language(AbstractLibraryEntity):
      """docstring for Language"""
 
-     alphabet = models.CharField(max_length=STND_ID_CHAR_LIMIT,
-                                 blank=False)
-          
+     alphabet = models.CharField(
+        max_length=STND_CHAR_LIMIT,
+        blank=False)
