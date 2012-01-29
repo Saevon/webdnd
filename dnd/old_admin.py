@@ -1,5 +1,5 @@
 from django.contrib import admin
-from library.models import *
+from dnd.models import *
 
 # General
 admin.site.register(Source)

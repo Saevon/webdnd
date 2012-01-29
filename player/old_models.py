@@ -1,6 +1,6 @@
 from django.db import models
 
-from library.models import *
+from dnd.models import *
 from game.constants import *
 from lib.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 
@@ -35,10 +35,10 @@ class Item(models.Model):
         return "%s belonging to %s" %(self.full_name(), self.character_sheet)
 
 class WeaponItem(Item):
-    default_object = models.ForeignKey('library.Weapon')
-    material = models.ForeignKey('library.Material', null=True, blank=True)
-    physical_enhancements = models.ManyToManyField('library.PhysicalEnhancement', null=True, blank=True)
-    magical_enhancements = models.ManyToManyField('library.MagicEnhancement', null=True, blank=True)
+    default_object = models.ForeignKey('dnd.Weapon')
+    material = models.ForeignKey('dnd.Material', null=True, blank=True)
+    physical_enhancements = models.ManyToManyField('dnd.PhysicalEnhancement', null=True, blank=True)
+    magical_enhancements = models.ManyToManyField('dnd.MagicEnhancement', null=True, blank=True)
 
     magical_bonus = models.CharField(max_length=1, choices=WEAPON_PLUSES, default='0')
 

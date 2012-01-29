@@ -1,12 +1,12 @@
 from django.db import models
 
 from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
-from library.constants.items.weapons import WEAPON_CLASSES
-from library.constants.creatures import SIZES
-from library.models.combat.weapon_info import MeleeWeaponInfo, RangedWeaponInfo, ThrownWeaponInfo
-from library.models.library_entities.items.item_groups import ItemCategory
-from library.models.library_entities.abstract import AbstractLibraryEntity
-from library.models.library_entities.items.materials import Material
+from dnd.constants.items.weapons import WEAPON_CLASSES
+from dnd.constants.creatures import SIZES
+from dnd.models.combat.weapon_info import MeleeWeaponInfo, RangedWeaponInfo, ThrownWeaponInfo
+from dnd.models.library_entities.items.item_groups import ItemCategory
+from dnd.models.library_entities.abstract import AbstractLibraryEntity
+from dnd.models.library_entities.items.materials import Material
 
 class AbstractItem(AbstractLibraryEntity):
     """

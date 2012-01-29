@@ -1,9 +1,9 @@
 from django.db import models
 
 from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
-from library.constants.skills import SKILL_SAMPLE_TYPES
-from library.models.abstract import AbstractLibraryModel
-from library.models.library_entities.abstract import AbstractLibraryEntity
+from dnd.constants.skills import SKILL_SAMPLE_TYPES
+from dnd.models.abstract import AbstractLibraryModel
+from dnd.models.library_entities.abstract import AbstractLibraryEntity
 
 class Skill(AbstractLibraryEntity):
     """

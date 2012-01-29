@@ -1,10 +1,10 @@
 from django.db import models
 
 from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
-from library.constants.creatures import SIZES
-from library.models.library_entities.abstract import AbstractLibraryEntity
-from library.models.library_entities.abilities import Ability
-from library.models.library_entities.classes import SaveProgression
+from dnd.constants.creatures import SIZES
+from dnd.models.library_entities.abstract import AbstractLibraryEntity
+from dnd.models.library_entities.abilities import Ability
+from dnd.models.library_entities.classes import SaveProgression
 
 class Creature(AbstractLibraryEntity):
     """

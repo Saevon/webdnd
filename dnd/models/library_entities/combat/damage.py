@@ -1,7 +1,7 @@
 from django.db import models
 
 from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
-from library.models.library_entities.abstract import AbstractLibraryEntity
+from dnd.models.library_entities.abstract import AbstractLibraryEntity
 
 class DamageType(AbstractLibraryEntity):
     """

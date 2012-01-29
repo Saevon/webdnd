@@ -1,6 +1,6 @@
 from django.db import models
 
-from library.models.abstract import AbstractLibraryModel
+from dnd.models.abstract import AbstractLibraryModel
 from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 
 class ActionTimeDuration(AbstractLibraryModel):

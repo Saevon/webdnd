@@ -2,14 +2,14 @@ from django.conf.urls.defaults import *
 from django.conf import settings
 
 # from game.views import *
-from library.views import *
+from dnd.views import *
 
 from django.contrib import admin
 from lib.admin import register_mapping
 #from game.admin.mapping import game_admin_mapping
 #from game.admin.site import GameAdminSite
-from library.admin import library_admin_mapping
-from library.admin.site import LibraryAdminSite
+from dnd.admin import library_admin_mapping
+from dnd.admin.site import LibraryAdminSite
 
 # General admin
 register_mapping(admin.site.register, library_admin_mapping)#, game_admin_mapping)
@@ -29,10 +29,10 @@ urlpatterns = patterns('',
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    
+
     # (r'^game/$', homepage),
-    # (r'^charsheet/([A-Za-z]*)$', display_sheet), 
-    (r'^library/$', library_home), 
+    # (r'^charsheet/([A-Za-z]*)$', display_sheet),
+    (r'^library/$', library_home),
 
     # Uncomment the next lines to enable the admin:
     (r'^admin/', include(admin.site.urls)),

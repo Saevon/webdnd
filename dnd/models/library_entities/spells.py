@@ -1,17 +1,17 @@
 from django.db import models
 
 from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
-from library.constants.magic import SCHOOLS_OF_MAGIC
-from library.constants.magic.spells import SPELL_RANGES
-from library.models.abstract import AbstractLibraryModel
-from library.models.combat.spell_info import TouchAttackInfo
-from library.models.library_entities.abstract import AbstractLibraryEntity
-from library.models.library_entities.abilities import Ability
-from library.models.library_entities.classes import DnDClass
-from library.models.library_entities.conditions import Condition
-from library.models.modifiers.modifiers import Modifier
-from library.models.modifiers.saving_throws import SavingThrow
-from library.models.units import ActionTimeDuration
+from dnd.constants.magic import SCHOOLS_OF_MAGIC
+from dnd.constants.magic.spells import SPELL_RANGES
+from dnd.models.abstract import AbstractLibraryModel
+from dnd.models.combat.spell_info import TouchAttackInfo
+from dnd.models.library_entities.abstract import AbstractLibraryEntity
+from dnd.models.library_entities.abilities import Ability
+from dnd.models.library_entities.classes import DnDClass
+from dnd.models.library_entities.conditions import Condition
+from dnd.models.modifiers.modifiers import Modifier
+from dnd.models.modifiers.saving_throws import SavingThrow
+from dnd.models.units import ActionTimeDuration
 
 class Spell(AbstractLibraryEntity):
     """

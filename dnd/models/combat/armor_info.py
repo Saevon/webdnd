@@ -1,8 +1,8 @@
 from django.db import models
 
 from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
-from library.models.abstract import AbstractLibraryModel
-from library.models.proficiencies import ProficiencyGroup
+from dnd.models.abstract import AbstractLibraryModel
+from dnd.models.proficiencies import ProficiencyGroup
 
 class ArmorInfo(AbstractLibraryModel):
     """

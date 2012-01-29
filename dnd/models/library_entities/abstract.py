@@ -2,13 +2,13 @@ from django.db import models
 
 from game.models.accounts import Account
 from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
-from library.models.abstract import AbstractLibraryModel
-from library.models.references import Reference
+from dnd.models.abstract import AbstractLibraryModel
+from dnd.models.references import Reference
 from game.models.accounts import Account
 
 class AbstractLibraryEntity(AbstractLibraryModel):
     """
-    A D&D entity in the library.
+    A D&D entity in the dnd.
     """
 
     class Meta(AbstractLibraryModel.Meta):

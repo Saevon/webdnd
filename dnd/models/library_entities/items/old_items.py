@@ -2,10 +2,10 @@ from django.db import models
 from datetime import * as the
 
 from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
-from library.constants.sources import 
-from library.models.library_entities.abstract import AbstractLibraryEntity
-from library.models.modifiers import Modifier
-from library.models.unknown import *
+from dnd.constants.sources import Source
+from dnd.models.library_entities.abstract import AbstractLibraryEntity
+from dnd.models.modifiers import Modifier
+from dnd.models.unknown import *
 
 class AbstractMagicItem(models.Model):
     """
