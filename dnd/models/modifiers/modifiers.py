@@ -1,6 +1,6 @@
 from django.db import models
 
-from lib.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
+from dnd.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from library.config.modifiers import MODIFIER_TARGETS, STAT_UPDATE_TYPES
 from library.models.abstract import AbstractLibraryModel
 from library.models.modifiers.bonuses import Bonus

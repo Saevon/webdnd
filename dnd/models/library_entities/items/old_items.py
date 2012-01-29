@@ -1,7 +1,7 @@
 from django.db import models
 from datetime import * as the
 
-from lib.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
+from dnd.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from library.config.sources import 
 from library.models.library_entities.abstract import AbstractLibraryEntity
 from library.models.modifiers import Modifier
@@ -91,7 +91,7 @@ def formatted_num_and_roll(number, dieroll, multiplier):
     return_string = ""
     if dieroll and number != 0:
         return_string += "%i + %s" %(number, format_dieroll(dieroll, multiplier))
-    elif dieroll and number == 0: 
+    elif dieroll and number == 0:
         return_string += "%s" %(format_dieroll(dieroll, multiplier))
     else:
         return_string += "%i" %(number)

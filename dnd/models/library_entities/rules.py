@@ -1,17 +1,17 @@
 from django.db import models
 
-from lib.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
+from dnd.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from library.models.abstract import AbstractLibraryModel
 from library.models.library_entities.abstract import AbstractLibraryEntity
 
 class Rule(AbstractLibraryEntity):
     """
     A rule.
-    
+
     * may containt Terms
     * may "spawn" Terms
     """
-    
+
     examples = models.ManyToManyField(
         'Example',
         related_name="rules",
@@ -22,7 +22,7 @@ class Term(AbstractLibraryEntity):
     """
     A glossary term. Usually spawned from a Rule
     """
-    
+
     short_description = models.TextField(blank=False)
     examples = models.ManyToManyField(
         'Example',
@@ -59,7 +59,7 @@ class Article(AbstractLibraryEntity):
     """
     An article about various D&D stuff, NOT a Rule.
     """
-    
+
     examples = models.ManyToManyField(
         'Example',
         related_name="articles",

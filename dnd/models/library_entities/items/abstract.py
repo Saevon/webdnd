@@ -1,6 +1,6 @@
 from django.db import models
 
-from lib.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
+from dnd.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from library.config.items.weapons import WEAPON_CLASSES
 from library.config.creatures import SIZES
 from library.models.combat.weapon_info import MeleeWeaponInfo, RangedWeaponInfo, ThrownWeaponInfo

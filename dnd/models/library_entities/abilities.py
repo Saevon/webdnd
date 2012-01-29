@@ -1,6 +1,6 @@
 from django.db import models
 
-from lib.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
+from dnd.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from library.config.abilities import ABILITY_CLASSES
 from library.models.library_entities.abstract import AbstractLibraryEntity
 from library.models.modifiers.modifiers import Modifier
@@ -10,7 +10,7 @@ class Ability(AbstractLibraryEntity):
     """
     Ability
     """
-    
+
     saving_throw = models.ForeignKey(SavingThrow, blank=True)
     type = models.ForeignKey("AbilityType", blank=False)
     ability_class = models.CharField(

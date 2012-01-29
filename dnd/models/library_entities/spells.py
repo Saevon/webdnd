@@ -1,6 +1,6 @@
 from django.db import models
 
-from lib.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
+from dnd.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from library.config.magic import SCHOOLS_OF_MAGIC
 from library.config.magic.spells import SPELL_RANGES
 from library.models.abstract import AbstractLibraryModel
@@ -17,7 +17,7 @@ class Spell(AbstractLibraryEntity):
     """
     Spell
     """
-    
+
     school = models.CharField(
         max_length=STND_ID_CHAR_LIMIT,
         choices=SCHOOLS_OF_MAGIC,
@@ -34,7 +34,7 @@ class Spell(AbstractLibraryEntity):
         Modifier,
         related_name="spells",
         blank=True)
-    # target? 
+    # target?
 # Duration?
     #range = models.CharField(blank=True, max_length=100)
     touch_attack = models.ForeignKey(
@@ -46,7 +46,7 @@ class Spell(AbstractLibraryEntity):
         related_name='spells',
         blank=True)
     # All Effects are in the description
-    
+
     # Components
     verbal_component = models.BooleanField(default=False)
     somatic_component = models.BooleanField(default=False)
@@ -60,7 +60,7 @@ class Spell(AbstractLibraryEntity):
     affects_objects = models.BooleanField(default=False)
     harmless = models.BooleanField(default=False)
     dismiss = models.BooleanField(default=False)
-    
+
     casting_time = models.ForeignKey("ActionTimeDuration", blank=False)
     resistable = models.BooleanField(default=True)
 
@@ -112,7 +112,7 @@ class CastingLevelClassPair(AbstractLibraryModel):
     """
     class Meta(AbstractLibraryModel.Meta):
         unique_together = (
-            ('dnd_class', 'spell'),   
+            ('dnd_class', 'spell'),
         )
 
     dnd_class = models.ForeignKey(

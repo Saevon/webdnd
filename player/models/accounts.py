@@ -2,8 +2,8 @@ import datetime
 
 from django.db import models
 
+from game.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from game.models.abstract import AbstractGameModel
-from lib.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 
 class Account(AbstractGameModel):
     """

@@ -1,6 +1,6 @@
 from django.db import models
 
-from lib.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
+from dnd.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from library.models.abstract import AbstractLibraryModel
 from library.models.library_entities.combat.damage import DamageType
 from library.models.library_entities.combat.proficiencies import ProficiencyGroup
