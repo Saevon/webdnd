@@ -1,10 +1,10 @@
 from django.db import models
 
-from game.models.accounts import Account
+from player.models.accounts import Account
 from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from dnd.models.abstract import AbstractLibraryModel
 from dnd.models.references import Reference
-from game.models.accounts import Account
+from player.models.accounts import Account
 
 class AbstractLibraryEntity(AbstractLibraryModel):
     """

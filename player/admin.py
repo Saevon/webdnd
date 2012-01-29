@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from game.models import *
+from player.models import *
 
 admin.site.register(Character)
 admin.site.register(CharacterSheet)

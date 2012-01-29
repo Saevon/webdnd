@@ -1,13 +1,13 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
 
-# from game.views import *
+# from player.views import *
 from dnd.views import *
 
 from django.contrib import admin
 from lib.admin import register_mapping
-#from game.admin.mapping import game_admin_mapping
-#from game.admin.site import GameAdminSite
+#from player.admin.mapping import game_admin_mapping
+#from player.admin.site import GameAdminSite
 from dnd.admin import library_admin_mapping
 from dnd.admin.site import LibraryAdminSite
 

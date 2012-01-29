@@ -1,7 +1,7 @@
 from django.db import models
 
 from dnd.models import *
-from game.constants import *
+from player.constants import *
 from lib.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 
 class Character(models.Model):
