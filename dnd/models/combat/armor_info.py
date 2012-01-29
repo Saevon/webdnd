@@ -1,10 +1,10 @@
 from django.db import models
 
 from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
-from dnd.models.abstract import AbstractLibraryModel
+from dnd.models.abstract import AbstractDnDModel
 from dnd.models.proficiencies import ProficiencyGroup
 
-class ArmorInfo(AbstractLibraryModel):
+class ArmorInfo(AbstractDnDModel):
     """
     Stats needed for generic armor
     """

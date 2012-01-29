@@ -4,19 +4,19 @@ from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from dnd.constants.classes import CLASS_CATEGORIES, CLASS_SKILL_TYPES
 from dnd.constants.magic import MAGIC_SOURCES
 from dnd.constants.creatures import ATTRIBUTES
-from dnd.models.abstract import AbstractLibraryModel
-from dnd.models.library_entities.abstract import AbstractLibraryEntity
+from dnd.models.abstract import AbstractDnDModel
+from dnd.models.library_entities.abstract import AbstractDnDEntity
 from dnd.models.library_entities.abilities import Ability
 from dnd.models.library_entities.combat.proficiencies import ProficiencyGroup
 from dnd.models.library_entities.items.abstract import AbstractItem
 from dnd.models.library_entities.skills import Skill
 
-class DnDClass(AbstractLibraryEntity):
+class DnDClass(AbstractDnDEntity):
     """
     A class in D&D.
     """
 
-    class Meta(AbstractLibraryEntity.Meta):
+    class Meta(AbstractDnDEntity.Meta):
         verbose_name_plural = "DnD Classes"
 
     class_abv = models.CharField(
@@ -59,7 +59,7 @@ class DnDClass(AbstractLibraryEntity):
     # Proficiencies
     # Requiremnent and Prohibitions
 
-class SaveProgression(AbstractLibraryEntity):
+class SaveProgression(AbstractDnDEntity):
     """
     The amount a Characters Base Save Increases per Level
     """
@@ -67,7 +67,7 @@ class SaveProgression(AbstractLibraryEntity):
     ref = models.DecimalField(max_digits=5, decimal_places=2)
     will = models.DecimalField(max_digits=5, decimal_places=2)
 
-class ClassAbility(AbstractLibraryModel):
+class ClassAbility(AbstractDnDModel):
     """
     The abilities a DnDClass gets at a specific level
     """
@@ -81,11 +81,11 @@ class ClassAbility(AbstractLibraryModel):
         blank=False)
     level = models.IntegerField(blank=False, null=False)
 
-class ClassSkill(AbstractLibraryModel):
+class ClassSkill(AbstractDnDModel):
     """
     Class Specific Abilities
     """
-    class Meta(AbstractLibraryModel.Meta):
+    class Meta(AbstractDnDModel.Meta):
         unique_together = (
             ('dnd_class', 'skill'),
         )
@@ -103,11 +103,11 @@ class ClassSkill(AbstractLibraryModel):
         default='class',
         blank=False)
 
-class ClassSpellLevel(AbstractLibraryModel):
+class ClassSpellLevel(AbstractDnDModel):
     """
     Class Spells of a certain type at a certain level
     """
-    class Meta(AbstractLibraryModel.Meta):
+    class Meta(AbstractDnDModel.Meta):
         unique_together = (
             ('dnd_class','spell_level', 'type', 'level'),
         )
@@ -130,7 +130,7 @@ class ClassSpellLevel(AbstractLibraryModel):
         blank=False)
     level = models.PositiveIntegerField(blank=False, null=False)
 
-class ClassSpellType(AbstractLibraryEntity):
+class ClassSpellType(AbstractDnDEntity):
     """
     A type of spell,
       e.g. spell/day, known spell

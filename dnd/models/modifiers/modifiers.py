@@ -2,13 +2,13 @@ from django.db import models
 
 from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from dnd.constants.modifiers import MODIFIER_TARGETS, STAT_UPDATE_TYPES
-from dnd.models.abstract import AbstractLibraryModel
+from dnd.models.abstract import AbstractDnDModel
 from dnd.models.modifiers.bonuses import Bonus
 from dnd.models.modifiers.die_roll import DieRoll
 from dnd.models.modifiers.values import Value
 
 
-class Modifier(AbstractLibraryModel):
+class Modifier(AbstractDnDModel):
     """
     """
     target = models.CharField(

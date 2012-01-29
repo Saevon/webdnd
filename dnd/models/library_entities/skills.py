@@ -2,10 +2,10 @@ from django.db import models
 
 from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from dnd.constants.skills import SKILL_SAMPLE_TYPES
-from dnd.models.abstract import AbstractLibraryModel
-from dnd.models.library_entities.abstract import AbstractLibraryEntity
+from dnd.models.abstract import AbstractDnDModel
+from dnd.models.library_entities.abstract import AbstractDnDEntity
 
-class Skill(AbstractLibraryEntity):
+class Skill(AbstractDnDEntity):
     """
     A skill.
     """
@@ -13,13 +13,13 @@ class Skill(AbstractLibraryEntity):
     short_description = models.TextField(blank=False)
     has_subtypes = models.BooleanField(blank=False)
 
-class SkillSubType(AbstractLibraryEntity):
+class SkillSubType(AbstractDnDEntity):
     """
     a subtype for a skill
         e.g. Nature for the Knowledge skill
     """
 
-    class Meta(AbstractLibraryEntity.Meta):
+    class Meta(AbstractDnDEntity.Meta):
         unique_together = (
             ('title','skill'),
         )
@@ -32,7 +32,7 @@ class SkillSubType(AbstractLibraryEntity):
     # (if True) always put this in the skill tree
     main = models.BooleanField(blank=False)
 
-class SkillSample(AbstractLibraryModel):
+class SkillSample(AbstractDnDModel):
     """
     A sample skill DC or modifier that shows DC
     """
@@ -50,7 +50,7 @@ class SkillSample(AbstractLibraryModel):
         default='dc',
         blank=True)
 
-class Language(AbstractLibraryEntity):
+class Language(AbstractDnDEntity):
      """docstring for Language"""
 
      alphabet = models.CharField(

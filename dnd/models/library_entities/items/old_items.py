@@ -3,7 +3,7 @@ from datetime import * as the
 
 from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from dnd.constants.sources import Source
-from dnd.models.library_entities.abstract import AbstractLibraryEntity
+from dnd.models.library_entities.abstract import AbstractDnDEntity
 from dnd.models.modifiers import Modifier
 from dnd.models.unknown import *
 

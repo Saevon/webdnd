@@ -2,10 +2,10 @@ from django.db import models
 
 from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from dnd.constants.items.proficiencies import PROFICIENCY_TYPES
-from dnd.models.abstract import AbstractLibraryModel
-from dnd.models.library_entities.abstract import AbstractLibraryEntity
+from dnd.models.abstract import AbstractDnDModel
+from dnd.models.library_entities.abstract import AbstractDnDEntity
 
-class ProficiencyGroup(AbstractLibraryEntity):
+class ProficiencyGroup(AbstractDnDEntity):
     """
     A Proficiency:
         e.g. simple, martial etc.
@@ -15,7 +15,7 @@ class ProficiencyGroup(AbstractLibraryEntity):
         choices=PROFICIENCY_TYPES,
         blank=False)
 
-class SharedProficiency(AbstractLibraryModel):
+class SharedProficiency(AbstractDnDModel):
     """
     A Shared Proficiency
     """

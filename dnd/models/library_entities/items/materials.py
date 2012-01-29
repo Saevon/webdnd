@@ -1,9 +1,9 @@
 from django.db import models
 
 from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT, STND_DECIMAL_PLACES
-from dnd.models.library_entities.abstract import AbstractLibraryEntity
+from dnd.models.library_entities.abstract import AbstractDnDEntity
 
-class Material(AbstractLibraryEntity):
+class Material(AbstractDnDEntity):
     price = models.PositiveIntegerField(blank=False, null=False)
     hardness = models.PositiveIntegerField(
         default=10,

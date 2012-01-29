@@ -1,10 +1,10 @@
 from django.db import models
 
 from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
-from dnd.models.library_entities.abstract import AbstractLibraryEntity
+from dnd.models.library_entities.abstract import AbstractDnDEntity
 from dnd.models.modifiers.modifiers import Modifier
 
-class Condition(AbstractLibraryEntity):
+class Condition(AbstractDnDEntity):
     """
     A condition in which something can be.
     """

@@ -1,10 +1,10 @@
 from django.db import models
 
-from dnd.models.abstract import AbstractLibraryModel
+from dnd.models.abstract import AbstractDnDModel
 from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from dnd.constants.saving_throws import SAVE_AFFECTS, SAVE_STATS
 
-class SavingThrow(AbstractLibraryModel):
+class SavingThrow(AbstractDnDModel):
     """
     A saving throw.
     """

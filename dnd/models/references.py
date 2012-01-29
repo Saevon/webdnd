@@ -3,9 +3,9 @@ from django.db import models
 from player.models.account import Account
 from dnd.constants.database import ADMIN_CHAR_CUTOFF, STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from dnd.constants.references import SOURCE_DOC_PATH
-from dnd.models.abstract import AbstractLibraryModel
+from dnd.models.abstract import AbstractDnDModel
 
-class Reference(AbstractLibraryModel):
+class Reference(AbstractDnDModel):
     """
     A D&D reference.
     """
@@ -31,7 +31,7 @@ class Reference(AbstractLibraryModel):
             'pages': self.pages[:ADMIN_CHAR_CUTOFF]
         }
 
-class Source(AbstractLibraryModel):
+class Source(AbstractDnDModel):
     """
     A D&D Source such as a book, or homebrew text
     """

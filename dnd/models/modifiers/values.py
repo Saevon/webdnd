@@ -1,11 +1,11 @@
 from django.db import models
 
 from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
-from dnd.models.abstract import AbstractLibraryModel
+from dnd.models.abstract import AbstractDnDModel
 from dnd.models.modifiers.die_roll import DieRoll
 
 #TODO add math between these types
-class Value(AbstractLibraryModel):
+class Value(AbstractDnDModel):
     """
     A Value including Decimals and Die Rolls
     """
@@ -16,7 +16,7 @@ class Value(AbstractLibraryModel):
     )
     modifier = models.IntegerField(blank=False, null=False)
 
-class Multiplier(AbstractLibraryModel):
+class Multiplier(AbstractDnDModel):
     """
     A DnD Multiplier
     """

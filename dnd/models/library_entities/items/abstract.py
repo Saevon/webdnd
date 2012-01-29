@@ -5,14 +5,14 @@ from dnd.constants.items.weapons import WEAPON_CLASSES
 from dnd.constants.creatures import SIZES
 from dnd.models.combat.weapon_info import MeleeWeaponInfo, RangedWeaponInfo, ThrownWeaponInfo
 from dnd.models.library_entities.items.item_groups import ItemCategory
-from dnd.models.library_entities.abstract import AbstractLibraryEntity
+from dnd.models.library_entities.abstract import AbstractDnDEntity
 from dnd.models.library_entities.items.materials import Material
 
-class AbstractItem(AbstractLibraryEntity):
+class AbstractItem(AbstractDnDEntity):
     """
     A generic item
     """
-    class Meta(AbstractLibraryEntity.Meta):
+    class Meta(AbstractDnDEntity.Meta):
         abstract = True
 
     # Info needed to Buy the Item

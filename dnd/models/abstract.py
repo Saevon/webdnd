@@ -1,10 +1,10 @@
 from django.db import models
 
-class AbstractLibraryModel(models.Model):
+class AbstractDnDModel(models.Model):
     """
-    A model within the Library App
+    A model for the Dnd tables
     """
 
     class Meta:
         abstract = True
-        app_label = 'library'
+        app_label = 'webdnd'

@@ -1,10 +1,10 @@
 from django.db import models
 
 from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
-from dnd.models.abstract import AbstractLibraryModel
-from dnd.models.library_entities.abstract import AbstractLibraryEntity
+from dnd.models.abstract import AbstractDnDModel
+from dnd.models.library_entities.abstract import AbstractDnDEntity
 
-class Rule(AbstractLibraryEntity):
+class Rule(AbstractDnDEntity):
     """
     A rule.
 
@@ -18,7 +18,7 @@ class Rule(AbstractLibraryEntity):
         blank=True)
     body = models.TextField(blank=False)
 
-class Term(AbstractLibraryEntity):
+class Term(AbstractDnDEntity):
     """
     A glossary term. Usually spawned from a Rule
     """
@@ -41,7 +41,7 @@ class Term(AbstractLibraryEntity):
         """
         return [alias.name for alias in self.aliases]
 
-class Alias(AbstractLibraryModel):
+class Alias(AbstractDnDModel):
     """
     An alias for a Term.
     """
@@ -55,7 +55,7 @@ class Alias(AbstractLibraryModel):
         related_name="aliases",
         blank=False)
 
-class Article(AbstractLibraryEntity):
+class Article(AbstractDnDEntity):
     """
     An article about various D&D stuff, NOT a Rule.
     """
@@ -65,7 +65,7 @@ class Article(AbstractLibraryEntity):
         related_name="articles",
         blank=True)
 
-class Example(AbstractLibraryEntity):
+class Example(AbstractDnDEntity):
     """
     An example of a rule.
     """

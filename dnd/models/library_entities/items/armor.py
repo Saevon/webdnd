@@ -4,7 +4,7 @@ from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from dnd.constants.items.armor import SHIELD_SIZES
 from dnd.models.combat.armor_info import ArmorInfo
 from dnd.models.items.abstract import AbstractItem
-from dnd.models.library_entities.abstract import AbstractLibraryEntity
+from dnd.models.library_entities.abstract import AbstractDnDEntity
 
 class AbstractArmor(AbstractItem):
     """

@@ -1,10 +1,10 @@
 from django.db import models
 
-class AbstractGameModel(models.Model):
+class AbstractPlayerModel(models.Model):
     """
-    A model within the Game App
+    A model for the Player tables
     """
 
     class Meta:
         abstract = True
-        app_label = 'game'
+        app_label = 'webdnd'

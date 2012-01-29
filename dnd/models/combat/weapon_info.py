@@ -1,15 +1,15 @@
 from django.db import models
 
 from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
-from dnd.models.abstract import AbstractLibraryModel
+from dnd.models.abstract import AbstractDnDModel
 from dnd.models.library_entities.combat.damage import DamageType
 from dnd.models.library_entities.combat.proficiencies import ProficiencyGroup
 
-class AbstractWeaponInfo(AbstractLibraryModel):
+class AbstractWeaponInfo(AbstractDnDModel):
     """
     The main Combat Stats needed for a weapon
     """
-    class Meta(AbstractLibraryModel.Meta):
+    class Meta(AbstractDnDModel.Meta):
         abstract = True
 
     proficiency_group = models.ForeignKey(

@@ -3,9 +3,9 @@ from django.db import models
 from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from dnd.constants.magic import SCHOOLS_OF_MAGIC
 from dnd.constants.magic.spells import SPELL_RANGES
-from dnd.models.abstract import AbstractLibraryModel
+from dnd.models.abstract import AbstractDnDModel
 from dnd.models.combat.spell_info import TouchAttackInfo
-from dnd.models.library_entities.abstract import AbstractLibraryEntity
+from dnd.models.library_entities.abstract import AbstractDnDEntity
 from dnd.models.library_entities.abilities import Ability
 from dnd.models.library_entities.classes import DnDClass
 from dnd.models.library_entities.conditions import Condition
@@ -13,7 +13,7 @@ from dnd.models.modifiers.modifiers import Modifier
 from dnd.models.modifiers.saving_throws import SavingThrow
 from dnd.models.units import ActionTimeDuration
 
-class Spell(AbstractLibraryEntity):
+class Spell(AbstractDnDEntity):
     """
     Spell
     """
@@ -73,7 +73,7 @@ class Spell(AbstractLibraryEntity):
         blank=True)
     #upgraded spells? cure moderate -> serious -> critical
 
-class Domain(AbstractLibraryEntity):
+class Domain(AbstractDnDEntity):
     """
     A Domain
     """
@@ -82,11 +82,11 @@ class Domain(AbstractLibraryEntity):
         related_name='domains',
         blank=False)
 
-class DomainSpellLevel(AbstractLibraryModel):
+class DomainSpellLevel(AbstractDnDModel):
     """
     A domain Spell level
     """
-    class Meta(AbstractLibraryModel.Meta):
+    class Meta(AbstractDnDModel.Meta):
         unique_together = (
             ('domain','level'),
         )
@@ -101,16 +101,16 @@ class DomainSpellLevel(AbstractLibraryModel):
         related_name='domain_spells',
         blank=False)
 
-class SpellDescriptor(AbstractLibraryEntity):
+class SpellDescriptor(AbstractDnDEntity):
     """
     A spell descriptor.
     """
 
-class CastingLevelClassPair(AbstractLibraryModel):
+class CastingLevelClassPair(AbstractDnDModel):
     """
     A pair of a class and a casting level.
     """
-    class Meta(AbstractLibraryModel.Meta):
+    class Meta(AbstractDnDModel.Meta):
         unique_together = (
             ('dnd_class', 'spell'),
         )

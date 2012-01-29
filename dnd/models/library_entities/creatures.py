@@ -2,11 +2,11 @@ from django.db import models
 
 from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 from dnd.constants.creatures import SIZES
-from dnd.models.library_entities.abstract import AbstractLibraryEntity
+from dnd.models.library_entities.abstract import AbstractDnDEntity
 from dnd.models.library_entities.abilities import Ability
 from dnd.models.library_entities.classes import SaveProgression
 
-class Creature(AbstractLibraryEntity):
+class Creature(AbstractDnDEntity):
     """
     A base Creature
     """
@@ -35,7 +35,7 @@ class Creature(AbstractLibraryEntity):
         blank=True,
         null=True)
 
-class Race(AbstractLibraryEntity):
+class Race(AbstractDnDEntity):
     """
     A Race one can Play
     """
@@ -79,7 +79,7 @@ class Race(AbstractLibraryEntity):
         blank=True,
         null=True)
 
-class CreatureType(AbstractLibraryEntity):
+class CreatureType(AbstractDnDEntity):
     """
     A Monster Type.
     """
@@ -107,7 +107,7 @@ class CreatureType(AbstractLibraryEntity):
         blank=True,
         null=True)
 
-class CreatureSubType(AbstractLibraryEntity):
+class CreatureSubType(AbstractDnDEntity):
     """
     A Creature's Subtype
     """
