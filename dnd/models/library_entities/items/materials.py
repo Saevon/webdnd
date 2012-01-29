@@ -1,6 +1,6 @@
 from django.db import models
 
-from dnd.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT, STND_DECIMAL_PLACES
+from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT, STND_DECIMAL_PLACES
 from library.models.library_entities.abstract import AbstractLibraryEntity
 
 class Material(AbstractLibraryEntity):

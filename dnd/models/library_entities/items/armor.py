@@ -1,7 +1,7 @@
 from django.db import models
 
-from dnd.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
-from library.config.items.armor import SHIELD_SIZES
+from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
+from library.constants.items.armor import SHIELD_SIZES
 from library.models.combat.armor_info import ArmorInfo
 from library.models.items.abstract import AbstractItem
 from library.models.library_entities.abstract import AbstractLibraryEntity

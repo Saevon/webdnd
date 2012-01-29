@@ -1,7 +1,7 @@
 from django.db import models
 
-from dnd.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
-from library.config.modifiers import MODIFIER_TARGETS, STAT_UPDATE_TYPES
+from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
+from library.constants.modifiers import MODIFIER_TARGETS, STAT_UPDATE_TYPES
 from library.models.abstract import AbstractLibraryModel
 from library.models.modifiers.bonuses import Bonus
 from library.models.modifiers.die_roll import DieRoll

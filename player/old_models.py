@@ -2,35 +2,35 @@ from django.db import models
 
 from library.models import *
 from game.constants import *
-from lib.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
+from lib.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
 
 class Character(models.Model):
     name = models.CharField(max_length=STND_CHAR_LIMIT)
     # account
     # groups
-    
+
     def __unicode__(self):
         return self.name
 
 class CharacterSheet(models.Model):
     owner_character = models.ForeignKey('Character')
-    
+
     def __unicode__(self):
         return "%s's character sheet." %(self.owner_character)
-    
+
 class Item(models.Model):
     """
-    an item    
+    an item
     """
-    
+
     class Meta:
         abstract = True
-    
+
     character_sheet = models.ForeignKey('CharacterSheet')
-    
+
     def full_name(self):
         raise NotImplemented
-    
+
     def __unicode__(self):
         return "%s belonging to %s" %(self.full_name(), self.character_sheet)
 
@@ -39,7 +39,7 @@ class WeaponItem(Item):
     material = models.ForeignKey('library.Material', null=True, blank=True)
     physical_enhancements = models.ManyToManyField('library.PhysicalEnhancement', null=True, blank=True)
     magical_enhancements = models.ManyToManyField('library.MagicEnhancement', null=True, blank=True)
-    
+
     magical_bonus = models.CharField(max_length=1, choices=WEAPON_PLUSES, default='0')
 
     def print_material(self):
@@ -56,7 +56,7 @@ class WeaponItem(Item):
             return_string += " with "
             for enhancement in self.physical_enhancements.all():
                 return_string += str(enhancement) + ", "
-            
+
             return return_string[:-2]
 
     def list_magical_enhancements(self):
@@ -66,14 +66,14 @@ class WeaponItem(Item):
         else:
             for enhancement in self.magical_enhancements.all():
                 return_string += str(enhancement) + ", "
-            
+
             return return_string[:-2] + " "
-    
+
     def print_magical_bonus(self):
         if self.magical_bonus == '0':
             return ''
         else:
             return '+%s' % (self.magical_bonus) + " "
-    
+
     def full_name(self):
         return "%s%s%s%s%s" %(self.print_magical_bonus(), self.list_magical_enhancements(), self.print_material(), self.default_object, self.list_physical_enhancements())

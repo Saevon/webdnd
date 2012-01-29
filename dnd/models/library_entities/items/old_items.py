@@ -1,8 +1,8 @@
 from django.db import models
 from datetime import * as the
 
-from dnd.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
-from library.config.sources import 
+from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
+from library.constants.sources import 
 from library.models.library_entities.abstract import AbstractLibraryEntity
 from library.models.modifiers import Modifier
 from library.models.unknown import *

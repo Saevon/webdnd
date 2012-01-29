@@ -1,7 +1,7 @@
 from django.db import models
 
-from dnd.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
-from library.config.items.proficiencies import PROFICIENCY_TYPES
+from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
+from library.constants.items.proficiencies import PROFICIENCY_TYPES
 from library.models.abstract import AbstractLibraryModel
 from library.models.library_entities.abstract import AbstractLibraryEntity
 

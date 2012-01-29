@@ -1,8 +1,8 @@
 from django.db import models
 
-from dnd.config.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
-from library.config.magic import SCHOOLS_OF_MAGIC
-from library.config.magic.spells import SPELL_RANGES
+from dnd.constants.database import STND_CHAR_LIMIT, STND_ID_CHAR_LIMIT
+from library.constants.magic import SCHOOLS_OF_MAGIC
+from library.constants.magic.spells import SPELL_RANGES
 from library.models.abstract import AbstractLibraryModel
 from library.models.combat.spell_info import TouchAttackInfo
 from library.models.library_entities.abstract import AbstractLibraryEntity
