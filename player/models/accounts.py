@@ -1,4 +1,5 @@
 import datetime
+import hashlib
 
 from django.db import models
 
@@ -17,8 +18,13 @@ class Account(AbstractGameModel):
     name = models.CharField(
         max_length=STND_CHAR_LIMIT,
         blank=False)
-    password = models.CharField(
+    password_hash = models.CharField(
         max_length=STND_CHAR_LIMIT,
+        blank=False)
+    password_salt = models.CharField(
+        max_length=16,
+        default=_create_salt,
+        editable=False
         blank=False)
     email = models.CharField(
         max_length=STND_CHAR_LIMIT,
@@ -32,20 +38,27 @@ class Account(AbstractGameModel):
     def __unicode__(self):
         return u"%s" %(self.name)
 
+    def _create_salt(self):
+        """
+        Creates a 16-byte password salt
+        """
+        return os.urandom(16)
+
     def auth_password(self, password):
         """
         Returns the success of this password
         """
-        if self._encode_password(password) == self.password:
+        if self._hash_password(password, password_salt) == self.password_hash:
             self.session.new_session()
             return True
         return False
 
-    def _encode_password(self, password):
+    def _hash_password(self, password, salt):
         """
-        Encodes a password
+        Hashes a password with salting
+        Uses the SHA512 hash algorithm
         """
-        return password
+        return hashlib.sha512(password + salt).digest()
 
     def is_logged_in(self):
         """
