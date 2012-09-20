@@ -8,3 +8,7 @@ def homepage(request):
 
 def display_sheet(request, character_name):
     return render_to_response('character_sheet.html', {'character_name': character_name}, context_instance=RequestContext(request))
+
+def login(request):
+    return render_to_response('account/login.html', {}, context_instance=RequestContext(request))
+

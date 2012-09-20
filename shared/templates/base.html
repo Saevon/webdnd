@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+  <head>
+    {% load compress %}
+    {% load staticfiles %}
+
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="shortcut icon" href="{% static '/ico/favicon.ico' %}">
+
+    <title>{% block title %}Webdnd{% endblock title %}</title>
+    <!-- <link rel="icon" type="image/ico" href="/static/images/favicon.ico"> -->
+
+    <link rel="stylesheet" href="{% static 'shared/css/bootstrap.css' %}" type="text/css" />
+    {% compress css %}
+      <link rel="stylesheet" href="{% static 'shared/css/base.css' %}" type="text/css" />
+    {% endcompress %}
+    {% compress css %}
+      {% block extra_css %}{% endblock %}
+    {% endcompress %}
+    <style>
+      {% block css %}{% endblock css %}
+    </style>
+
+
+  </head>
+  <body>
+    <!-- HEADER Nav-Bar -->
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/account">Web D&amp;D</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li id="nav_home"><a href="/account">Home</a></li>
+              {% if logged_in %}
+                <li id="nav_settings"><a href="/account/settings">Settings</a></li>
+              {% endif %}
+            </ul>
+            <ul class="nav pull-right">
+              {% if logged_in %}
+                <li id="nav_logout" class="pull-right"><a href="/account/logout">Logout</a></li>
+              {% else %}
+                <li id="nav_login" class="pull-right"><a href="/account/login">Login</a></li>
+              {% endif %}
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Main Body -->
+    <div class="container centered">
+        {% block content %}
+        {% endblock content %}
+    </div>
+
+
+    <!-- Footer -->
+
+
+    <!-- Javascript at the bottom for faster page loading -->
+    {% compress js %}
+      <script type="text/javascript" src="{% static 'shared/js/jquery.js' %}"></script>
+      <script type="text/javascript" src="{% static 'shared/js/bootstrap.js' %}"></script>
+    {% endcompress %}
+    {% compress js %}
+      {% block extra_js %}{% endblock %}
+    {% endcompress %}
+    <script type="text/javascript">
+        $(function() {
+            $('#nav_{% block tab_name %}{% endblock %}').addClass('active');
+        });
+        {% block js %}{% endblock js %}
+    </script>
+
+  </body>
+</html>
+
+
+
+
