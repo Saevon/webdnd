@@ -1,10 +1,9 @@
-from django.contrib.auth import authenticate, login
-from django.http import HttpResponse, HttpResponseRedirect
-from django.template.loader import get_template
-from django.template import RequestContext
-from django.shortcuts import render_to_response
-from django.core.urlresolvers import reverse
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 
@@ -20,9 +19,9 @@ def display_sheet(request, character_name):
 def settings(request):
     pass
 
-def logout(request):
-    pass
-
+def account_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('account_login') + '?logout=1')
 
 class AccountHomeView(View, LoginRequiredMixin):
 
@@ -42,6 +41,7 @@ class LoginView(View):
             # TODO: this does nothing right now, and isnt saved
             'remember': request.GET.get('remember', ''),
             'error': request.GET.get('error', False),
+            'logout': request.GET.get('logout', False),
         }
 
         return render_to_response(
