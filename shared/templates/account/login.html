@@ -1,34 +1,42 @@
 {% extends "account/base.html" %}
 
-{% block title %}Webdnd ~ Login{% endblock %}
 
+{% block title %}Webdnd ~ Login{% endblock %}
 {% block tab_name %}login{% endblock %}
 
-{% block content %}
-<form class="form-horizontal" id="login">
 
-        
-        <legend>
-Login
-</legend>
-<div class="control-group">
-    <label class="control-label" for="inputEmail">Email</label>
-    <div class="controls">
-      <input type="text" id="inputEmail" placeholder="Email">
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="inputPassword">Password</label>
-    <div class="controls">
-      <input type="password" id="inputPassword" placeholder="Password">
-    </div>
-  </div>
-  <div class="control-group">
-    <div class="controls">
-      <label class="checkbox">
-        <input type="checkbox"> Remember me
-      </label>
-      <button type="submit" class="btn btn-info">Sign in</button>
-    </div>
-  </div>
-    </form>{% endblock %}
+{% block content %}
+<form class="form-horizontal" id="login" method="POST">
+    {% if error %}
+        <div class="alert alert-error fade in">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Error!</strong> There was a problem logging you in. Check your credentials and try again.
+        </div>
+    {% endif %}
+
+    <legend> Login </legend>
+    {{ request.error }}
+        {% csrf_token %}
+        <div class="control-group">
+            <label class="control-label" for="inputEmail">Email</label>
+            <div class="controls">
+                <input type="text" name="username" placeholder="Username"
+                        value="{{ username }}">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputPassword">Password</label>
+            <div class="controls">
+                <input type="password" name="password" placeholder="Password">
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <label class="checkbox">
+                    <input disabled class="disabled" type="checkbox" name="remember" {{ remember }}> <span class="muted">Remember me</span>
+                </label>
+                <button type="submit" class="btn btn-info">Sign in</button>
+            </div>
+        </div>
+</form>
+{% endblock %}

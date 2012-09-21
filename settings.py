@@ -127,10 +127,8 @@ TEMPLATE_LOADERS = (
 
 # How long cookies will last
 SESSION_COOKIE_AGE = 60 * 60 * 24
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 SESSION_COOKIE_NAME = 'webdndID'
-SESSION_COOKIE_SECURE = True
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 # Default url to redirect to for login
 LOGIN_URL = '/account/login'

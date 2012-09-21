@@ -44,7 +44,6 @@ urlpatterns = patterns('',
     # (r'^game-admin/', include(game_admin_site.urls)),
     # (r'^library-admin/', include(library_admin_site.urls)),
 ) + staticfiles_urlpatterns()
-print staticfiles_urlpatterns()
 
 # Page to serve in case one of these errors occurs
 # handler404 = '.views.error_404'
