@@ -1,0 +1,34 @@
+{% extends "account/base.html" %}
+
+
+{% block page_title %}Webdnd ~ Login{% endblock %}
+{% block tab_name %}login{% endblock %}
+
+
+{% block content %}
+<form class="form-horizontal" id="login" method="POST">
+    <legend> Login </legend>
+    {% csrf_token %}
+    <div class="control-group">
+        <label class="control-label" for="input-username">Username</label>
+        <div class="controls">
+            <input type="text" name="username" placeholder="Username"
+                    value="{{ username }}" id="input-username">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="input-password">Password</label>
+        <div class="controls">
+            <input type="password" name="password" placeholder="Password" id="input-password">
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <label class="checkbox">
+                <input disabled class="disabled" type="checkbox" name="remember" {{ remember }} id="input-remember"> <span class="muted">Remember me</span>
+            </label>
+            <button type="submit" class="btn btn-info">Sign in</button>
+        </div>
+    </div>
+</form>
+{% endblock content %}

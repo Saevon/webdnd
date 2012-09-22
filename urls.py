@@ -26,8 +26,7 @@ admin.autodiscover()
 # register_mapping(game_admin_site.register, game_admin_mapping)
 
 urlpatterns = patterns('',
-    url(r'^$', 'player.views.login'),
-    url(r'^account/', include('webdnd.player.urls')),
+    url(r'^account/', include('webdnd.player.urls.account')),
 
     # Example:[A-Za-z]
     # (r'^webdnd/', include('web_dnd.foo.urls')),
@@ -43,6 +42,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     # (r'^game-admin/', include(game_admin_site.urls)),
     # (r'^library-admin/', include(library_admin_site.urls)),
+    url(r'', include('webdnd.player.urls.main')),
 ) + staticfiles_urlpatterns()
 
 # Page to serve in case one of these errors occurs

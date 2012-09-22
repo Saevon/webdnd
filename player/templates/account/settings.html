@@ -1,0 +1,43 @@
+{% extends "account/base.html" %}
+
+
+{% block page_title %}Webdnd ~ Login{% endblock %}
+{% block tab_name %}settings{% endblock %}
+
+
+{% block content %}
+<form class="form-horizontal" id="settings" method="POST">
+    {% csrf_token %}
+    <legend> Settings </legend>
+
+
+
+
+    <legend> Change Password </legend>
+
+    <div class="control-group" id="group-old-pass">
+        <label class="control-label" for="input-password">Old Password</label>
+        <div class="controls">
+            <input type="password" name="password" placeholder="Password" id="input-password">
+        </div>
+
+    </div>
+
+    <div class="control-group" id="group-new-pass">
+        <label class="control-label" for="input-new-password">New Password</label>
+        <div class="controls">
+            <input type="password" name="new-password" placeholder="New Password" id="input-new-password">
+            <input type="password" name="new-password-2" placeholder="Repeat Password" id="input-repeat-new-password">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <div class='controls'>
+            <button type="submit" class="btn btn-info" name="update-password">
+                Update Password
+            </button>
+        </div>
+
+    </div>
+</form>
+{% endblock content %}
