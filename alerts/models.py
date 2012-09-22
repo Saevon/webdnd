@@ -1,10 +1,14 @@
 from django.conf import settings
-from django.db import models
 from django.contrib.auth.models import User, AnonymousUser
+from django.db import models
 
 import datetime
 
+
 class Alert(models.Model):
+    """
+    A session based alert, this follows any logged in or logged out user
+    """
 
     class Meta:
         app_label = 'alerts'
@@ -42,21 +46,40 @@ class Alert(models.Model):
 
     @staticmethod
     def clear(owner):
+        """
+        Removes all the alerts for the given owner
+        """
         Alert.objects.filter(owner=owner).delete()
 
     @staticmethod
-    def show_all(owner):
-        alerts = Alert.objects.filter(owner=owner)
-
-    @staticmethod
     def get_alerts(owner):
+        """
+        Deletes all the alerts for the owner, returning them
+          If you only wish to see a list of the alerts the owner has
+          do NOT use this function. Only use this if you are consuming
+          the alerts.
+        """
         alerts = Alert.objects.filter(owner=owner)
         showing = [alert.copy() for alert in alerts]
         alerts.delete()
 
         return showing
 
+    def __unicode__(self):
+        """
+        Returns a string representation of the alert
+        """
+        return '%s %s%s' % (
+            self.title or self.prefix,
+            '~ ' if self.text else '',
+            self.text
+        )
+
     def save(self, *args, **kwargs):
+        """
+        Saves the current model, expiry is automatically passed in as *now*
+        you cannot pass it in yourself.
+        """
         self.expiry = datetime.datetime.now() + datetime.timedelta(
             # Days then seconds
             0, settings.SESSION_COOKIE_AGE
@@ -64,6 +87,9 @@ class Alert(models.Model):
         return super(Alert, self).save(*args, **kwargs)
 
     def copy(self):
+        """
+        Returns a new Alert that is a copy of self
+        """
         return Alert(
             owner=self.owner,
             title=self.title,
@@ -72,14 +98,10 @@ class Alert(models.Model):
             level=self.level
         )
 
-    def __unicode__(self):
-        return '%s %s%s' % (
-            self.title or self.prefix,
-            '~ ' if self.text else '',
-            self.text
-        )
-
     def details(self):
+        """
+        Returns the details needed to show this alert
+        """
         return {
             'title': self.title,
             'prefix': self.prefix,

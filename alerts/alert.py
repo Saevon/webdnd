@@ -2,6 +2,7 @@ from django.conf import settings
 
 from alerts.models import Alert
 
+
 class Alerts(list):
 
     def __init__(self, session, owner):
