@@ -43,8 +43,6 @@ class LoginView(View):
             'remember': request.GET.get('remember', ''),
         }
 
-        request.alert(title='Banned Account', prefix='Sorry,', text='This account appears to be banned', level='error')
-
         return render_to_response(
             'account/login.html',
             out,

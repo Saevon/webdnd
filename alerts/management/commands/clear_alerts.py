@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 
 from optparse import make_option
-from webdnd.alerts.models import Alert
+from alerts.models import Alert
 import datetime
 
 class Command(BaseCommand):

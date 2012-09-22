@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from webdnd.alerts.models import Alert
+from alerts.models import Alert
 
 class Alerts(list):
 

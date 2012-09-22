@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from webdnd.alerts.models import Alert
+from alerts.models import Alert
 
 
 class AlertAdmin(admin.ModelAdmin):
