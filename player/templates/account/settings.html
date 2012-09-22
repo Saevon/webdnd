@@ -8,8 +8,54 @@
 {% block content %}
 <form class="form-horizontal" id="settings" method="POST">
     {% csrf_token %}
-    <legend> Settings </legend>
+    <h2> Settings </h2>
 
+
+
+    <legend> Personal Details </legend>
+
+    <div class="control-group" id="group-name">
+        <label class="control-label" for="input-name">Name</label>
+        <div class="controls" id="input-name">
+            <input type="text" name="first_name" placeholder="Given Name" id="input-first-name" value="{{ user.first_name }}">
+            <input type="text" name="last_name" placeholder="Family Name" id="input-last-name" value="{{ user.last_name }}">
+            <span class="help-inline text-info">
+                <span class="name-format" id="format-eastern" style="display: none;">
+                    Family-name Given-name
+                </span>
+                <span class="name-format" id="format-western" style="display: none;">
+                    Given-name Family-name
+                </span>
+            </span>
+        </div>
+    </div>
+
+    <div class="control-group" id="group-name-order">
+        <label class="control-label">Name Format</label>
+        <div class="controls">
+            <label class="radio">
+                <input type="radio" name="name_order" value="Eastern">Eastern:
+                <span class="help-inline text-info">
+                    Family-name Given-name
+                </span>
+            </label>
+            <label class="radio">
+                <input type="radio" name="name_order" value="Western">Western:
+                <span class="help-inline text-info">
+                    Given-name Family-name
+                </span>
+
+            </label>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <div class='controls'>
+            <button disabled type="submit" class="disabled btn btn-info" name="update-password">
+                Save Details
+            </button>
+        </div>
+    </div>
 
 
 
@@ -37,7 +83,32 @@
                 Update Password
             </button>
         </div>
-
     </div>
 </form>
 {% endblock content %}
+
+
+{% block compress_js %}
+<script type="text/javascript">
+$(function() {
+    $('#group-name-order input').on('change', function() {
+        var format = $('.name-format');
+        format.hide()
+
+        if ($(this).val() == 'Eastern') {
+            format.filter('#format-eastern').show()
+            $('#input-first-name').attr('placeholder', 'Family Name');
+            $('#input-last-name').attr('placeholder', 'Given Name');
+        } else {
+            format.filter('#format-western').show()
+            $('#input-first-name').attr('placeholder', 'Given Name')
+            $('#input-last-name').attr('placeholder', 'Family Name')
+        }
+    });
+
+});
+</script>
+{% endblock compress_js %}
+
+
+

@@ -10,11 +10,16 @@ from django.views.generic import View
 from webdnd.shared.views import LoginRequiredMixin
 from webdnd.shared.utils.quotes import blurb
 
-def homepage(request):
-    return render_to_response('game_main.html', {}, context_instance=RequestContext(request))
 
-def display_sheet(request, character_name):
-    return render_to_response('character_sheet.html', {'character_name': character_name}, context_instance=RequestContext(request))
+class AccountHomeView(View, LoginRequiredMixin):
+
+    def get(self, request):
+        return render_to_response(
+            'account/home.html',
+            {},
+            context_instance=RequestContext(request)
+        )
+
 
 class SettingsView(View, LoginRequiredMixin):
     def get(self, request):
@@ -73,15 +78,6 @@ class LogoutView(View, LoginRequiredMixin):
         request.alert('You have successfully logged out', prefix='Yay!', level='success')
 
         return HttpResponseRedirect(reverse('account_login'))
-
-class AccountHomeView(View, LoginRequiredMixin):
-
-    def get(self, request):
-        return render_to_response(
-            'account/home.html',
-            {},
-            context_instance=RequestContext(request)
-        )
 
 class LoginView(View):
     def get(self, request):
