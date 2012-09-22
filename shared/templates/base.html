@@ -89,6 +89,7 @@
       <script type="text/javascript" src="{% static 'shared/js/jquery.js' %}"></script>
       <script type="text/javascript" src="{% static 'shared/js/bootstrap.js' %}"></script>
       <script type="text/javascript" src="{% static 'shared/js/bootstrap-plugins.js' %}"></script>
+      <script type="text/javascript" src="{% static 'alerts/highlighter.js' %}"></script>
     {% endcompress %}
     {% compress js %}
       {% block extra_js %}{% endblock %}
@@ -99,6 +100,7 @@
         });
         {% block js %}{% endblock js %}
     </script>
+    {% include 'highlighter.html' %}
 
   </body>
 </html>

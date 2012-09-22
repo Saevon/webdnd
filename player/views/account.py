@@ -36,10 +36,13 @@ class SettingsView(View, LoginRequiredMixin):
 
         change = True
         if not request.user.check_password(password):
+            request.highlight('#group-old-pass', text='Incorrect password.')
             change = False
         if new_password != repeat_password:
+            request.highlight('#group-new-pass', text='Passwords don\'t match')
             change = False
         elif new_password == '' or repeat_password == '':
+            request.highlight('#group-new-pass', text='Empty passwords not allowed')
             change = False
 
         if change:

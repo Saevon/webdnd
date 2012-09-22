@@ -5,6 +5,7 @@ from django.template import RequestContext
 
 from alerts.alert import Alerts, alert_key
 from alerts.models import Alert
+from alerts.highlighter import Highlighter
 
 
 class AlertMiddleware(object):
@@ -29,3 +30,15 @@ class AlertMiddleware(object):
             # Force delay any current messages
             request.alert.delay()
         return response
+
+class FieldHighlightMiddleware(object):
+    """
+    A Middleware used to highlight fields based on input validation
+    """
+
+    def process_request(self, request):
+        """
+        Adds the highlight interface into the request
+        """
+        request.highlight = Highlighter()
+

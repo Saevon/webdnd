@@ -1,0 +1,16 @@
+{% comment %}
+This is a template that can be added to highlight fields through javascript
+{% endcomment %}
+
+<script type="text/javascript">
+    $(function() {
+    {% for field in highlighted_fields %}
+        alerts.highlight(
+            '{{ field.selector }}',
+            '{{ field.level }}'
+            {% if field.text %}, '{{ field.text }}'{% endif %}
+        );
+    {% endfor %}
+    });
+</script>
+

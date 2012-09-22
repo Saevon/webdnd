@@ -149,6 +149,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
     # alerts plugin
     "alerts.alert.template_processor",
+    "alerts.highlighter.template_processor",
 )
 
 
@@ -227,6 +228,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 
     'alerts.middleware.AlertMiddleware',
+    'alerts.middleware.FieldHighlightMiddleware',
 )
 
 
