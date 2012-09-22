@@ -44,16 +44,24 @@
           <a class="brand" href="/account">Web D&amp;D</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li id="nav_home"><a href="/account/home">Home</a></li>
+              <li id="nav_home"><a href="/account/home">
+                <i class="icon-home"></i> Home
+              </a></li>
               {% if user.is_active %}
-                <li id="nav_settings"><a href="/account/settings">Settings</a></li>
+                <li id="nav_settings"><a href="/account/settings">
+                    <i class="icon-wrench"></i> Settings
+                </a></li>
               {% endif %}
             </ul>
             <ul class="nav pull-right">
               {% if user.is_active %}
-                <li id="nav_logout" class="pull-right"><a href="/account/logout">Logout</a></li>
+                <li id="nav_logout" class="pull-right"><a href="/account/logout">
+                  <i class="icon-off"></i> Logout
+                </a></li>
               {% else %}
-                <li id="nav_login" class="pull-right"><a href="/account/login">Login</a></li>
+                <li id="nav_login" class="pull-right"><a href="/account/login">
+                  <i class="icon-user"></i> Login
+                </a></li>
               {% endif %}
             </ul>
           </div><!--/.nav-collapse -->
