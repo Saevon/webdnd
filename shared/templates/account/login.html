@@ -7,20 +7,6 @@
 
 {% block content %}
 <form class="form-horizontal" id="login" method="POST">
-    {% if error %}
-        <div class="alert alert-error fade in">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong>Error!</strong> There was a problem logging you in. Check your credentials and try again.
-        </div>
-    {% endif %}
-
-    {% if logout %}
-        <div class="alert alert-success fade in">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong>Success!</strong> You've logged out.
-        </div>
-    {% endif %}
-
     <legend> Login </legend>
     {{ request.error }}
         {% csrf_token %}

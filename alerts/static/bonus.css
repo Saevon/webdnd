@@ -1,0 +1,40 @@
+.text-level {
+    font-weight: bolder;
+}
+
+.pill.text-level {
+    padding: 2px 7px;
+    border-radius: 100%;
+    font-size: larger;
+    vertical-align: middle;
+}
+.pointer {
+    vertical-align: middle;
+    font-size: larger;
+    font-weight: bolder;
+    padding-left: 3px;
+}
+
+.text-level.warn,
+.text-level.warning {
+  color: #c09853;
+  background-color: #fcf8e3;
+  border-color: #fbeed5;
+}
+.text-level.err,
+.text-level.error {
+  background-color: #f2dede;
+  border-color: #eed3d7;
+  color: #b94a48;
+}
+.text-level.info {
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+  color: #3a87ad;
+}
+.text-level.yay,
+.text-level.success {
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+  color: #468847;
+}

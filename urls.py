@@ -54,6 +54,5 @@ urlpatterns = patterns('',
 if settings.DEBUG:
     from os.path import expanduser
     urlpatterns += patterns('',
-        (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': expanduser("~/code/webdnd/media")}),
-        # (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': expanduser("~/Developer/webdnd/media")}),
+        (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': expanduser(settings.MEDIA_ROOT)}),
     )

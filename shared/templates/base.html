@@ -8,10 +8,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <link rel="shortcut icon" href="{% static '/ico/favicon.ico' %}">
+    <!-- <link rel="shortcut icon" href="{% static '/ico/favicon.ico' %}"> -->
+    <!-- <link rel="icon" type="image/ico" href="/static/images/favicon.ico"> -->
 
     <title>{% block title %}Webdnd{% endblock title %}</title>
-    <!-- <link rel="icon" type="image/ico" href="/static/images/favicon.ico"> -->
 
     <link rel="stylesheet" href="{% static 'shared/css/bootstrap.css' %}" type="text/css" />
     {% compress css %}
@@ -59,6 +59,12 @@
 
     <!-- Main Body -->
     <div class="container centered">
+
+        <!-- Alerts -->
+        <div id="page_alerts">
+          {% include 'alerts.html' %}
+        </div>
+
         {% block content %}
         {% endblock content %}
     </div>

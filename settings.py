@@ -49,6 +49,9 @@ INSTALLED_APPS = (
     # Compression for static files
     'compressor',
     'django.contrib.staticfiles',
+
+    # Alerts
+    'webdnd.alerts',
 )
 
 DATABASES = {
@@ -61,6 +64,14 @@ DATABASES = {
         'PORT': '',
     },
 }
+
+# CharField
+STND_CHAR_LIMIT = 100
+STND_ID_CHAR_LIMIT = 5
+ADMIN_CHAR_CUTOFF = 20
+
+#DecimalField
+STND_DECIMAL_PLACES = 3
 
 # TODO: Prehaps we should get a cache?
 
@@ -86,6 +97,7 @@ STATIC_URL = '/static/'
 # A list of locations of additional static files
 STATICFILES_DIRS = (
     ('shared', '/apps/webdnd/shared/static/'),
+    '/apps/webdnd/alerts/static/',
 )
 
 # List of finder classes that know how to find static files in
@@ -118,6 +130,17 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
     # 'django.template.loaders.eggs.Loader',
 )
+# Functions which add onto the context before rendering a template
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages",
+    "webdnd.alerts.alert.template_processor",
+)
 
 
 
@@ -129,6 +152,9 @@ TEMPLATE_LOADERS = (
 SESSION_COOKIE_AGE = 60 * 60 * 24
 SESSION_COOKIE_NAME = 'webdndID'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+# TODO: make sure this works on a prod server
+# I can't get it to work in dev :(
+# SESSION_COOKIE_SECURE = True
 
 # Default url to redirect to for login
 LOGIN_URL = '/account/login'
@@ -190,6 +216,12 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+
+    'webdnd.alerts.middleware.AlertMiddleware',
 )
+
+
+# Alerts
+from webdnd.alerts.settings import *
 
 

@@ -1,0 +1,18 @@
+{% for alert in alerts %}
+    <div class="alert alert-{{ alert.level }} fade in">
+        {% spaceless %}
+
+        {% if not alert.permanent %}
+            <button type="button" class="close" data-dismiss="alert">×</button>
+        {% endif %}
+        {% if alert.title %}
+            <h4 class="alert-heading">{{ alert.title }}</h4>
+        {% endif %}
+        {% if alert.prefix %}
+            <strong>{{ alert.prefix }}</strong>
+        {% endif %}
+        {{ alert.text }}
+
+        {% endspaceless %}
+    </div>
+{% endfor %}

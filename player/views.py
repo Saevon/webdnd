@@ -9,7 +9,6 @@ from django.views.generic import View
 
 from webdnd.shared.views import LoginRequiredMixin
 
-
 def homepage(request):
     return render_to_response('game_main.html', {}, context_instance=RequestContext(request))
 
@@ -21,7 +20,9 @@ def settings(request):
 
 def account_logout(request):
     logout(request)
-    return HttpResponseRedirect(reverse('account_login') + '?logout=1')
+    request.alert.logout()
+
+    return HttpResponseRedirect(reverse('account_login'))
 
 class AccountHomeView(View, LoginRequiredMixin):
 
@@ -40,9 +41,9 @@ class LoginView(View):
             'password': '',
             # TODO: this does nothing right now, and isnt saved
             'remember': request.GET.get('remember', ''),
-            'error': request.GET.get('error', False),
-            'logout': request.GET.get('logout', False),
         }
+
+        request.alert(title='Banned Account', prefix='Sorry,', text='This account appears to be banned', level='error')
 
         return render_to_response(
             'account/login.html',
@@ -59,11 +60,11 @@ class LoginView(View):
                 login(request, user)
                 url = reverse('account_home')
             else:
-                # Add a page for disabled/banned users
-                url = '%s?username=%s&error=1' % (reverse('account_login'), username)
+                request.alert(title='Banned Account', prefix='Sorry,', text='This account appears to be banned', level='error', delay=True)
+                url = '%s?username=%s' % (reverse('account_login'), username)
         else:
-            # Validation failed
-            url = '%s?username=%s&error=1' % (reverse('account_login'), username)
+            request.alert(title='Login Failed', text='Please check your credentials and try agin.', level='warning', delay=True)
+            url = '%s?username=%s' % (reverse('account_login'), username)
 
         return HttpResponseRedirect(url)
 
