@@ -1,10 +1,12 @@
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
 
 class LoginRequiredMixin(object):
     """
-    Mixin that requires all methods for this view to have a logged in user
+    Ensures that user must be authenticated in order to access view.
     """
 
-    def as_view(cls):
-        return login_required(super(LoginRequiredMixin, cls).as_view())
-
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
