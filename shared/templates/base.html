@@ -13,9 +13,12 @@
 
     <title>{% block title %}Webdnd{% endblock title %}</title>
 
-    <link rel="stylesheet" href="{% static 'shared/css/bootstrap.css' %}" type="text/css" />
+
+
+    <link rel="stylesheet" href="{% static 'shared/css/bootstrap.css' %}" type="text/css" charset="utf-8">
     {% compress css %}
-      <link rel="stylesheet" href="{% static 'shared/css/base.css' %}" type="text/css" />
+      <link rel="stylesheet" href="{% static 'shared/css/bootstrap.extra.css' %}" type="text/css" charset="utf-8">
+      <link rel="stylesheet" href="{% static 'shared/css/base.css' %}" type="text/css" charset="utf-8">
     {% endcompress %}
     {% compress css %}
       {% block extra_css %}{% endblock %}
@@ -25,8 +28,12 @@
     </style>
 
 
+
   </head>
   <body>
+
+
+
     <!-- HEADER Nav-Bar -->
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
@@ -70,7 +77,11 @@
     </div>
 
 
+
     <!-- Footer -->
+    <div class="footer">
+    </div>
+
 
 
     <!-- Javascript at the bottom for faster page loading -->

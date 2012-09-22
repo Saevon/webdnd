@@ -1,0 +1,11 @@
+/*
+Adds onto the twitter bootstrap. Adds any css that I think should have been in
+the bootstrap, or are highly intertwined with it.
+*/
+
+/* Muted colouring doesn't seem to exist for all elem types */
+.control-group.muted > label,
+.control-group.muted .help-block,
+.control-group.muted .help-inline {
+    color: #999;
+}

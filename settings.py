@@ -80,11 +80,6 @@ STND_DECIMAL_PLACES = 3
 # Media and Static files
 ##################################################
 
-# Locations of the template files
-TEMPLATE_DIRS = (
-    '/apps/webdnd/shared/templates',
-)
-
 # Absolute path to the directory that holds media.
 MEDIA_ROOT = '/apps/webdnd/media/'
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
@@ -97,7 +92,7 @@ STATIC_URL = '/static/'
 # A list of locations of additional static files
 STATICFILES_DIRS = (
     ('shared', '/apps/webdnd/shared/static/'),
-    '/apps/webdnd/alerts/static/',
+    ('alerts', '/apps/webdnd/alerts/static/',)
 )
 
 # List of finder classes that know how to find static files in
@@ -116,14 +111,26 @@ COMPRESS_ROOT = '/apps/webdnd/static'
 COMPRESS_OUTPUT_DIR = '/compressed'
 # COMPRESS_JS_FILTERS = ('compressor.filters.yui.YUIJSFilter',)
 # COMPRESS_CSS_FILTERS = ('compressor.filters.yui.YUICSSFilter',)
-COMPRESS_PRECOMPILERS = (
-    # ('text/coffeescript', 'coffee --compile --stdio'),
-    ('text/less', 'lessc {infile} {outfile}'),
-    # ('text/x-sass', 'sass {infile} {outfile}'),
-    # ('text/x-scss', 'sass --scss {infile} {outfile}'),
-    # ('text/foobar', 'path.to.MyPrecompilerFilter'),
-)
+# COMPRESS_PRECOMPILERS = (
+#     # CSS Pre-compilers
+#     ('text/css', 'cat {infile} > {outfile}'),
+#     # ('text/less', 'lessc {infile} {outfile}'),
 
+#     # JS Pre-Compilers
+#     ('text/js', 'cat {infile} > {outfile}'),
+#     # ('text/coffeescript', 'coffee --compile --stdio'),
+
+#     # Some Examples
+#     # ('text/x-sass', 'sass {infile} {outfile}'),
+#     # ('text/x-scss', 'sass --scss {infile} {outfile}'),
+#     # ('text/foobar', 'path.to.MyPrecompilerFilter'),
+# )
+
+# Locations of the template files
+TEMPLATE_DIRS = (
+    '/apps/webdnd/shared/templates',
+    '/apps/webdnd/player/templates',
+)
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
@@ -139,7 +146,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
-    "webdnd.alerts.alert.template_processor",
+
+    # alerts plugin
+    "alerts.alert.template_processor",
 )
 
 
@@ -217,7 +226,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 
-    'webdnd.alerts.middleware.AlertMiddleware',
+    'alerts.middleware.AlertMiddleware',
 )
 
 
