@@ -18,16 +18,16 @@ def display_sheet(request, character_name):
 def settings(request):
     pass
 
-def account_logout(request):
-    logout(request)
-    request.alert.logout()
+class LogoutView(View, LoginRequiredMixin):
+    def get(self, request):
+        logout(request)
+        request.alert.logout()
 
-    request.alert('You have successfully logged out', prefix='Yay!', level='success')
+        request.alert('You have successfully logged out', prefix='Yay!', level='success')
 
-    return HttpResponseRedirect(reverse('account_login'))
+        return HttpResponseRedirect(reverse('account_login'))
 
 class AccountHomeView(View, LoginRequiredMixin):
-
     def get(self, request):
         return render_to_response(
             'account/home.html',
@@ -36,7 +36,6 @@ class AccountHomeView(View, LoginRequiredMixin):
         )
 
 class LoginView(View):
-
     def get(self, request):
         out = {
             'username': request.GET.get('username', ''),
@@ -68,6 +67,4 @@ class LoginView(View):
 
         return HttpResponseRedirect(url)
 
-
-        
 
