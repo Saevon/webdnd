@@ -22,6 +22,8 @@ def account_logout(request):
     logout(request)
     request.alert.logout()
 
+    request.alert('You have successfully logged out', prefix='Yay!', level='success')
+
     return HttpResponseRedirect(reverse('account_login'))
 
 class AccountHomeView(View, LoginRequiredMixin):
@@ -58,10 +60,10 @@ class LoginView(View):
                 login(request, user)
                 url = reverse('account_home')
             else:
-                request.alert(title='Banned Account', prefix='Sorry,', text='This account appears to be banned', level='error', delay=True)
+                request.alert(title='Banned Account', prefix='Sorry,', text='This account appears to be banned', level='error')
                 url = '%s?username=%s' % (reverse('account_login'), username)
         else:
-            request.alert(title='Login Failed', text='Please check your credentials and try agin.', level='warning', delay=True)
+            request.alert(title='Login Failed', text='Please check your credentials and try agin.', level='warning')
             url = '%s?username=%s' % (reverse('account_login'), username)
 
         return HttpResponseRedirect(url)

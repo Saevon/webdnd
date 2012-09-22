@@ -51,7 +51,7 @@ class Alert(models.Model):
     @staticmethod
     def get_alerts(owner):
         alerts = Alert.objects.filter(owner=owner)
-        showing = [alert.details() for alert in alerts]
+        showing = [alert.copy() for alert in alerts]
         alerts.delete()
 
         return showing
@@ -62,6 +62,15 @@ class Alert(models.Model):
             0, settings.SESSION_COOKIE_AGE
         )
         return super(Alert, self).save(*args, **kwargs)
+
+    def copy(self):
+        return Alert(
+            owner=self.owner,
+            title=self.title,
+            prefix=self.prefix,
+            text=self.text,
+            level=self.level
+        )
 
     def __unicode__(self):
         return '%s %s%s' % (

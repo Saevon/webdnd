@@ -9,7 +9,7 @@ class Alerts(list):
         self.session = session
         self.owner = owner
 
-    def __call__(self, text, level=None, title=None, prefix=None, delay=False):
+    def __call__(self, text, level=None, title=None, prefix=None):
         """
         Adds a new alert to the list, if theres a delay adds it to the database
         Returns the index at which the alert is at, so you can change it afterwards
@@ -22,15 +22,9 @@ class Alerts(list):
             owner=self.owner
         )
 
-        # If we're not delaying add it to the output list
-        if not delay:
-            alert = alert.details()
-            self.append(alert)
-            return len(self) - 1
-        # Otherwise store it in the database for the next request
-        else:
-            alert.save()
-            return alert
+        alert.save()
+        self.append(alert)
+        return alert
 
     def logout(self):
         """
@@ -41,6 +35,18 @@ class Alerts(list):
         del self[:]
 
         self.owner = alert_key(self.session)
+
+    def delay(self):
+        """
+        Removes any alerts that are beign shown, delaying them for the next call
+        """
+        for alert in self:
+            alert.save()
+        self[:] = []
+
+    def process(self):
+        return [alert.details() for alert in self]
+
 
 def alert_key(session):
     key = session.get('alert_key', None)
@@ -54,5 +60,5 @@ def template_processor(request):
     Adds the alerts to the template context
     """
     return {
-        'alerts': list(request.alert),
+        'alerts': request.alert.process(),
     }
