@@ -3,9 +3,33 @@ Adds onto the twitter bootstrap. Adds any css that I think should have been in
 the bootstrap, or are highly intertwined with it.
 */
 
-/* Muted colouring doesn't seem to exist for all elem types */
 .control-group.muted > label,
 .control-group.muted .help-block,
-.control-group.muted .help-inline {
+.control-group.muted .help-inline,
+.help-inline.muted,
+.help-block.muted
+{
     color: #999;
 }
+
+.help-inline.text-info,
+.help-block.text-info
+{
+    color: #3A87AD;
+}
+.help-inline.text-success,
+.help-block.text-success
+{
+    color: #468847;
+}
+.help-inline.text-warning,
+.help-block.text-warning
+{
+    color: #C09853;
+}
+.help-inline.text-error,
+.help-block.text-error
+{
+    color: #B94A48;
+}
+
