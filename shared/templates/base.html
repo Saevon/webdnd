@@ -21,11 +21,9 @@
       <link rel="stylesheet" href="{% static 'shared/css/base.css' %}" type="text/css" charset="utf-8">
     {% endcompress %}
     {% compress css %}
-      {% block extra_css %}{% endblock %}
+      {% block compress_css %}{% endblock compress_css %}
     {% endcompress %}
-    <style>
-      {% block css %}{% endblock css %}
-    </style>
+    {% block dynamic_css %}{% endblock dynamic_css %}
 
 
 
@@ -92,14 +90,14 @@
       <script type="text/javascript" src="{% static 'alerts/highlighter.js' %}"></script>
     {% endcompress %}
     {% compress js %}
-      {% block extra_js %}{% endblock %}
+      {% block compress_js %}{% endblock compress_js %}
     {% endcompress %}
     <script type="text/javascript">
         $(function() {
             $('#nav_{% block tab_name %}{% endblock %}').addClass('active');
         });
-        {% block js %}{% endblock js %}
     </script>
+    {% block dynamic_js %}{% endblock dynamic_js %}
     {% include 'highlighter.html' %}
 
   </body>
