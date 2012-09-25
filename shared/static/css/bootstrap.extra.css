@@ -33,3 +33,6 @@ the bootstrap, or are highly intertwined with it.
     color: #B94A48;
 }
 
+.table tbody tr.muted td {
+    background-color: #EEE;
+}
