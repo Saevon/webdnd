@@ -7,4 +7,4 @@ class AbstractPlayerModel(models.Model):
 
     class Meta:
         abstract = True
-        app_label = 'webdnd'
+        app_label = 'player'

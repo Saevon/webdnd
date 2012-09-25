@@ -7,6 +7,7 @@ from django.template import RequestContext
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 
+from webdnd.player.models.campaigns import Campaign
 from webdnd.shared.views import LoginRequiredMixin
 from webdnd.shared.utils.quotes import blurb
 
@@ -14,9 +15,14 @@ from webdnd.shared.utils.quotes import blurb
 class AccountHomeView(LoginRequiredMixin, View):
 
     def get(self, request):
+        campaigns = Campaign.objects.filter(owner=request.user.get_profile())
+
         return render_to_response(
             'account/home.html',
-            {},
+            {
+                'campaigns': campaigns,
+
+            },
             context_instance=RequestContext(request)
         )
 

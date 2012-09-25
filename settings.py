@@ -43,7 +43,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
 
     # Webdnd apps
-    # 'webdnd.player',
+    'webdnd.player',
     # 'webdnd.dnd',
 
     # Compression for static files
@@ -169,6 +169,8 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 # Default url to redirect to for login
 LOGIN_URL = '/account/login'
 LOGIN_REDIRECT_URL = '/'
+
+AUTH_PROFILE_MODULE = 'player.AccountProfile'
 
 
 

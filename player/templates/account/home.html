@@ -6,4 +6,20 @@
 
 
 {% block content %}
+<legend>Coming Up</legend>
+
+<legend>Campaigns</legend>
+
+<div class="campaigns">
+    {% for campaign in campaigns %}
+        <div class="campaign">
+            <blockquote>
+                <span class="capitalize">{{ campaign.name }}</span>
+                <small>{{ campaign.owner.user }}</small>
+            </blockquote>
+        </div>
+    {% endfor %}
+</div>
+<legend>Characters</legend>
+
 {% endblock content %}
