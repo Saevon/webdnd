@@ -7,7 +7,8 @@ from webdnd.player.views.main import ContactView
 
 
 urlpatterns = patterns('webdnd.player.views.main',
-    url(r'^$', HomeView.as_view(), name='home'),
+    url(r'^$', redirect_to, {'url': '/home'}),
+    url(r'^home', HomeView.as_view(), name='home'),
     url(r'^about', AboutView.as_view(), name='about'),
     url(r'^contact_us', ContactView.as_view(), name='contact_us'),
 )
