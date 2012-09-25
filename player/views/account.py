@@ -11,7 +11,7 @@ from webdnd.shared.views import LoginRequiredMixin
 from webdnd.shared.utils.quotes import blurb
 
 
-class AccountHomeView(View, LoginRequiredMixin):
+class AccountHomeView(LoginRequiredMixin, View):
 
     def get(self, request):
         return render_to_response(
@@ -21,7 +21,7 @@ class AccountHomeView(View, LoginRequiredMixin):
         )
 
 
-class SettingsView(View, LoginRequiredMixin):
+class SettingsView(LoginRequiredMixin, View):
     def get(self, request):
         out = {}
         return render_to_response(
@@ -70,7 +70,7 @@ class SettingsView(View, LoginRequiredMixin):
         return self.get(request)
 
 
-class LogoutView(View, LoginRequiredMixin):
+class LogoutView(LoginRequiredMixin, View):
     def get(self, request):
         logout(request)
         request.alert.logout()
