@@ -13,7 +13,7 @@ from webdnd.shared.utils.quotes import blurb
 class AccountHomeView(LoginRequiredMixin, View):
 
     def get(self, request):
-        campaigns = Campaign.objects.filter(owner=request.user.get_profile())
+        campaigns = Campaign.objects.filter(owner=request.user)
 
         return render_to_response(
             'account/home.html',

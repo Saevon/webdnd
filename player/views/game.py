@@ -12,7 +12,7 @@ from webdnd.shared.views import LoginRequiredMixin
 
 class CampaignListView(LoginRequiredMixin, View):
     def get(self, request):
-        campaigns = Campaign.objects.filter(owner=request.user.get_profile())
+        campaigns = Campaign.objects.filter(owner=request.user)
 
         out = {
             'campaigns': campaigns,
@@ -79,7 +79,7 @@ class CampaignEditView(LoginRequiredMixin, View):
             if create:
                 campaign = Campaign.objects.get(id=cid)
             else:
-                campaign = Campaign(owner=request.user.get_profile())
+                campaign = Campaign(owner=request.user)
                 campaign.save()
                 cid = campaign.id
 
