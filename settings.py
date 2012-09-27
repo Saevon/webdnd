@@ -20,6 +20,7 @@ DEV_MODE = True
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 COMPRESS_ENABLED = not DEBUG
+PRETTIFY_HTML = DEBUG
 
 
 
@@ -221,6 +222,7 @@ SECRET_KEY = '1t2h3i4s5i6s7a8v9e0rysecretkeybecauseitisv0e9r8y7s6e5c4r3e2t1'
 
 
 MIDDLEWARE_CLASSES = (
+    'shared.middleware.HtmlPrettifyMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
