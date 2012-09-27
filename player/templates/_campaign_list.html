@@ -1,0 +1,13 @@
+
+<div class="campaigns">
+    {% for campaign in campaigns %}
+        <div class="campaign user"><a href="{% url game_campaign_edit cid=campaign.id %}">
+            <blockquote>
+                <i class="icon-globe"></i>
+                <span class="capitalize">{{ campaign.name }}</span>
+                <small class="username">{{ campaign.owner.name }}</small>
+            </blockquote>
+        </a></div>
+    {% endfor %}
+</div>
+

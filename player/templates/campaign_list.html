@@ -18,18 +18,8 @@
         </div>
     </legend>
 
+    {% include '_campaign_list.html' %}
 
-    <div class="campaigns">
-        {% for campaign in campaigns %}
-            <div class="campaign user"><a href="{% url game_campaign_edit cid=campaign.id %}">
-                <blockquote>
-                    <i class="icon-globe"></i>
-                    <span class="capitalize">{{ campaign.name }}</span>
-                    <small class="username">{{ campaign.owner.user }}</small>
-                </blockquote>
-            </a></div>
-        {% endfor %}
-    </div>
 {% endblock content %}
 
 
