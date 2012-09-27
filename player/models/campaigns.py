@@ -1,9 +1,9 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.auth.models import User
 
 from player.constants.campaign import ROLEPLAYING_SYSTEMS
 from player.models.abstract import AbstractPlayerModel
-from player.models.accounts import AccountProfile
 
 
 class Campaign(AbstractPlayerModel):
@@ -12,7 +12,7 @@ class Campaign(AbstractPlayerModel):
     """
 
     owner = models.ForeignKey(
-        AccountProfile,
+        User,
         related_name='owned_campaigns',
         blank=False,
         null=False
@@ -29,3 +29,6 @@ class Campaign(AbstractPlayerModel):
         blank=False,
         null=False
     )
+
+    def __unicode__(self):
+        return u'%s' % self.name

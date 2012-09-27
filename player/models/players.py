@@ -1,8 +1,8 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.auth.models import User
 
 from player.models.abstract import AbstractPlayerModel
-from player.models.accounts import AccountProfile
 from player.models.campaigns import Campaign
 
 
@@ -12,11 +12,11 @@ class Player(AbstractPlayerModel):
     """
 
     class Meta(AbstractPlayerModel.Meta):
-        unique_together = ('account', 'campaign')
+        unique_together = ('user', 'campaign')
 
-    # M2M Mapping
-    account = models.ForeignKey(
-        AccountProfile,
+    # M2M Mapping between users and campaigns
+    user = models.ForeignKey(
+        User,
         related_name='campaigns',
         blank=False,
         null=False
@@ -34,3 +34,9 @@ class Player(AbstractPlayerModel):
     # For people to spectate
     is_spectator = models.BooleanField(default=False)
 
+    @property
+    def name(self):
+        return unicode(self)
+
+    def __unicode__(self):
+        return u'%s' % (self.account.user.username)

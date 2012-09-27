@@ -6,16 +6,29 @@ from django.dispatch import receiver
 
 from player.constants.account import PREFERENCES
 from player.models.abstract import AbstractPlayerModel
+from shared.views import ModelMixin
 
 
-class AccountProfile(AbstractPlayerModel):
+class UserMixin(ModelMixin):
     """
-    A webdnd Account
+    Adds new fields to the Django user
     """
-    user = models.OneToOneField(User)
+    model = User
 
-    def __unicode__(self):
-        return self.user.get_full_name();
+    friends = models.ManyToManyField(
+        'self',
+        blank=False,
+        null=False
+    )
+    desc = models.CharField(
+        max_length=settings.STND_CHAR_LIMIT,
+        blank=False,
+        null=False
+    )
+
+    @property
+    def name(self):
+        return unicode(self)
 
 
 class Preference(AbstractPlayerModel):
@@ -29,19 +42,19 @@ class Preference(AbstractPlayerModel):
     preference = models.CharField(
         max_length=settings.STND_ID_CHAR_LIMIT,
         choices=PREFERENCES,
-        blank=False)
+        blank=False,
+        null=False
+    )
     value = models.CharField(
         max_length=settings.STND_CHAR_LIMIT,
-        blank=False)
+        blank=False,
+        null=False
+    )
     user = models.ForeignKey(
-        AccountProfile,
+        User,
         related_name='preferences',
         blank=False,
-        null=False)
+        null=False
+    )
 
 
-
-@receiver(post_save, sender=User)
-def add_profile(sender, instance, created, raw, **kwargs):
-    if created:
-        AccountProfile.objects.create(user=instance)
