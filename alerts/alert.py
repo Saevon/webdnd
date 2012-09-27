@@ -10,7 +10,7 @@ class Alerts(list):
         self.session = session
         self.owner = owner
 
-    def __call__(self, text, level=None, title=None, prefix=None):
+    def __call__(self, text, level=None, title=None, prefix=None, important=None):
         """
         Adds a new alert to the list, if theres a delay adds it to the database
         Returns the index at which the alert is at, so you can change it afterwards
@@ -22,6 +22,9 @@ class Alerts(list):
             level=level or settings.ALERT_DEFAULT_LEVEL,
             owner=self.owner
         )
+        if important is None:
+            important = level in settings.ALERT_IMPORTANT_LEVELS
+        alert.closable = not important
 
         alert.save()
         self.append(alert)

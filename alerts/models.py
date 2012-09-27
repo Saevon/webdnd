@@ -19,6 +19,11 @@ class Alert(models.Model):
         null=False
     )
     expiry = models.DateTimeField(blank=False, null=False);
+    closable = models.BooleanField(
+        default=False,
+        blank=False,
+        null=False
+    )
 
     # Actual message details
     title = models.CharField(
@@ -95,7 +100,8 @@ class Alert(models.Model):
             title=self.title,
             prefix=self.prefix,
             text=self.text,
-            level=self.level
+            level=self.level,
+            closable=self.closable,
         )
 
     def details(self):
@@ -107,6 +113,7 @@ class Alert(models.Model):
             'prefix': self.prefix,
             'text': self.text,
             'level': self.level,
+            'closable': self.closable,
         }
 
 

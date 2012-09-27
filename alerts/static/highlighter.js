@@ -22,7 +22,7 @@ alerts.highlight('CSS SELECTOR', 'LEVEL', 'OPTIONAL TEXT');
         pass in this param.
 */
 
-alerts = {};
+var alerts = alerts || {};
 
 alerts.highlight = (function() {
     var HIGHLIGHT_LEVELS = [

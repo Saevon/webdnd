@@ -1,5 +1,5 @@
 {% for alert in alerts %}
-    <div class="alert alert-{{ alert.level }} fade in">
+    <div class="alert alert-{{ alert.level }} fade in {% if alert.closable %}click-close{% endif %}">
         {% spaceless %}
 
         {% if not alert.permanent %}

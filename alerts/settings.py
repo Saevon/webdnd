@@ -7,6 +7,9 @@ ALERT_LEVELS = (
     ('err', 'error'),
 )
 ALERT_DEFAULT_LEVEL = 'info'
+ALERT_IMPORTANT_LEVELS = (
+    'error',
+)
 
 
 # Field highlighting
