@@ -8,18 +8,22 @@
 {% block content %}
 <legend>Coming Up</legend>
 
-<legend>Campaigns</legend>
+{% if campaigns %}
+    <legend>Campaigns</legend>
 
-<div class="campaigns">
-    {% for campaign in campaigns %}
-        <div class="campaign">
-            <blockquote>
-                <span class="capitalize">{{ campaign.name }}</span>
-                <small>{{ campaign.owner.user }}</small>
-            </blockquote>
-        </div>
-    {% endfor %}
-</div>
+    <div class="campaigns">
+        {% for campaign in campaigns %}
+            <div class="campaign user"><a href="{% url game_campaign_edit cid=campaign.id %}">
+                <blockquote>
+                    <span class="capitalize">{{ campaign.name }}</span>
+                    <small class="username">{{ campaign.owner.name }}</small>
+                </blockquote>
+            </a></div>
+        {% endfor %}
+    </div>
+{% endif %}
+
 <legend>Characters</legend>
 
 {% endblock content %}
+

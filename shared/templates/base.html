@@ -19,6 +19,7 @@
     {% compress css %}
       <link rel="stylesheet" href="{% static 'shared/css/bootstrap.extra.css' %}" type="text/css" charset="utf-8">
       <link rel="stylesheet" href="{% static 'shared/css/base.css' %}" type="text/css" charset="utf-8">
+      <link rel="stylesheet" href="{% static 'shared/css/player.css' %}" type="text/css" charset="utf-8">
     {% endcompress %}
     {% compress css %}
       {% block compress_css %}{% endblock compress_css %}
@@ -41,29 +42,32 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="/account">Web D&amp;D</a>
+          <a class="brand" href="{% url main_about %}">Web D&amp;D</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
               {% if user.is_active %}
-                <li id="nav_home"><a href="/account/home">
+                <li id="nav_home"><a href="{% url account_home %}">
                   <i class="icon-home"></i> Home
                 </a></li>
-                <li id="nav_settings"><a href="/account/settings">
-                    <i class="icon-wrench"></i> Settings
+                <li id="nav_campaigns"><a href="{% url game_campaign_list %}">
+                  <i class="icon-globe"></i> Campaigns
                 </a></li>
               {% else %}
-                <li id="nav_home"><a href="/home">
+                <li id="nav_home"><a href="{% url main_home %}">
                   <i class="icon-home"></i> Home
                 </a></li>
               {% endif %}
             </ul>
             <ul class="nav pull-right">
               {% if user.is_active %}
-                <li id="nav_logout" class="pull-right"><a href="/account/logout">
+                <li id="nav_settings"><a href="{% url account_settings %}">
+                    <i class="icon-wrench"></i> Settings
+                </a></li>
+                <li id="nav_logout" class="pull-right"><a href="{% url account_logout %}">
                   <i class="icon-off"></i> Logout
                 </a></li>
               {% else %}
-                <li id="nav_login" class="pull-right"><a href="/account/login">
+                <li id="nav_login" class="pull-right"><a href="{% url account_login %}">
                   <i class="icon-user"></i> Login
                 </a></li>
               {% endif %}

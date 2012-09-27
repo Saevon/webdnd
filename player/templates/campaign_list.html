@@ -1,0 +1,35 @@
+{% extends "account/base.html" %}
+
+
+{% block page_title %}Webdnd ~ Campaigns{% endblock %}
+{% block tab_name %}campaigns{% endblock %}
+
+
+{% block content %}
+    <legend>
+        Campaigns
+        <div class="control-group pull-right">
+            <div class='controls'>
+                <a class="btn btn-success" href="{% url game_campaign_create %}">
+                    <i class="icon-plus icon-white"></i>
+                    <b>New Campaign</b>
+                </a>
+            </div>
+        </div>
+    </legend>
+
+
+    <div class="campaigns">
+        {% for campaign in campaigns %}
+            <div class="campaign user"><a href="{% url game_campaign_edit cid=campaign.id %}">
+                <blockquote>
+                    <i class="icon-globe"></i>
+                    <span class="capitalize">{{ campaign.name }}</span>
+                    <small class="username">{{ campaign.owner.user }}</small>
+                </blockquote>
+            </a></div>
+        {% endfor %}
+    </div>
+{% endblock content %}
+
+

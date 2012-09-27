@@ -27,6 +27,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^account/', include('webdnd.player.urls.account')),
+    url(r'^game/', include('webdnd.player.urls.game')),
 
     # Example:[A-Za-z]
     # (r'^webdnd/', include('web_dnd.foo.urls')),
