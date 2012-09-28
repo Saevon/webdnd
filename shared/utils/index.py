@@ -25,7 +25,6 @@ class WhooshIndex(object):
         remade from scratch, however this doesn't happen if the index is
         already open.
         """
-        print indexdir
         if not WhooshIndex.INDICES.has_key(indexdir):
             WhooshIndex.INDICES[indexdir] = (WhooshIndex(indexdir)
                 .open_index(flush=flush)
@@ -60,7 +59,6 @@ class WhooshIndex(object):
         """
         Opens the index for reading/writing
         """
-        print self._indexdir, os.path.exists(self._indexdir)
         if not os.path.exists(self._indexdir) or flush:
             self.create_schema(flush=flush)
         else:

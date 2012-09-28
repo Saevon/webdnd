@@ -56,8 +56,6 @@ class UserIndex(WhooshIndex):
 from django.db import models
 from django.dispatch import receiver
 
-print settings.USER_INDEX_DIR
-
 @receiver(models.signals.post_save)
 def update_index(sender, instance, **kwargs):
     if type(instance).__name__ in UserIndex.CLASSES['all']:
