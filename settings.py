@@ -239,6 +239,9 @@ MIDDLEWARE_CLASSES = (
     'alerts.middleware.FieldHighlightMiddleware',
 )
 
+INDEX_DIR = '/apps/webdnd/index/'
+USER_INDEX_DIR = os.path.join(INDEX_DIR, 'user/')
+
 
 # Alerts
 from alerts.settings import *
