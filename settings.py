@@ -235,6 +235,6 @@ MIDDLEWARE_CLASSES = (
 
 
 # Alerts
-from webdnd.alerts.settings import *
+from alerts.settings import *
 
 

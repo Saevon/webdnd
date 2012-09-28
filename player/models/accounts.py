@@ -1,8 +1,6 @@
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 from player.constants.account import PREFERENCES
 from player.models.abstract import AbstractPlayerModel
@@ -17,12 +15,8 @@ class UserMixin(ModelMixin):
 
     friends = models.ManyToManyField(
         'self',
-        blank=False,
-        null=False
-    )
-    desc = models.CharField(
-        max_length=settings.STND_CHAR_LIMIT,
-        blank=False,
+        symmetrical=True,
+        blank=True,
         null=False
     )
 
