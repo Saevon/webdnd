@@ -1,12 +1,12 @@
-from player.models.accounts import Preference
-from player.models.campaigns import Campaign
-from player.models.players import Player
+from player.models import accounts
+from player.models import campaigns
+from player.models import players
 
 
 __all__ = [
-    Preference,
+    accounts.Preference,
 
-    Campaign,
+    campaigns.Campaign,
 
-    Player,
+    players.Player,
 ]

@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     # Webdnd apps
     'webdnd.player',
     # 'webdnd.dnd',
+    'webdnd.shared',
 
     # Compression for static files
     'compressor',
@@ -73,6 +74,11 @@ ADMIN_CHAR_CUTOFF = 20
 
 #DecimalField
 STND_DECIMAL_PLACES = 3
+
+# Fixtures
+INITIAL_FIXTURE_DIRS = (
+    'player/fixtures',
+)
 
 # TODO: Prehaps we should get a cache?
 
