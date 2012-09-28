@@ -1,8 +1,10 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-
+from django.contrib.auth.models import User
+from django import forms
 
 from player.models.accounts import Preference
+
 
 class PreferenceInline(admin.TabularInline):
     model = Preference
@@ -15,6 +17,14 @@ class PreferenceInline(admin.TabularInline):
     extra = 1
 
 class AccountAdmin(UserAdmin):
-    list_display = UserAdmin.list_display + ('friends',)
+    UserAdmin.form.base_fields['friends'] = forms.ModelMultipleChoiceField(
+        queryset=User.objects.all()
+    )
+
+    fieldsets = UserAdmin.fieldsets + (
+        ('Friends', {'fields': ('friends',)}),
+    )
+    filter_horizontal = ('friends',)
+
     inlines = [PreferenceInline,]
 
