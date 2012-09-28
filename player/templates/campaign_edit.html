@@ -17,6 +17,11 @@
                 <button type="submit" class="btn btn-success" name="campaign_create">
                     {% if create %}Create{% else %}Save{% endif %} Campaign
                 </button>
+                {% if not create %}
+                    <button type="button" class="btn btn-info" name="campaign_play">
+                        Play
+                    </button>
+                {% endif %}
             </div>
         </div>
     </legend>
