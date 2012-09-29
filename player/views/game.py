@@ -1,5 +1,5 @@
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.generic import View
@@ -61,7 +61,7 @@ class CampaignEditView(LoginRequiredMixin, View):
         )
 
     def post(self, request, cid):
-        name =request.POST.get('name')
+        name = request.POST.get('name')
         system = request.POST.get('system')
         players = request.POST.getlist('players[]')
         create = bool(cid)
@@ -91,7 +91,7 @@ class CampaignEditView(LoginRequiredMixin, View):
             keep = set()
             for id in players:
                 Player.objects.get_or_create(user=User.objects.get(id=id), campaign=campaign).save()
-                keep.add(id);
+                keep.add(id)
             Player.objects.filter(user__id__in=set(cur_players) - keep, campaign=campaign).delete()
 
             alert = request.alert(

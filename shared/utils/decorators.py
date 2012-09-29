@@ -1,5 +1,6 @@
 from functools import wraps
 
+
 def cascade(func):
     """
     class method decorator, always returns the
