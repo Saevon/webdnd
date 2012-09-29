@@ -9,3 +9,4 @@ localsettings.py
 hide_pyc.py
 *.hidden
 static/compressed
+index/

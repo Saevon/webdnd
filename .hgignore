@@ -6,3 +6,5 @@ syntax:glob
 localsettings.py
 *.sqlite3
 *.orig
+static/compressed
+index/

@@ -9,6 +9,8 @@ class WhooshIndex(object):
         'all': []
     }
 
+    INDICES = {}
+
     def __init__(self, indexdir):
         """
         Creates a new index that reads/writes into the folder indexdir
@@ -17,8 +19,8 @@ class WhooshIndex(object):
         self._indexdir = indexdir
         self._writer = None
 
-    @staticmethod
-    def get(indexdir=None, flush=False):
+    @classmethod
+    def get(cls, indexdir=None, flush=False):
         """
         Returns the WhooshIndex that is reading the index located in the
         indexdir folder. flush indicates whether the index should be
@@ -26,7 +28,7 @@ class WhooshIndex(object):
         already open.
         """
         if not WhooshIndex.INDICES.has_key(indexdir):
-            WhooshIndex.INDICES[indexdir] = (WhooshIndex(indexdir)
+            WhooshIndex.INDICES[indexdir] = (cls(indexdir)
                 .open_index(flush=flush)
             )
 
@@ -48,7 +50,7 @@ class WhooshIndex(object):
 
         # Create the folder if needed
         if not os.path.exists(self._indexdir):
-            os.mkdir(self._indexdir)
+            os.makedirs(os.path.abspath(self._indexdir))
 
         # make the actual index
         self.index = index.create_in(self._indexdir, schema)
