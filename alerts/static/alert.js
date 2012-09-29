@@ -6,7 +6,7 @@ alerts.click_close = function click_close(elem) {
     });
 
     // Need a better cursor
-    elem.css('cursor', 'not-allowed');
+    elem.css('cursor', 'url(/static/alerts/remove.cur), not-allowed');
 
     return elem;
 };
