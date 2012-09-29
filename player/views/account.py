@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.http import HttpResponseRedirect
@@ -38,6 +39,24 @@ class FriendsView(LoginRequiredMixin, View):
             out,
             context_instance=RequestContext(request)
         )
+
+    def post(self, request):
+        friends = set(f.id for f in request.user.friends.all())
+        unfriends = set(int(f) for f in request.POST.getlist('unfriends[]'))
+        new_friends = set(int(f) for f in request.POST.getlist('new-friends[]'))
+
+        final_friends = (friends - unfriends) | new_friends
+
+        request.user.friends = User.objects.filter(id__in=final_friends)
+        request.user.save()
+
+        request.alert(
+            prefix='Alright!',
+            text='Your changes have been saved',
+            level='success'
+        )
+
+        return self.get(request)
 
 
 class SettingsView(LoginRequiredMixin, View):
