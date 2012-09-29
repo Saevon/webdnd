@@ -9,6 +9,9 @@ from django.views.generic import View
 from webdnd.player.models.campaigns import Campaign
 from webdnd.shared.views import LoginRequiredMixin
 from webdnd.shared.utils.quotes import blurb
+from webdnd.shared.views import Api
+
+from webdnd.player.views.index import UserIndex
 
 
 class AccountHomeView(LoginRequiredMixin, View):
@@ -121,5 +124,14 @@ class LoginView(View):
             url = '%s?username=%s' % (reverse('account_login'), username)
 
         return HttpResponseRedirect(url)
+
+class UserSearchApi(Api):
+
+    def get(self, request, text):
+        results = UserIndex.get(settings.USER_INDEX_DIR).search(text)
+
+        return results
+
+
 
 
