@@ -241,6 +241,9 @@ MIDDLEWARE_CLASSES = (
 INDEX_DIR = '/apps/webdnd/index/'
 USER_INDEX_DIR = os.path.join(INDEX_DIR, 'user/')
 
+# Characters that a user can't search for
+USER_CHAR_RE = re.compile(r'[^.@-_a-zA-Z0-9]*')
+
 
 # Alerts
 from alerts.settings import *

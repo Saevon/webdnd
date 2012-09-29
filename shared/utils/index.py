@@ -27,7 +27,7 @@ class WhooshIndex(object):
         remade from scratch, however this doesn't happen if the index is
         already open.
         """
-        if not WhooshIndex.INDICES.has_key(indexdir):
+        if not indexdir in WhooshIndex.INDICES:
             WhooshIndex.INDICES[indexdir] = (cls(indexdir)
                 .open_index(flush=flush)
             )
