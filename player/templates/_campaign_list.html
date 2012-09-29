@@ -8,6 +8,10 @@
                 <small class="username">{{ campaign.owner.name }}</small>
             </blockquote>
         </a></div>
+    {% empty %}
+        <blockquote class="empty span9 muted">
+            You have no campaigns right now.
+        </blockquote>
     {% endfor %}
 </div>
 

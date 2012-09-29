@@ -19,7 +19,8 @@
     {% compress css %}
       <link rel="stylesheet" href="{% static 'shared/css/bootstrap.extra.css' %}" type="text/css" charset="utf-8">
       <link rel="stylesheet" href="{% static 'shared/css/base.css' %}" type="text/css" charset="utf-8">
-      <link rel="stylesheet" href="{% static 'shared/css/player.css' %}" type="text/css" charset="utf-8">
+      <link rel="stylesheet" href="{% static 'player/css/base.css' %}" type="text/css" charset="utf-8">
+      <link rel="stylesheet" href="{% static 'player/css/user.css' %}" type="text/css" charset="utf-8">
     {% endcompress %}
 
     <!-- Dynamic Styles -->
@@ -62,6 +63,9 @@
             </ul>
             <ul class="nav pull-right">
               {% if user.is_active %}
+                <li id="nav_friends"><a href="{% url account_friends %}">
+                    <i class="icon-user"></i> Friends
+                </a></li>
                 <li id="nav_settings"><a href="{% url account_settings %}">
                     <i class="icon-wrench"></i> Settings
                 </a></li>

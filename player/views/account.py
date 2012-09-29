@@ -28,6 +28,17 @@ class AccountHomeView(LoginRequiredMixin, View):
             context_instance=RequestContext(request)
         )
 
+class FriendsView(LoginRequiredMixin, View):
+    def get(self, request):
+        out = {
+            'friends': request.user.friends.all()
+        }
+        return render_to_response(
+            'account/friends.html',
+            out,
+            context_instance=RequestContext(request)
+        )
+
 
 class SettingsView(LoginRequiredMixin, View):
     def get(self, request):
@@ -124,6 +135,12 @@ class LoginView(View):
             url = '%s?username=%s' % (reverse('account_login'), username)
 
         return HttpResponseRedirect(url)
+
+
+
+################
+# API Calls
+################
 
 class UserSearchApi(Api):
 

@@ -1,5 +1,6 @@
 # Django settings for webdnd project.
 import os.path
+import re
 
 
 ########################################
@@ -99,7 +100,8 @@ STATIC_URL = '/static/'
 # A list of locations of additional static files
 STATICFILES_DIRS = (
     ('shared', '/apps/webdnd/shared/static/'),
-    ('alerts', '/apps/webdnd/alerts/static/',)
+    ('alerts', '/apps/webdnd/alerts/static/'),
+    ('player', '/apps/webdnd/player/static/'),
 )
 
 # List of finder classes that know how to find static files in

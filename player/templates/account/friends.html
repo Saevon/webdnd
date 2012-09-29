@@ -1,0 +1,126 @@
+{% extends "account/base.html" %}
+{% load staticfiles %}
+
+{% block page_title %}
+    {{ block.super }} ~ Friends
+{% endblock %}
+{% block tab_name %}friends{% endblock %}
+
+{% block content %}
+<form class="form-vertical form-search" id="friends" method="POST">
+    {% csrf_token %}
+
+    <legend>
+        Your Friends
+        <div class="control-group pull-right">
+            <div class='controls'>
+                <button type="submit" class="btn btn-info" name="save-changes">
+                    Save Changes
+                </button>
+            </div>
+        </div>
+    </legend>
+
+    <div class="control-group">
+        <div class="controls" id="input-friends">
+            <blockquote class="empty span9 muted">Your friends list is empty.</blockquote>
+        </div>
+    </div>
+
+
+    <legend>Find A User</legend>
+
+    <div class="control-group" id="group-search">
+        <div class="controls">
+            <div class="input-append">
+                <input type="text" id="user-search" class="span2 search-query" placeholder="Username / Name">
+                <button class="btn btn-small btn-search"><i class="icon-search"></i> Search</button>
+            </div>
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls offset2" id="user-search-results">
+        </div>
+    </div>
+
+
+    <!-- Templates -->
+    <script type="text/x-mustache-template" id="template-user">
+        <%#players%>
+        <blockquote class="user span2 <%type%>" data-type="<%type%>">
+            <span class="pull-right action text-success add">✔</span>
+            <span class="pull-right action text-error remove">✘</span>
+            <span class="username"> <%name%> <span>
+            <input class="hide" name="<%type%>s[]" value="<%id%>"></input>
+        </blockquote>
+        <%/players%>
+    </script>
+
+    <script type="text/x-mustache-template" id="template-search-empty">
+        <blockquote class="empty span9 text-warning">No users found.</blockquote>
+    </script>
+
+    <script type="text/x-mustache-template" id="template-user-empty">
+    </script>
+
+</form>
+
+{% endblock content %}
+
+
+
+{% block compress_js %}
+<script type="text/javascript" src="{% static 'player/js/user_search.js' %}"></script>
+{% endblock %}
+
+
+{% block dynamic_js %}
+<script type="text/javascript">
+$(function() {
+    // Adds the starting friends
+    var data = {'players': [{% for user in friends %}
+        {'id': {{ user.id }}, 'name': '{{ user.name }}', 'type': 'friend'},
+    {% endfor %} ]};
+
+    var tmpl;
+    if (data.players.length !== 0) {
+        $('#input-friends .empty').hide();
+
+        tmpl = $('#template-user').html();
+        $('#input-friends').append(Mustache.render(tmpl, data));
+        $('#input-friends .user').each(function() {
+            friends.user($(this));
+        })
+    }
+
+    // Creates the search listener
+    var search = friends.search($('#user-search'), $('#user-search-results'));
+    $('.btn-search').on('click', function(e) {
+        search.refresh();
+        e.preventDefault();
+    });
+});
+</script>
+{% endblock %}
+
+
+
+{% block compress_css %}
+<style>
+    #group-search .search-query {
+        height: 16px;
+    }
+    .unfriend .action.remove,
+    .search-user .action.remove,
+    .friend .action.add,
+    .new-friend .action.add {
+        display: none;
+    }
+    .unfriend {
+        background-color: #FDD;
+    }
+    .new-friend {
+        background-color: #DFD;
+    }
+</style>
+{% endblock compress_css %}

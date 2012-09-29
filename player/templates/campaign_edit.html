@@ -2,13 +2,13 @@
 
 
 {% block page_title %}
-    Webdnd ~ {% if create %}New{% else %}Edit{% endif %} Campaign
+    {{ block.super}} ~ {% if create %}New{% else %}Edit{% endif %} Campaign
 {% endblock %}
 {% block tab_name %}campaigns{% endblock %}
 
 
 {% block content %}
-<form class="form-horizontal form-search" id="campaign" method="POST">
+<form class="form-horizontal" id="campaign" method="POST">
     {% csrf_token %}
     <legend>
         {% if create %}New{% else %}Edit{% endif %} Campaign
@@ -58,30 +58,11 @@
                     <input class="hide" name="" value="{{ player.id }}"></input>
                 </blockquote>
             {% empty %}
-                <blockquote class="span9 muted">Your friends list is empty.</blockquote>
+                <blockquote class="empty span9 muted">Your friends list is empty.</blockquote>
             {% endfor %}
         </div>
     </div>
 
-<!--     <div class="control-group">
-        <label class="control-label" for="user-search">Find User </label>
-        <div class="controls" id="user-search">
-            <div class="input-append">
-                <input type="text" class="span2 search-query">
-                <button class="btn btn-small"><i class="icon-search"></i> Search</button>
-            </div>
-        </div>
-        <div class="controls" id="user-search-results">
-        </div>
-
-        <script type="text/template" id="search-result-user-template">
-            <div class="user search-result span2">
-                <small class="username">name</small>
-                <input class="hide" name="players[]" value="{{ player.name }}"></input>
-                <span class="pull-right action text-error">✘</span>
-                <span class="add text-success hide pull-right">✔</span>
-            </div>
-        </script> -->
 </form>
 {% endblock content %}
 
@@ -115,56 +96,3 @@ $(function() {
 {% endblock %}
 
 
-{% block compress_css %}
-<style>
-/*#user-search .search-query {
-    height: 16px;
-}
-.search-result {
-    clear: both;
-    border: 1px solid #AAA;
-    margin-left: 0px;
-    -webkit-border-radius: 14px 0 0 14px;
-    -moz-border-radius: 14px 0 0 14px;
-    border-radius: 14px 0 0 14px;
-    padding-left: 14px;
-    border-right-width: 3px;
-
-    cursor: pointer;
-}
-.search-result:hover .add {
-    display: block;
-    padding-right: 2px;
-}
-*/
-/* Player Selection */
-.user {
-    -webkit-border-radius: 14px 14px 14px 14px;
-    -moz-border-radius: 14px 14px 14px 14px;
-    border-radius: 14px 14px 14px 14px;
-}
-.user .action {
-    font-size: 9px;
-    border: 1px solid #ADE;
-    -webkit-border-radius: 100%;
-    -moz-border-radius: 100%;
-    border-radius: 100%;
-    text-align: center;
-    width: 20px;
-    cursor: pointer;
-
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-.user .action:hover {
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
-    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
-}
-
-</style>
-{% endblock %}

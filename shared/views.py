@@ -37,9 +37,10 @@ class Api(LoginRequiredMixin, View):
             if isinstance(data, list):
                 paging = {
                     'page': 1,
+                    'length': len(data),
                     'pagelen': -1,
                     'pages': 1,
-                    'total': len(data)
+                    'total': len(data),
                 }
 
             return {

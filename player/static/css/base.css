@@ -1,12 +1,3 @@
-/* User styles */
-.user .username {
-    font-weight: bolder;
-}
-.user:hover .username {
-    color: #66F;
-}
-
-
 /* Campaign Overview lists */
 .user:hover,
 .campaign:hover {

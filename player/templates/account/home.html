@@ -1,7 +1,7 @@
 {% extends "account/base.html" %}
 
 
-{% block page_title %}Webdnd ~ {{ user.username }}{% endblock %}
+{% block page_title %} {{ block.super }} ~ {{ user.username }}{% endblock %}
 {% block tab_name %}home{% endblock %}
 
 
