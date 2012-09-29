@@ -56,7 +56,7 @@ class FriendsView(LoginRequiredMixin, View):
             level='success'
         )
 
-        return self.get(request)
+        return HttpResponseRedirect(reverse('account_friends'))
 
 
 class SettingsView(LoginRequiredMixin, View):
@@ -104,8 +104,9 @@ class SettingsView(LoginRequiredMixin, View):
                 text='There were some problems with your input.',
                 level='error'
             )
+            return self.get(request)
 
-        return self.get(request)
+        return HttpResponseRedirect(reverse('account_settings'))
 
 
 class LogoutView(LoginRequiredMixin, View):
@@ -119,12 +120,7 @@ class LogoutView(LoginRequiredMixin, View):
 
 class LoginView(View):
     def get(self, request):
-        out = {
-            'username': request.GET.get('username', ''),
-            'password': '',
-            # TODO: this does nothing right now, and isnt saved
-            'remember': request.GET.get('remember', ''),
-        }
+        out = {}
         if request.user.is_authenticated():
             out['username'] = request.user.username
             request.alert('You are already logged in', level='info')
@@ -151,7 +147,10 @@ class LoginView(View):
                 url = '%s?username=%s' % (reverse('account_login'), username)
         else:
             request.alert(title='Login Failed', text='Please check your credentials and try agin.', level='error')
-            url = '%s?username=%s' % (reverse('account_login'), username)
+            request.highlight('#group-pass')
+            request.highlight('#group-username')
+
+            return self.get(request)
 
         return HttpResponseRedirect(url)
 

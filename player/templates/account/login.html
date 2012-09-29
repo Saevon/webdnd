@@ -9,14 +9,14 @@
 <form class="form-horizontal" id="login" method="POST">
     <legend> Login </legend>
     {% csrf_token %}
-    <div class="control-group">
+    <div class="control-group" id="group-username">
         <label class="control-label" for="input-username">Username</label>
         <div class="controls">
             <input type="text" name="username" placeholder="Username"
                     value="{{ username }}" id="input-username">
         </div>
     </div>
-    <div class="control-group">
+    <div class="control-group" id="group-pass">
         <label class="control-label" for="input-password">Password</label>
         <div class="controls">
             <input type="password" name="password" placeholder="Password" id="input-password">
