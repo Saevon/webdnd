@@ -14,13 +14,15 @@
     <title>{% block page_title %}Webdnd{% endblock page_title %}</title>
 
 
-
+    <!-- Styles -->
     <link rel="stylesheet" href="{% static 'shared/css/bootstrap.css' %}" type="text/css" charset="utf-8">
     {% compress css %}
       <link rel="stylesheet" href="{% static 'shared/css/bootstrap.extra.css' %}" type="text/css" charset="utf-8">
       <link rel="stylesheet" href="{% static 'shared/css/base.css' %}" type="text/css" charset="utf-8">
       <link rel="stylesheet" href="{% static 'shared/css/player.css' %}" type="text/css" charset="utf-8">
     {% endcompress %}
+
+    <!-- Dynamic Styles -->
     {% compress css %}
       {% block compress_css %}{% endblock compress_css %}
     {% endcompress %}
@@ -72,7 +74,7 @@
                 </a></li>
               {% endif %}
             </ul>
-          </div><!--/.nav-collapse -->
+          </div>
         </div>
       </div>
     </div>
@@ -99,9 +101,11 @@
 
 
     <!-- Javascript at the bottom for faster page loading -->
+    <script type="text/javascript" src="{% static 'shared/js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'shared/js/bootstrap.js' %}"></script>
     {% compress js %}
-      <script type="text/javascript" src="{% static 'shared/js/jquery.js' %}"></script>
-      <script type="text/javascript" src="{% static 'shared/js/bootstrap.js' %}"></script>
+      <script type="text/javascript" src="{% static 'shared/js/mustache.js' %}"></script>
+      <script type="text/javascript" src="{% static 'shared/js/mustache-plugins.js' %}"></script>
       <script type="text/javascript" src="{% static 'shared/js/bootstrap-plugins.js' %}"></script>
       <script type="text/javascript" src="{% static 'alerts/alert.js' %}"></script>
       <script type="text/javascript" src="{% static 'alerts/highlighter.js' %}"></script>
@@ -110,6 +114,8 @@
     {% compress js %}
       {% block compress_js %}{% endblock compress_js %}
     {% endcompress %}
+
+    <!-- Dynamic Javascript -->
     <script type="text/javascript">
         $(function() {
             $('#nav_{% block tab_name %}{% endblock %}').addClass('active');
