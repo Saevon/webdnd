@@ -119,14 +119,19 @@ friends.search = (function() {
 
                 this._elem.append(this.ctemplate(data));
 
+                var kept = 0;
                 this._elem.find('.user').each(function() {
                     var elem = $(this);
                     if (friends.unique(elem)) {
                         friends.user(elem);
+                        kept++;
                     } else {
                         elem.remove();
                     }
                 });
+                if (!kept) {
+                    this._elem.append(this.ctemplate_empty(response.output));
+                }
             }
         },
 
