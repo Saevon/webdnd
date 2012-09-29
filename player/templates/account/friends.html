@@ -47,7 +47,7 @@
     <!-- Templates -->
     <script type="text/x-mustache-template" id="template-user">
         <%#players%>
-        <blockquote class="user span2 <%type%>" data-type="<%type%>">
+        <blockquote class="user span2 <%type%>" data-type="<%type%>" data-id="<%id%>">
             <span class="pull-right action text-success add">✔</span>
             <span class="pull-right action text-error remove">✘</span>
             <span class="username"> <%name%> <span>
@@ -78,9 +78,11 @@
 <script type="text/javascript">
 $(function() {
     // Adds the starting friends
-    var data = {'players': [{% for user in friends %}
-        {'id': {{ user.id }}, 'name': '{{ user.name }}', 'type': 'friend'},
+    var data = {'players': [{% for friend in friends %}
+        {'id': {{ friend.id }}, 'name': '{{ friend.name }}', 'type': 'friend'},
     {% endfor %} ]};
+
+    friends.unique({{ user.id }}, true);
 
     var tmpl;
     if (data.players.length !== 0) {
@@ -89,7 +91,10 @@ $(function() {
         tmpl = $('#template-user').html();
         $('#input-friends').append(Mustache.render(tmpl, data));
         $('#input-friends .user').each(function() {
-            friends.user($(this));
+            var elem = $(this);
+            if (friends.unique(elem, true)) {
+                friends.user(elem);
+            }
         })
     }
 

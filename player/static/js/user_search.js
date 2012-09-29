@@ -1,10 +1,34 @@
 
 
 var friends = {};
+
+friends.unique = (function() {
+    var users = {};
+
+    var unique = function unique(elem, add) {
+        var id = elem;
+        if (typeof(elem) != 'number') {
+            id = elem.data('id');
+        }
+
+        if (users[id] !== undefined) {
+            return false;
+        } else {
+            if (add) {
+                users[id] = true;
+            }
+            return true;
+        }
+    };
+
+    return unique;
+})();
+
 friends.user = (function() {
 
     var add = function(elem) {
         var type = elem.data('type');
+        friends.unique(elem, true);
         if (type == 'search-user') {
             elem.detach().appendTo('#input-friends');
             elem.find('input').attr('name', 'new-friends[]');
@@ -84,7 +108,7 @@ friends.search = (function() {
         render: function(response) {
             this._elem.empty();
 
-            if (response.paging.length == 0) {
+            if (!response.paging.length) {
                 this._elem.append(this.ctemplate_empty(response.output));
             } else {
                 var data = {'players': response.output};
@@ -97,7 +121,11 @@ friends.search = (function() {
 
                 this._elem.find('.user').each(function() {
                     var elem = $(this);
-                    friends.user(elem);
+                    if (friends.unique(elem)) {
+                        friends.user(elem);
+                    } else {
+                        elem.remove();
+                    }
                 });
             }
         },

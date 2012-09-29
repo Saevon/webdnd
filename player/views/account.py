@@ -32,7 +32,7 @@ class AccountHomeView(LoginRequiredMixin, View):
 class FriendsView(LoginRequiredMixin, View):
     def get(self, request):
         out = {
-            'friends': request.user.friends.all()
+            'friends': request.user.friends.exclude(id=request.user.id)
         }
         return render_to_response(
             'account/friends.html',
