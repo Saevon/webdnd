@@ -49,13 +49,13 @@
 
     <div class="control-group" id="group-players">
         <label class="control-label" for="input-players">Players: </label>
-        <div class="controls" id="input-players" data-name="players[]">
-            {% for player in friends %}
-                <blockquote class="user span2">
+        <div class="controls" id="input-players">
+            {% for friend in friends %}
+                <blockquote class="user span2 {% if friend.id in players %}player{% else %}non-player{% endif %}">
                     <span class="pull-right action text-error add">✘</span>
-                    <span class="pull-right action text-success remove hide">✔</span>
-                    <span class="username">{{ player.name }}</span>
-                    <input class="hide" name="" value="{{ player.id }}"></input>
+                    <span class="pull-right action text-success remove">✔</span>
+                    <span class="username">{{ friend.name }}</span>
+                    <input class="hide" name="{% if friend.id in players %}players[]{% endif %}" value="{{ friend.id }}"></input>
                 </blockquote>
             {% empty %}
                 <blockquote class="empty span9 muted">Your friends list is empty.</blockquote>
@@ -67,32 +67,59 @@
 {% endblock content %}
 
 
+
+{% block compress_css %}
+<style>
+    .player .action.add,
+    .non-player .action.remove {
+        display: none;
+    }
+    .unplayer {
+        text-decoration: line-through;
+        background-color: #FDD;
+    }
+    .new-player {
+        background-color: #DFD;
+    }
+</style>
+{% endblock compress_css %}
+
+
+
 {% block compress_js %}
 <script type="text/javascript">
 $(function() {
     var player_input_name = $('#input-players').data('name');
 
     $('.user .action.add').on('click', function() {
-        $(this).hide();
         var elem = $(this).parents('.user');
-        elem.find('.action.remove').show();
 
-        elem.find('input').attr('name', player_input_name);
+        elem.find('input').attr('name', 'players[]');
+
+        if (elem.hasClass('unplayer')) {
+            elem.removeClass('unplayer');
+        } else if (elem.hasClass('non-player')) {
+            elem.addClass('new-player');
+        }
+        elem.removeClass('non-player').addClass('player');
     });
 
     $('.user .action.remove').on('click', function() {
-        $(this).hide();
         var elem = $(this).parents('.user');
-        elem.find('.action.add').show();
 
         elem.find('input').attr('name', '');
-    });
 
-    {% for player in players %}
-    $('input[value={{ player.account.id }}]').parents('.user').find('.add').trigger('click')
-    {% endfor %}
+        if (elem.hasClass('new-player')) {
+            elem.removeClass('new-player');
+        } else if (elem.hasClass('player')) {
+            elem.addClass('unplayer');
+        }
+        elem.removeClass('player').addClass('non-player');
+    });
 });
 </script>
 {% endblock %}
+
+
 
 

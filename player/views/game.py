@@ -44,7 +44,7 @@ class CampaignEditView(LoginRequiredMixin, View):
             }
         else:
             campaign = Campaign.objects.get(id=cid)
-            players = campaign.players.all()
+            players = set(p.user.id for p in campaign.players.all())
 
         out = {
             'players': players,
@@ -87,20 +87,22 @@ class CampaignEditView(LoginRequiredMixin, View):
             campaign.system = system
             campaign.save()
 
-            cur_players = [str(p.user.id) for p in campaign.players.all()]
+            cur_players = set(str(p.user.id) for p in campaign.players.all())
             keep = set()
             for id in players:
-                Player.objects.get_or_create(user=User.objects.get(id=id), campaign=campaign).save()
+                Player.objects.get_or_create(user=User.objects.get(id=id), campaign=campaign)
                 keep.add(id)
-            Player.objects.filter(user__id__in=set(cur_players) - keep, campaign=campaign).delete()
+            Player.objects.filter(user__id__in=cur_players - keep, campaign=campaign).delete()
 
-            alert = request.alert(
+            text = 'Your changes have been saved.'
+            if create:
+                text = 'A new campaign was created.'
+
+            request.alert(
                 prefix='Alright!',
-                text='Your changes have been saved',
+                text=text,
                 level='success'
             )
-            if create:
-                alert['text'] = 'A new campaign was created'
         else:
             request.alert(
                 title='Not Saved!.',
@@ -110,6 +112,6 @@ class CampaignEditView(LoginRequiredMixin, View):
             )
 
         if create and change:
-            return HttpResponseRedirect(reverse('game_campaign_edit', {'cid': cid}))
+            return HttpResponseRedirect(reverse('game_campaign_edit', kwargs={'cid': cid}))
 
         return self.get(request, cid)
