@@ -1,6 +1,6 @@
-from player.models import accounts
-from player.models import campaigns
-from player.models import players
+from webdnd.player.models import accounts
+from webdnd.player.models import campaigns
+from webdnd.player.models import players
 
 
 __all__ = [

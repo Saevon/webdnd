@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django import forms
 
-from player.models.accounts import Preference
+from webdnd.player.models.accounts import Preference
 
 
 class PreferenceInline(admin.TabularInline):

@@ -2,8 +2,8 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from player.constants.campaign import ROLEPLAYING_SYSTEMS
-from player.models.abstract import AbstractPlayerModel
+from webdnd.player.constants.campaign import ROLEPLAYING_SYSTEMS
+from webdnd.player.models.abstract import AbstractPlayerModel
 
 
 class Campaign(AbstractPlayerModel):

@@ -1,10 +1,10 @@
 from django.contrib.auth.models import User
 from django.contrib import admin
 
-from player.admin.user import AccountAdmin
-from player.models.accounts import Preference
-from player.models.campaigns import Campaign
-from player.models.players import Player
+from webdnd.player.admin.user import AccountAdmin
+from webdnd.player.models.accounts import Preference
+from webdnd.player.models.campaigns import Campaign
+from webdnd.player.models.players import Player
 
 
 # Adds user customizations

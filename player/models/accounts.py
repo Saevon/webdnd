@@ -2,8 +2,8 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 
-from player.constants.account import PREFERENCES
-from player.models.abstract import AbstractPlayerModel
+from webdnd.player.constants.account import PREFERENCES
+from webdnd.player.models.abstract import AbstractPlayerModel
 from shared.views import ModelMixin
 
 

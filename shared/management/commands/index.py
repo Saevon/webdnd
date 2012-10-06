@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.conf import settings
 
-from player.views.index import UserIndex
+from webdnd.player.views.index import UserIndex
 from optparse import make_option
 
 class Command(BaseCommand):

@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import patterns, include, url
+from django.conf.urls.defaults import patterns, url
 from django.views.generic.simple import redirect_to
 
 from webdnd.player.views.account import AccountHomeView
