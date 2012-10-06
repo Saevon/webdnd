@@ -142,7 +142,7 @@ class LoginView(View):
             if user.is_active:
                 login(request, user)
                 url = request.POST.get('next', None)
-                if url is None:
+                if not url:
                     url = reverse('account_home')
 
                 prefix = 'Welcome %s!' % (user.get_full_name())
