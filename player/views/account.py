@@ -120,7 +120,10 @@ class LogoutView(LoginRequiredMixin, View):
 
 class LoginView(View):
     def get(self, request):
-        out = {}
+        out = {
+            'username': request.GET.get('username', ''),
+            'next': request.GET.get('next', ''),
+        }
         if request.user.is_authenticated():
             out['username'] = request.user.username
             request.alert('You are already logged in', level='info')
@@ -138,7 +141,9 @@ class LoginView(View):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                url = reverse('account_home')
+                url = request.POST.get('next', None)
+                if url is None:
+                    url = reverse('account_home')
 
                 prefix = 'Welcome %s!' % (user.get_full_name())
                 request.alert(blurb('welcome'), prefix=prefix, title='Logged in', level='success')
