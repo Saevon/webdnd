@@ -11,6 +11,9 @@ from webdnd.player.models.campaigns import Game
 from webdnd.player.models.players import Player
 from webdnd.shared.views import LoginRequiredMixin
 
+import urllib
+
+
 class CampaignListView(LoginRequiredMixin, View):
     def get(self, request):
         campaigns = Campaign.objects.filter(owner=request.user)
@@ -134,19 +137,13 @@ class PlayView(LoginRequiredMixin, View):
         game.new_key()
         game.save()
 
-        # Current redirect to the tornado app, needs to be fixed up for deployment
-        # See line below for the actual url
-        return HttpResponseRedirect(':8888/play?cid=%(cid)s&uid=%(uid)i&key=%(key)s' % {
+        args = urllib.urlencode({
             'cid': cid,
             'uid': request.user.id,
             'key': game.key,
         })
 
-        # Actual tornado redirect
-        return HttpResponseRedirect('/play?cid=%(cid)s&uid=%(uid)i&key=%(key)s' % {
-            'cid': cid,
-            'uid': request.user.id,
-            'key': game.key,
-        })
+        # Redirect to the Tornado App
+        return HttpResponseRedirect('/play?%s' % (args))
 
 
