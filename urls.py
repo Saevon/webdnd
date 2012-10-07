@@ -5,10 +5,19 @@ from django.contrib import admin
 
 admin.autodiscover()
 
+from django.template import RequestContext
+from django.shortcuts import render_to_response
+def tornado_redirect(request):
+    return render_to_response(
+        'campaign_play.html',
+        {},
+        context_instance=RequestContext(request)
+    )
 
 urlpatterns = patterns('',
     url(r'^account/', include('webdnd.player.urls.account')),
     url(r'^game/', include('webdnd.player.urls.game')),
+    url(r'^play/?', tornado_redirect, name='campaign_play'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),

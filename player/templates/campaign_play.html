@@ -1,0 +1,16 @@
+{% extends "account/base.html" %}
+
+
+{% block page_title %}
+    {{ block.super}} ~ Play Redirect
+{% endblock %}
+{% block tab_name %}campaigns{% endblock %}
+
+
+{% block dynamic_js %}
+<script type="text/javascript">
+$(function() {
+    window.location = window.location.href.replace('9000', '8888');
+});
+</script>
+{% endblock %}
