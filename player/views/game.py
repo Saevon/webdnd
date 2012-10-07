@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 
 from webdnd.player.constants.campaign import ROLEPLAYING_SYSTEMS
 from webdnd.player.models.campaigns import Campaign
+from webdnd.player.models.campaigns import Game
 from webdnd.player.models.players import Player
 from webdnd.shared.views import LoginRequiredMixin
 
@@ -115,3 +116,37 @@ class CampaignEditView(LoginRequiredMixin, View):
             return HttpResponseRedirect(reverse('game_campaign_edit', kwargs={'cid': cid}))
 
         return self.get(request, cid)
+
+class PlayView(LoginRequiredMixin, View):
+
+    def get(self, request, cid):
+        campaign = Campaign.objects.get(id=cid)
+        if (not campaign.players.filter(user=request.user).count()
+            or campaign.owner == request.user):
+            # Not allowed, error out
+            pass
+
+        # Delete any old sesions
+        Game.objects.filter(user=request.user).delete()
+
+        # Create the game session
+        game = Game(user=request.user, campaign=campaign)
+        game.new_key()
+        game.save()
+
+        # Current redirect to the tornado app, needs to be fixed up for deployment
+        # See line below for the actual url
+        return HttpResponseRedirect(':8888/play?cid=%(cid)s&uid=%(uid)i&key=%(key)s' % {
+            'cid': cid,
+            'uid': request.user.id,
+            'key': game.key,
+        })
+
+        # Actual tornado redirect
+        return HttpResponseRedirect('/play?cid=%(cid)s&uid=%(uid)i&key=%(key)s' % {
+            'cid': cid,
+            'uid': request.user.id,
+            'key': game.key,
+        })
+
+

@@ -18,9 +18,9 @@
                     {% if create %}Create{% else %}Save{% endif %} Campaign
                 </button>
                 {% if not create %}
-                    <button type="button" class="btn btn-info" name="campaign_play">
+                    <a class="btn btn-info" href="{% url game_campaign_play cid=campaign.id %}">
                         Play
-                    </button>
+                    </a>
                 {% endif %}
             </div>
         </div>
