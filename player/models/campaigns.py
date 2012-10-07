@@ -40,6 +40,8 @@ KEY_LENGTH = 64
 
 class Game(models.Model):
 
+    ALLOWED_CHARS = string.ascii_letters + string.digits + '~!@#$%^*()_+-=,./;:|\\{}[]'
+
     class Meta:
         app_label = 'player'
         unique_together = ('user', 'campaign')
@@ -63,7 +65,7 @@ class Game(models.Model):
     )
 
     def new_key(self):
-        self.key = ''.join([random.choice(string.printable) for i in range(KEY_LENGTH)])
+        self.key = ''.join([random.choice(Game.ALLOWED_CHARS) for i in range(KEY_LENGTH)])
 
 
 
