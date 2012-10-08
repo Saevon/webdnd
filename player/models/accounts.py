@@ -22,7 +22,7 @@ class UserMixin(ModelMixin):
 
     @property
     def name(self):
-        return unicode(self)
+        return u'%s %s' % (self.last_name, self.first_name)
 
 
 class Preference(AbstractPlayerModel):

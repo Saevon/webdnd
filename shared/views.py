@@ -4,6 +4,9 @@ from django.views.generic import View
 
 from webdnd.shared.utils.decorators import json_return
 from webdnd.shared.utils.api import api_output, http_auth_login
+from webdnd.shared.utils.api import InvalidKey
+
+from webdnd.player.models.campaigns import Game
 
 class LoginRequiredMixin(object):
     """
@@ -13,9 +16,6 @@ class LoginRequiredMixin(object):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
-
-class ApiError(BaseException):
-    pass
 
 class Api(View):
     @classmethod
@@ -34,8 +34,13 @@ class AjaxApi(LoginRequiredMixin, Api):
 class SyncraeApi(Api):
 
     @method_decorator(http_auth_login)
-    def dispatch(self, *args, **kwargs):
-        return super(SyncraeApi, self).dispatch(*args, **kwargs)
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            kwargs['game'] = Game.objects.get(key=request.REQUEST.get('key', ''))
+        except Game.DoesNotExist:
+            kwargs['output'].error(InvalidKey('The game key is invalid, please try restarting your game session.'))
+
+        super(SyncraeApi, self).dispatch(request, *args, **kwargs)
 
 
 class MixinType(type):

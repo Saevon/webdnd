@@ -5,14 +5,17 @@ from django.conf import settings
 from functools import wraps
 from webdnd.shared.utils.decorators import cascade
 import base64
-import simplejson
 
 
 class ApiError(BaseException):
-    pass
+    ERR_CODE = 000
+
+class InvalidKey(ApiError):
+    ERR_CODE = 001
 
 class ApiWarning(BaseException):
-    pass
+    ERR_CODE = 100
+
 
 class ApiOutput(object):
 
@@ -97,11 +100,11 @@ def api_output(func):
 
 
 def http_auth_login(func):
+    '''
+    Allows pre-request login for Api endpoints
+    '''
     @wraps(func)
     def view_or_basicauth(request, *args, **kwargs):
-        '''
-        Allows pre-request login for Api endpoints
-        '''
         if 'HTTP_AUTHORIZATION' in request.META:
             auth = request.META['HTTP_AUTHORIZATION'].split()
             if len(auth) == 2 and auth[0].lower() == 'basic':
@@ -126,3 +129,4 @@ def http_auth_login(func):
         response['WWW-Authenticate'] = 'Basic realm="api"'
         return response
     return view_or_basicauth
+

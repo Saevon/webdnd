@@ -11,6 +11,7 @@ from webdnd.player.models.campaigns import Campaign
 from webdnd.shared.views import LoginRequiredMixin
 from webdnd.shared.utils.quotes import blurb
 from webdnd.shared.views import AjaxApi
+from webdnd.shared.views import SyncraeApi
 
 from webdnd.player.views.index import UserIndex
 
@@ -171,6 +172,18 @@ class UserSearchApi(AjaxApi):
         results = UserIndex.get(settings.USER_INDEX_DIR).search(text)
 
         output.output(results)
+
+
+# Syncrae
+
+class UserDetailsApi(SyncraeApi):
+
+    def get(self, request, text, output):
+        output.output({
+            'name': request.user.name,
+            'is_dm': ''
+        })
+
 
 
 
