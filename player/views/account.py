@@ -178,10 +178,10 @@ class UserSearchApi(AjaxApi):
 
 class UserDetailsApi(SyncraeApi):
 
-    def get(self, request, text, output):
+    def get(self, request, output, game):
         output.output({
-            'name': request.user.name,
-            'is_dm': ''
+            'name': game.user.name,
+            'is_dm': (game.user == game.campaign.owner),
         })
 
 

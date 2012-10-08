@@ -36,7 +36,7 @@ class SyncraeApi(Api):
     @method_decorator(http_auth_login)
     def dispatch(self, request, *args, **kwargs):
         try:
-            kwargs['game'] = Game.objects.get(key=request.REQUEST.get('key', ''))
+            kwargs['game'] = Game.objects.select_related().get(key=request.REQUEST.get('key', ''))
         except Game.DoesNotExist:
             kwargs['output'].error(InvalidKey('The game key is invalid, please try restarting your game session.'))
 

@@ -91,9 +91,12 @@ def api_output(func):
         out = ApiOutput()
         kwargs['output'] = out
         try:
-            func(*args, **kwargs)
+            data = func(*args, **kwargs)
         except ApiError:
             pass
+        else:
+            if isinstance(data, HttpResponse):
+                return data
         return out.sanitize()
     return wrapper
 
