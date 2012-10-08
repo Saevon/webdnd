@@ -1,0 +1,46 @@
+[
+    {
+        "pk": 1,
+        "model": "auth.user",
+        "fields": {
+            "username": "admin",
+            "first_name": "Lorin",
+            "last_name": "Gaetin",
+            "is_active": true,
+            "is_superuser": true,
+            "is_staff": true,
+            "last_login": "2012-10-07T16:48:59.187",
+            "groups": [],
+            "user_permissions": [],
+            "password": "pbkdf2_sha256$10000$6o65jQtvBZzQ$ChLmX+jl9NQkHAD3yX1E50kNsu1CKrrdnAap2J4M8PQ=",
+            "email": "admin@kyomae.com",
+            "date_joined": "2012-09-27T23:26:50.911"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "auth.user",
+        "fields": {
+            "username": "syncrae",
+            "first_name": "Syncrae",
+            "last_name": "Tornado",
+            "is_active": true,
+            "is_superuser": true,
+            "is_staff": true,
+            "last_login": "2012-10-07T16:48:59.187",
+            "groups": [],
+            "user_permissions": [],
+            "password": "pbkdf2_sha256$10000$wf7H7Y9HTotU$Q1ganyrRI+OuKyZdWV8q4bJx96dbId9QKKa4FSvqj08=",
+            "email": "syncrae@kyomae.com",
+            "date_joined": "2012-09-27T23:26:50.911"
+        }
+    },
+    {
+        "pk": "3fe28f8b1c29a42783e3cdea788be6ea",
+        "model": "sessions.session",
+        "fields": {
+            "expire_date": "2013-10-09T14:47:59.234",
+            "session_data": "NDM1ZDg0NjY3YmFmMWM3ODFhZmFkY2Y2ZjU4ZjA5OWY2MTViMjg4MTqAAn1xAShVEl9hdXRoX3Vz\nZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHED\nVQ1fYXV0aF91c2VyX2lkcQRLAVUJYWxlcnRfa2V5VSA3NDQ4MDMyNzAwYTI1MDhlMDU1NmNkYTgz\nNTQ2YTc1MHEFdS4=\n"
+        }
+    }
+]
