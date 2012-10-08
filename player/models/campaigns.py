@@ -40,7 +40,7 @@ KEY_LENGTH = 64
 
 class Game(models.Model):
 
-    ALLOWED_CHARS = string.ascii_letters + string.digits + '~!@#$%^*()_+-=,./;:|\\{}[]'
+    ALLOWED_CHARS = string.ascii_letters + string.digits + '~!@$%^*()_-,.:|{}[]'
 
     class Meta:
         app_label = 'player'

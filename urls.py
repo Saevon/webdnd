@@ -19,6 +19,8 @@ urlpatterns = patterns('',
     url(r'^game/', include('webdnd.player.urls.game')),
     url(r'^play/?', tornado_redirect, name='campaign_play'),
 
+    url(r'^api/', include('webdnd.player.urls.api')),
+
     # Uncomment the admin/doc line below to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 

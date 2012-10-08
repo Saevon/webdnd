@@ -183,6 +183,12 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 LOGIN_URL = '/account/login'
 LOGIN_REDIRECT_URL = '/'
 
+# Api settings
+HTTP_AUTH_USERS = (
+    'syncrae',
+)
+
+
 
 ##################################################
 # Contact info and TZ

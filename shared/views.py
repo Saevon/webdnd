@@ -2,8 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 
-from functools import wraps
-from shared.utils.decorators import json_return
+from webdnd.shared.utils.decorators import json_return
+from webdnd.shared.utils.api import api_output, http_auth_login
 
 class LoginRequiredMixin(object):
     """
@@ -17,38 +17,26 @@ class LoginRequiredMixin(object):
 class ApiError(BaseException):
     pass
 
-class Api(LoginRequiredMixin, View):
+class Api(View):
     @classmethod
     def as_view(cls, *args, **kwargs):
         out = super(Api, cls).as_view(*args, **kwargs)
-        return json_return(Api.api_format(out))
+        return json_return(
+            api_output(
+                out
+            )
+        )
 
-    @staticmethod
-    def api_format(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            errors = []
-            paging = {}
-            try:
-                data = func(*args, **kwargs)
-            except ApiError as err:
-                errors = [err]
 
-            if isinstance(data, list):
-                paging = {
-                    'page': 1,
-                    'length': len(data),
-                    'pagelen': -1,
-                    'pages': 1,
-                    'total': len(data),
-                }
+class AjaxApi(LoginRequiredMixin, Api):
+    pass
 
-            return {
-                'output': data,
-                'errors': errors,
-                'paging': paging
-            }
-        return wrapper
+class SyncraeApi(Api):
+
+    @method_decorator(http_auth_login)
+    def dispatch(self, *args, **kwargs):
+        return super(SyncraeApi, self).dispatch(*args, **kwargs)
+
 
 class MixinType(type):
     def __new__(cls, name, bases, dct):

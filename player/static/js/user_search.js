@@ -84,7 +84,7 @@ friends.user = (function() {
 
 friends.search = (function() {
     var result  = {
-        endpoint: '/account/api/search/',
+        endpoint: '/api/account/search/',
         template: '#template-user',
         template_empty: '#template-search-empty',
         _request: false,

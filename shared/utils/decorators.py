@@ -22,11 +22,14 @@ import simplejson
 def json_return(func):
     """
     Wraps the returned object in a HttpResponse after a json dump,
-    returning that instead
+    returning that instead. Unless the return is a HttpResponse
     """
     @wraps(func)
     def wrapper(*args, **kwargs):
         data = func(*args, **kwargs)
+
+        if isinstance(data, HttpResponse):
+            return data
 
         response = HttpResponse(mimetype='application/json')
         simplejson.dump(data, response)

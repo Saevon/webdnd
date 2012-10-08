@@ -10,7 +10,7 @@ from django.views.generic import View
 from webdnd.player.models.campaigns import Campaign
 from webdnd.shared.views import LoginRequiredMixin
 from webdnd.shared.utils.quotes import blurb
-from webdnd.shared.views import Api
+from webdnd.shared.views import AjaxApi
 
 from webdnd.player.views.index import UserIndex
 
@@ -165,12 +165,12 @@ class LoginView(View):
 # API Calls
 ################
 
-class UserSearchApi(Api):
+class UserSearchApi(AjaxApi):
 
-    def get(self, request, text):
+    def get(self, request, text, output):
         results = UserIndex.get(settings.USER_INDEX_DIR).search(text)
 
-        return results
+        output.output(results)
 
 
 
