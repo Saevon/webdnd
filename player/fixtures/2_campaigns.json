@@ -1,0 +1,44 @@
+[
+    {
+        "pk": 1,
+        "model": "player.campaign",
+        "fields": {
+            "owner": 1,
+            "rp_system": "dnd35",
+            "name": "Rena'ii"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "player.player",
+        "fields": {
+            "characters": [],
+            "can_dm": false,
+            "is_spectator": false,
+            "user": 3,
+            "campaign": 1
+        }
+    },
+    {
+        "pk": 2,
+        "model": "player.player",
+        "fields": {
+            "characters": [],
+            "can_dm": false,
+            "is_spectator": false,
+            "user": 4,
+            "campaign": 1
+        }
+    },
+    {
+        "pk": 3,
+        "model": "player.player",
+        "fields": {
+            "characters": [],
+            "can_dm": false,
+            "is_spectator": false,
+            "user": 5,
+            "campaign": 1
+        }
+    }
+]
