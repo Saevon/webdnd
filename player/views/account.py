@@ -182,6 +182,7 @@ class UserDetailsApi(SyncraeApi):
         output.output({
             'name': game.user.name,
             'is_dm': (game.user == game.campaign.owner),
+            'campaign_name': game.campaign.name,
         })
 
 
