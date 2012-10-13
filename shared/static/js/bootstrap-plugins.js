@@ -23,3 +23,5 @@ $(function() {
     //     return old_alert.call(this, opt);
     // }
 });
+
+Array.prototype.each = Array.prototype.forEach;
