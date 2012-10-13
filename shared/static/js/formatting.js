@@ -4,7 +4,7 @@
 var format = function format(elem) {
     elem = $(elem);
 
-    var subelem, elem;
+    var subelem;
 
     //---------------------------
     //----- Text Formatting -----
@@ -73,7 +73,7 @@ var format = function format(elem) {
         });
     }
 
-}
+};
 
 
 //---------------------------
@@ -83,14 +83,14 @@ format.capitalize = function capitalize(text) {
     text = text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
     text = text.replace(/_/g,' ');
     return text;
-}
+};
 
 
 //-----------------------------
 //----- Number Formatting -----
 //-----------------------------
 format.number = function number(num, precision, thousands_sep) {
-    precision = parseInt(precision) || 0;
+    precision = parseInt(precision, 10) || 0;
 
     num = parseFloat(num).toFixed(precision);
     if (!thousands_sep) {
@@ -118,7 +118,7 @@ format.number = function number(num, precision, thousands_sep) {
     }
 
     return integer;
-}
+};
 
 format.currency = function currency(num, allow_cents, shorten) {
     shorten = shorten !== undefined ? shorten : true;
@@ -132,30 +132,30 @@ format.currency = function currency(num, allow_cents, shorten) {
     }
 
     return '$' + format.number(num, (allow_cents ? 2 : 0), true);
-}
+};
 
 format.percent = function percent(num, precision) {
     return format.number(num, precision) + '%';
-}
+};
 
 /**
  * formats input in cp into gp
  */
 format.pieces = function pieces(num) {
-    num = parseInt(format.number(num, 0, false));
+    num = parseInt(format.number(num, 0, false), 10);
 
-    var cp = num - (parseInt(num / 10) * 10);
-    var sp = parseInt(num / 10) - (parseInt(num / 100) * 10);
-    var gp = parseInt(num / 100);
+    var cp = num - (parseInt(num / 10, 10) * 10);
+    var sp = parseInt(num / 10, 10) - (parseInt(num / 100, 10) * 10);
+    var gp = parseInt(num / 100, 10);
 
-    if (gp == 0 && sp == 0 && cp == 0) {
+    if (gp === 0 && sp === 0 && cp === 0) {
         return '0 gp';
     }
-    text = (gp > 0 ? format.number(gp, 0, true) + '<small>gp</small>, ' : '')
-        + (sp > 0 ? sp + '<small>sp</small>, ' : '')
-        + (cp > 0 ? cp + '<small>cp</small>, ' : '');
+    text = (gp > 0 ? format.number(gp, 0, true) + '<small>gp</small>, ' : '') +
+        (sp > 0 ? sp + '<small>sp</small>, ' : '') +
+        (cp > 0 ? cp + '<small>cp</small>, ' : '');
     return text.substr(0, text.length - 2);
-}
+};
 
 
 //-------------------
@@ -173,17 +173,17 @@ format.cstrs = function cstrs(elem, prefix, def) {
     suffix = (suffix ? suffix[1] : def);
 
     return suffix;
-}
+};
 
 /* returns a numbered suffix for of a class
  * e.g. precise-1 -> 1
  */
 format.cnums = function cnums(elem, prefix, def) {
-    var num = parseInt(format.cstrs(elem, prefix, def));
+    var num = parseInt(format.cstrs(elem, prefix, def), 10);
     if (isNaN(num)) {
         return 0;
     } else {
         return num;
     }
-}
+};
 
