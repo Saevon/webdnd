@@ -1,4 +1,5 @@
 from django.core.urlresolvers import reverse
+from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -7,11 +8,8 @@ from django.contrib.auth.models import User
 
 from webdnd.player.constants.campaign import ROLEPLAYING_SYSTEMS
 from webdnd.player.models.campaigns import Campaign
-from webdnd.player.models.campaigns import Game
 from webdnd.player.models.players import Player
 from webdnd.shared.views import LoginRequiredMixin
-
-import urllib
 
 
 class CampaignListView(LoginRequiredMixin, View):
@@ -124,26 +122,24 @@ class PlayView(LoginRequiredMixin, View):
 
     def get(self, request, cid):
         campaign = Campaign.objects.get(id=cid)
-        if (not campaign.players.filter(user=request.user).count()
-            or campaign.owner == request.user):
-            # Not allowed, error out
-            pass
+        player = campaign.players.filter(user=request.user)
 
-        # Delete any old sesions
-        Game.objects.filter(user=request.user).delete()
+        out = {
+            'campaign': campaign,
+        }
 
-        # Create the game session
-        game = Game(user=request.user, campaign=campaign)
-        game.new_key()
-        game.save()
+        if campaign.owner == request.user:
+            out['is_dm'] = True
 
-        args = urllib.urlencode({
-            'cid': cid,
-            'uid': request.user.id,
-            'key': game.key,
-        })
+        if (player.count()):
+            out['player'] = player[0]
 
-        # Redirect to the Tornado App
-        return HttpResponseRedirect('/play?%s' % (args))
+        # Remove Game object
+
+        return render_to_response('play.html',
+            out,
+            context_instance=RequestContext(request)
+        )
+
 
 

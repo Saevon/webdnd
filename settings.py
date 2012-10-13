@@ -59,6 +59,9 @@ INSTALLED_APPS = (
 
     # Alerts
     'webdnd.alerts',
+
+    # Syncrae: Tornado websockets app
+    'webdnd.syncrae',
 )
 
 DATABASES = {
@@ -106,6 +109,7 @@ STATICFILES_DIRS = (
     ('shared', '/apps/webdnd/shared/static/'),
     ('alerts', '/apps/webdnd/alerts/static/'),
     ('player', '/apps/webdnd/player/static/'),
+    ('syncrae', '/apps/webdnd/syncrae/static/'),
 )
 
 # List of finder classes that know how to find static files in
@@ -320,5 +324,11 @@ USER_CHAR_RE = re.compile(r'[^.@-_a-zA-Z0-9]*')
 
 # Alerts
 from alerts.settings import *
+
+
+# Syncrae
+from syncrae.config.settings import *
+
+
 
 

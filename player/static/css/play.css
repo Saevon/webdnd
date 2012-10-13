@@ -1,0 +1,68 @@
+html, body {
+    height: 100%;
+    background: orange;
+    background: #333;
+}
+div.message {
+    color: #eee;
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 10px;
+}
+div.message:hover:not(.type) {
+    background-color: #445;
+}
+div.message.type {
+    margin-top: 0px;
+}
+div.message.type .body {
+    color: #666;
+    font-weight: normal;
+}
+div.message.notification .body {
+    color: lightblue;
+    font-weight: normal;
+}
+div.message .name {
+    color: #999;
+    text-align: right;
+}
+div#messages {
+    position: fixed;
+    bottom: 60px;
+    left: 0;
+    right: 0;
+}
+div#form {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+
+
+
+div.item:nth-child(4n+5) {
+    margin-left: 0;
+}
+div.item > div {
+    background: #efefef;
+    background-image: -webkit-gradient(linear, left bottom,left top, color-stop(0.05, rgb(230,230,230)), color-stop(0.85, rgb(247,247,247)));
+    height: 240px;
+    margin-top: 2.564102564%;
+    margin-bottom: 2.564102564%;
+    border-radius: 8px;
+    box-shadow: 0px 2px 3px rgba(0,0,0,0.3);
+    border: solid 2px #fff;
+    padding: 10px;
+}
+div.item div.image {
+    width: 150px;
+    height: 150px;
+    background: lightblue;
+    border-radius: 8px;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
