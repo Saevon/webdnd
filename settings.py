@@ -139,6 +139,7 @@ COMPRESS_OUTPUT_DIR = '/compressed'
 #     # ('text/foobar', 'path.to.MyPrecompilerFilter'),
 # )
 
+
 # Locations of the template files
 TEMPLATE_DIRS = (
     '/apps/webdnd/shared/templates',
@@ -216,6 +217,66 @@ TIME_ZONE = 'Canada/Eastern'
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-ca'
 LANGUAGE_COOKIE_NAME = 'webdnd-language'
+
+
+
+##################################################
+# Logging
+##################################################
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'verbose': {
+            'format': '[%(asctime)s] %(levelname)s - %(message)s - %(module)s@%(funcName)s %(lineno)s - %(process)d %(thread)d',
+            'datefmt': "%d/%b/%Y %H:%M:%S",
+        },
+        'simple': {
+            'format': '[%(asctime)s] %(levelname)s - %(message)s - %(module)s@%(funcName)s %(lineno)s',
+            'datefmt': "%d/%b/%Y %H:%M:%S",
+        },
+    },
+    'filters': {
+
+    },
+    'handlers': {
+        'null': {
+            'level': 'DEBUG',
+            'class': 'django.utils.log.NullHandler',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'webdnd.syncrae.config.log.ColorizingStreamHandler',
+            'formatter': 'simple',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+        },
+    },
+    'loggers': {
+        # Root logger that colors output
+        # Any other loggers should have propagate False if they output
+        # to the console to prevent duplicated console messages
+        '': {
+            'handlers': ['console'],
+            'propagate': False,
+            'level': 'INFO',
+        },
+        # Built-in Django loggers
+        # 'django': {
+
+        # },
+        # 'django.request': {
+        #     'handlers': ['console'],
+        #     'level': 'ERROR' if not DEBUG else 'INFO',
+        #     'propagate': False,
+        # },
+        # 'django.db.backends': {
+
+        # },
+    }
+}
 
 
 
