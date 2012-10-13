@@ -11,3 +11,4 @@ hide_pyc.py
 static/compressed
 index/
 syncrae
+local_settings.py

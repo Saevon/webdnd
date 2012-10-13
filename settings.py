@@ -330,5 +330,11 @@ from alerts.settings import *
 from syncrae.config.settings import *
 
 
+# Local Settings File
+try:
+    from webdnd.local_settings import *
+except ImportError:
+    pass
+
 
 
