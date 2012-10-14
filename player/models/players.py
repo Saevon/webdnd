@@ -39,4 +39,9 @@ class Player(AbstractPlayerModel):
         return unicode(self)
 
     def __unicode__(self):
-        return u'%s' % (self.account.user.username)
+        return u'%s' % (self.user.name)
+
+
+
+
+

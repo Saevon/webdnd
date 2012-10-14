@@ -36,9 +36,9 @@
         <label class="control-label" for="input-system">Roleplaying System</label>
         <div class="controls">
             <select id="input-system" name="system">
-                {% for sys in systems %}
+                {% for sys, view_sys in systems %}
                     <option value="{{ sys }}" {% if sys == campaign.rp_system %}selected{% endif %}>
-                        {{ sys }}
+                        {{ view_sys }}
                     </option>
                 {% endfor %}
             </select>

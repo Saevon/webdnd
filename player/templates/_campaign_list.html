@@ -1,7 +1,7 @@
 
 <div class="campaigns">
     {% for campaign in campaigns %}
-        <div class="campaign user"><a href="{% url game_campaign_edit cid=campaign.id %}">
+        <div class="campaign user"><a href="{% if campaign.owner == user %}{% url game_campaign_edit cid=campaign.id %}{% else %}{% url game_campaign_view cid=campaign.id %}{% endif %}">
             <blockquote>
                 <i class="icon-globe"></i>
                 <span class="capitalize">{{ campaign.name }}</span>

@@ -1,0 +1,55 @@
+{% extends "account/base.html" %}
+{% load helpers %}
+
+{% block page_title %}
+    {{ block.super}} ~ View Campaign
+{% endblock %}
+{% block tab_name %}campaigns{% endblock %}
+
+
+{% block content %}
+<form class="form-horizontal" id="campaign" method="POST">
+    {% csrf_token %}
+    <legend>
+        {{ campaign.name }}
+        <div class="control-group pull-right">
+            <div class="controls">
+                <a class="btn btn-info" href="{% url game_campaign_play cid=campaign.id %}">
+                    Play
+                </a>
+            </div>
+        </div>
+    </legend>
+
+    <div class="control-group" id="group-system">
+        <label class="control-label" for="input-system">Roleplaying System: </label>
+        <div class="controls">
+            <span>
+                {{ campaign.get_rp_system_display }}
+            </span>
+        </div>
+    </div>
+
+    <div class="control-group" id="group-players">
+        <label class="control-label" for="input-players">Players: </label>
+        <div class="controls" id="input-players">
+            {% for player in players %}
+                <blockquote class="user span2 player">
+                    <span class="username">{{ player.name }}</span>
+                </blockquote>
+            {% empty %}
+                <blockquote class="empty span9 muted">The player list is empty.</blockquote>
+            {% endfor %}
+        </div>
+    </div>
+
+</form>
+{% endblock content %}
+
+
+
+
+
+
+
+

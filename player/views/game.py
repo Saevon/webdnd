@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.generic import View
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 from webdnd.player.constants.campaign import ROLEPLAYING_SYSTEMS
 from webdnd.player.models.campaigns import Campaign
@@ -14,7 +15,15 @@ from webdnd.shared.views import LoginRequiredMixin
 
 class CampaignListView(LoginRequiredMixin, View):
     def get(self, request):
-        campaigns = Campaign.objects.filter(owner=request.user)
+        # Get all players that represent you
+        players = Player.objects.filter(user=request.user)
+
+        # Get all campaigns you can see, you own them or you play
+        # in them
+        campaigns = Campaign.objects.filter(
+            Q(owner=request.user)
+            | Q(id__in=[p.campaign.id for p in players])
+        )
 
         out = {
             'campaigns': campaigns,
@@ -26,10 +35,18 @@ class CampaignListView(LoginRequiredMixin, View):
         )
 
 class CampaignView(LoginRequiredMixin, View):
-    def get(self, request):
+    def get(self, request, cid):
+        campaign = Campaign.objects.get(id=cid)
+        players = set(campaign.players.all())
+
+        out = {
+            'players': players,
+            'campaign': campaign,
+        }
+
         return render_to_response(
-            'campaign.html',
-            {},
+            'campaign_view.html',
+            out,
             context_instance=RequestContext(request)
         )
 
@@ -51,7 +68,7 @@ class CampaignEditView(LoginRequiredMixin, View):
         out = {
             'players': players,
             'friends': request.user.friends.exclude(id=request.user.id),
-            'systems': [i[1] for i in ROLEPLAYING_SYSTEMS],
+            'systems': ROLEPLAYING_SYSTEMS,
             'create': created,
             'campaign': campaign,
         }
@@ -86,7 +103,7 @@ class CampaignEditView(LoginRequiredMixin, View):
                 cid = campaign.id
 
             campaign.name = name
-            campaign.system = system
+            campaign.rp_system = system
             campaign.save()
 
             cur_players = set(str(p.user.id) for p in campaign.players.all())
