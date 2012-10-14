@@ -7,19 +7,19 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.generic import View
 
-from webdnd.player.models.campaigns import Campaign
 from webdnd.shared.views import LoginRequiredMixin
 from webdnd.shared.utils.quotes import blurb
 from webdnd.shared.views import AjaxApi
 from webdnd.shared.views import SyncraeApi
 
 from webdnd.player.views.index import UserIndex
+from webdnd.player.views.game import my_campaigns
 
 
 class AccountHomeView(LoginRequiredMixin, View):
 
     def get(self, request):
-        campaigns = Campaign.objects.filter(owner=request.user)
+        campaigns = my_campaigns(request.user)
 
         return render_to_response(
             'account/home.html',

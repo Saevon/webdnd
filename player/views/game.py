@@ -15,24 +15,28 @@ from webdnd.shared.views import LoginRequiredMixin
 
 class CampaignListView(LoginRequiredMixin, View):
     def get(self, request):
-        # Get all players that represent you
-        players = Player.objects.filter(user=request.user)
-
-        # Get all campaigns you can see, you own them or you play
-        # in them
-        campaigns = Campaign.objects.filter(
-            Q(owner=request.user)
-            | Q(id__in=[p.campaign.id for p in players])
-        )
-
         out = {
-            'campaigns': campaigns,
+            'campaigns': my_campaigns(request.user),
         }
         return render_to_response(
             'campaign_list.html',
             out,
             context_instance=RequestContext(request)
         )
+
+def my_campaigns(user):
+    # Get all players that represent you
+    players = Player.objects.filter(user=user)
+
+    # Get all campaigns you can see, you own them or you play
+    # in them
+    campaigns = Campaign.objects.filter(
+        Q(owner=user)
+        | Q(id__in=[p.campaign.id for p in players])
+    )
+
+    return campaigns
+
 
 class CampaignView(LoginRequiredMixin, View):
     def get(self, request, cid):
