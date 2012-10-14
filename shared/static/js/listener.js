@@ -42,7 +42,16 @@ syncrae.subscribe('/messages/new', function(data) {
             opacity: 1,
             left: 0
         });
+});
 
+syncrae.subscribe('/terminal/result', function(data) {
+    $(Mustache.templates['terminal-cmd'](data))
+        .appendTo('#terminal-logs');
+    $(Mustache.templates['terminal-log'](data))
+        .appendTo('#terminal-logs');
+
+    var elem = $('#terminal-logs')[0];
+    elem.scrollTop = elem.scrollHeight;
 });
 
 syncrae.subscribe('/messages/started-typing', function(data) {
@@ -99,4 +108,49 @@ $(function() {
         }
     });
 
+    // Global Shortcuts
+    var global_keys = {};
+    $('body').keydown(function(e) {
+        global_keys[e.keyCode] = true;
+
+        // Ctrl-t
+        // Open-close Terminal
+        if (global_keys[17] && global_keys[84]) {
+            terminal = $('#terminal');
+            terminal.toggle();
+            if (terminal.is(':visible')) {
+                terminal.find('#terminal-cmd').focus();
+            }
+        } else {
+            // Not a global shortcut, continue propogation
+            return;
+        }
+        // If one of the commands was activated then stop default action
+        // and any other callbacks
+        return false;
+
+    });
+    $('body').keyup(function(e) {
+        global_keys[e.keyCode] = undefined;
+    });
+
+    // Terminal submition
+    $('#terminal-cmd').keyup(function(e) {
+        var elem = $(this);
+        // Enter key
+        if (e.keyCode == 13) {
+            data = {
+                cmd: elem.val()
+            };
+
+            // Send command
+            syncrae.publish('/terminal/command', data);
+
+            // Clear the input
+            elem.val('');
+        }
+    });
 });
+
+
+

@@ -1,0 +1,13 @@
+{% load helpers %}
+
+{% mustache 'terminal-log' %}
+    <div class="text-<% level %> terminal-log">
+        <% log %>
+    </div>
+{% endmustache %}
+
+{% mustache 'terminal-cmd' %}
+    <div class="text-info terminal-cmd">
+        <% cmd %>
+    </div>
+{% endmustache %}

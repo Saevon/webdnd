@@ -1,0 +1,39 @@
+/* Terminal Styles */
+
+#terminal {
+    position: fixed;
+    bottom: 0;
+    width: 90%;
+
+    border: 1px solid #468;
+    box-shadow: -2px -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.terminal-bg {
+    background: #000;
+}
+#terminal-cmd {
+    width: 95%;
+    height: 1em;
+    font-size: 9pt;
+    margin-right: 3px;
+    margin-left: 3px;
+}
+
+/* Output */
+.terminal-logs {
+    height: 150px;
+    padding: 5px;
+    overflow-y: scroll;
+}
+.terminal-log,
+.terminal-cmd {
+    clear: both;
+    font-size: 9pt;
+}
+.terminal-log {
+    /*float: right;*/
+}
+.terminal-cmd {
+    float: left;
+}

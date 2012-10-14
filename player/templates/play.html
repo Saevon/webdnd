@@ -21,6 +21,7 @@
       <link rel="stylesheet" href="{% static 'player/css/base.css' %}" type="text/css" charset="utf-8">
       <link rel="stylesheet" href="{% static 'player/css/user.css' %}" type="text/css" charset="utf-8">
       <link rel="stylesheet" href="{% static 'player/css/play.css' %}" type="text/css" charset="utf-8">
+      <link rel="stylesheet" href="{% static 'player/css/terminal.css' %}" type="text/css" charset="utf-8">
     {% endcompress %}
 
     <!-- Dynamic Styles -->
@@ -54,6 +55,17 @@
 
         {% include 'messenger.html' %}
         <!-- End Messenger -->
+
+        <!-- Terminal -->
+        <div id="terminal" class="terminal-bg hide">
+            <div class="terminal-logs" id="terminal-logs"></div>
+            <div>
+                <input type="text" id="terminal-cmd" placeholder="Command">
+            </div>
+        </div>
+
+        {% include 'terminal.html' %}
+        <!-- End Terminal -->
 
     </div>
     <!-- End Main Body -->
