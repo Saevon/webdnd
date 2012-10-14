@@ -36,7 +36,6 @@ def get_setting(k, default=None):
 class MustachedNode(template.Node):
     TMPL = dedent("""
         %(templates)s
-
         <script type="text/javascript">
         $(function() {
             %(lines)s
@@ -67,6 +66,9 @@ class MustachedNode(template.Node):
                 'name': name,
                 'content': dedent(nodes.render(context)).replace('\n', '\n' + (4 * ' ')),
             })
+
+        # Clear it for the next use
+        MustachedNode.nodes = {}
 
         return (MustachedNode.TMPL % {
             'lines': '\n'.join(lines).replace('\n', '\n' + (4 * ' ')),

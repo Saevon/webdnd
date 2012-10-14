@@ -1,0 +1,8 @@
+{% load helpers %}
+
+{% mustache 'message' %}
+    <div class="row-fluid message" data-id="<% id %>">
+        <div class="span2 name"><% name %></div>
+        <div class="span10 body"><% body %></div>
+    </div>
+{% endmustache %}
