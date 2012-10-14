@@ -25,6 +25,8 @@
 
     <!-- Dynamic Styles -->
 
+    <!-- End Styles -->
+
   </head>
   <body>
 
@@ -49,8 +51,10 @@
                 </div>
             </div>
         </div>
-        <!-- End Messanger -->
+        <!-- End Messenger -->
+
     </div>
+    <!-- End Main Body -->
 
 
     <!-- Scripts -->
@@ -68,16 +72,18 @@
       </script>
       <script type="text/javascript" src="{% static 'syncrae/js/syncrae.js' %}"></script>
       <script type="text/javascript" src="{% static 'shared/js/listener.js' %}"></script>
-      {% endcompress %}
-
-      <!-- Dynamic Javascript -->
-    {% compress js %}
-      <script type="text/javascript">
-          $(function() {
-              
-          });
-      </script>
     {% endcompress %}
+
+    <!-- Dynamic Javascript -->
+    <script type="text/javascript">
+        $(function() {
+        });
+    </script>
+    <!-- End Javascript -->
+
+    <!-- Mustache Templates -->
+    {% mustache_templates 6 %}
+    <!-- End Mustache Templates -->
 
   </body>
 </html>

@@ -25,3 +25,6 @@ Mustache.compile = (function() {
 
     return compile;
 })();
+
+// Prepare dict to store compiled templates
+Mustache.templates = {};
