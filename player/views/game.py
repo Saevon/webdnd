@@ -134,7 +134,7 @@ class PlayView(LoginRequiredMixin, View):
         if (player.count()):
             out['player'] = player[0]
 
-        # Remove Game object
+        request.session['cid'] = campaign.id
 
         return render_to_response('play.html',
             out,
