@@ -1,9 +1,16 @@
-syncrae.subscribe('/sessions/new', function(data) {
-    data = {
-        name: 'system',
-        msg: data.name + ' just joined us'
+syncrae.subscribe('/sessions/status', function(data) {
+    msgdata = {
+        name: 'system'
     };
-    $(Mustache.templates.message(data))
+
+    if (data.status == 'offline') {
+        msgdata['msg'] = data.name + ' just left';
+    } else if (data.status == 'online') {
+        msgdata['msg'] = data.name + ' just joined us';
+    } else {
+        console.warn('unknown status: ', data.status);
+    }
+    $(Mustache.templates.message(msgdata))
         .addClass('notification')
         .css('opacity', 0)
         .appendTo('#messages')
@@ -134,7 +141,7 @@ $(function() {
         global_keys[e.keyCode] = undefined;
     });
 
-    // Terminal submition
+    // Terminal submission
     $('#terminal-cmd').keyup(function(e) {
         var elem = $(this);
         // Enter key
