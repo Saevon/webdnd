@@ -73,6 +73,18 @@ var format = function format(elem) {
         });
     }
 
+    //---------------------------
+    //----- Time Formatting -----
+    //---------------------------
+    sublem = elem.find('[class*="time-"]');
+    if (sublem) {
+        subelem.each(function() {
+            item = $(this);
+            var format = format.cstr(item, 'time-');
+            item.html(format.time(item.text(), format));
+        });
+    }
+
 };
 
 
@@ -155,6 +167,20 @@ format.pieces = function pieces(num) {
         (sp > 0 ? sp + '<small>sp</small>, ' : '') +
         (cp > 0 ? cp + '<small>cp</small>, ' : '');
     return text.substr(0, text.length - 2);
+};
+
+
+//----------------
+//----- Time -----
+//----------------
+/**
+ * Formats time given in ms
+ */
+format.time = function time(val, type) {
+    val = parseInt(val, 10);
+    if (type == 'sec') {
+        return (val / 1000) + 'sec';
+    }
 };
 
 

@@ -40,7 +40,27 @@ div#form {
     right: 0;
 }
 
+.connection {
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
 
+    color: white;
+    font-size: smaller;
+    text-align: center;
+    width: 20px;
+    /*cursor: pointer;*/
+
+    position: fixed;
+    top: 10px;
+    left: 10px;
+}
+.connection.status-on {
+    background-color: #596;
+}
+.connection.status-off {
+    background-color: #956;
+}
 
 
 div.item:nth-child(4n+5) {

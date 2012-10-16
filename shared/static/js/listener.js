@@ -1,3 +1,29 @@
+
+// Reconnection timer
+syncrae.retry_timer.listen(function(sec) {
+    var timer = $('.connection');
+    var time = timer.find('.reconnect-time');
+    if (sec <= 0) {
+        timer.fadeOut(500);
+        time.html('&nbsp;');
+        return;
+    } else if (timer.is(':hidden')) {
+        timer.fadeIn(500);
+    }
+    time.text(sec);
+    format(time);
+});
+
+syncrae.on(function() {
+    $('.connection').addClass('status-on')
+        .removeClass('status-off')
+        .fadeIn(100);
+});
+syncrae.off(function() {
+    $('.connection').addClass('status-off')
+        .removeClass('status-on');
+});
+
 syncrae.subscribe('/sessions/status', function(data) {
     msgdata = {
         name: 'system'
@@ -158,6 +184,5 @@ $(function() {
         }
     });
 });
-
 
 
