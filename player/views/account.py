@@ -10,7 +10,6 @@ from django.views.generic import View
 from webdnd.shared.views import LoginRequiredMixin
 from webdnd.shared.utils.quotes import blurb
 from webdnd.shared.views import AjaxApi
-from webdnd.shared.views import SyncraeApi
 
 from webdnd.player.views.index import UserIndex
 from webdnd.player.views.game import my_campaigns
@@ -173,17 +172,6 @@ class UserSearchApi(AjaxApi):
 
         output.output(results)
 
-
-# Syncrae
-
-class UserDetailsApi(SyncraeApi):
-
-    def get(self, request, output, game):
-        output.output({
-            'name': game.user.name,
-            'is_dm': (game.user == game.campaign.owner),
-            'campaign_name': game.campaign.name,
-        })
 
 
 
