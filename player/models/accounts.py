@@ -2,10 +2,9 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 
-from webdnd.player.constants.account import PREFERENCES
+from webdnd.player.constants.account import ACCOUNT_PREFERENCES
 from webdnd.player.models.abstract import AbstractPlayerModel
 from shared.views import ModelMixin
-
 
 class UserMixin(ModelMixin):
     """
@@ -35,7 +34,7 @@ class Preference(AbstractPlayerModel):
 
     preference = models.CharField(
         max_length=settings.STND_ID_CHAR_LIMIT,
-        choices=PREFERENCES,
+        choices=ACCOUNT_PREFERENCES,
         blank=False,
         null=False
     )
@@ -50,5 +49,7 @@ class Preference(AbstractPlayerModel):
         blank=False,
         null=False
     )
+
+
 
 
