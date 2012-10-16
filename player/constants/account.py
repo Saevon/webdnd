@@ -2,7 +2,7 @@
 Account Settings
 """
 
-PREFERENCES = (
+ACCOUNT_PREFERENCES = (
     ('namo', 'name_order'),
 )
 
