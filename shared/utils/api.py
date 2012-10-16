@@ -101,35 +101,3 @@ def api_output(func):
     return wrapper
 
 
-
-def http_auth_login(func):
-    '''
-    Allows pre-request login for Api endpoints
-    '''
-    @wraps(func)
-    def view_or_basicauth(request, *args, **kwargs):
-        if 'HTTP_AUTHORIZATION' in request.META:
-            auth = request.META['HTTP_AUTHORIZATION'].split()
-            if len(auth) == 2 and auth[0].lower() == 'basic':
-                username, password = base64.b64decode(auth[1]).split(':')
-
-                # Only allowed a limited subset to use this login method
-                # Don't even let the other users know it exists
-                if username in settings.HTTP_AUTH_USERS:
-                    user = authenticate(username=username, password=password)
-                    if user is not None and user.is_active:
-                            login(request, user)
-                            request.user = user
-                            return func(request, *args, **kwargs)
-                else:
-                    response = HttpResponse()
-                    response.status_code = 403
-                    return response
-
-        # No Authorization, err out
-        response = HttpResponse()
-        response.status_code = 401
-        response['WWW-Authenticate'] = 'Basic realm="api"'
-        return response
-    return view_or_basicauth
-
