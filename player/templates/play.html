@@ -35,25 +35,31 @@
     <!-- Main Body -->
     <div class="container centered">
 
+        <!-- Character Sheet -->
+
+        <!-- End Sheet -->
+
         <!-- Messenger -->
-        <div class="container-fluid" id="messages">
+        <div style="display: none;">
+            <div class="container-fluid" id="messages">
 
-        </div>
+            </div>
 
-        <div class="container-fluid" id="form">
-            <div class="row-fluid message type">
-                <div class="span2 name">
-                    {{ user.name }}
-                </div>
-                <div class="span10 body">
-                    <form class="form-inline">
-                        <input class="span10" type="text" name="msg" placeholder="Say...">
-                    </form>
+            <div class="container-fluid" id="form">
+                <div class="row-fluid message type">
+                    <div class="span2 name">
+                        {{ user.name }}
+                    </div>
+                    <div class="span10 body">
+                        <form class="form-inline">
+                            <input class="span10" type="text" name="msg" placeholder="Say...">
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        {% include 'messenger.html' %}
+            {% include 'messenger.html' %}
+        </div>
         <!-- End Messenger -->
 
         <!-- Connection Status -->
