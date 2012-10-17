@@ -151,7 +151,7 @@ class LoginView(View):
                 request.alert(title='Banned Account', prefix='Sorry,', text='This account appears to be banned', level='error')
                 url = '%s?username=%s' % (reverse('account_login'), username)
         else:
-            request.alert(title='Login Failed', text='Please check your credentials and try agin.', level='error')
+            request.alert(title='Login Failed', text='Please check your credentials and try again.', level='error')
             request.highlight('#group-pass')
             request.highlight('#group-username')
 

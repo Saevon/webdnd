@@ -143,24 +143,43 @@ class PlayView(LoginRequiredMixin, View):
 
     def get(self, request, cid):
         campaign = Campaign.objects.get(id=cid)
-        player = campaign.players.filter(user=request.user)
 
-        out = {
-            'campaign': campaign,
-        }
-
-        if campaign.owner == request.user:
+        if request.user == campaign.owner:
+            out = self._dm(request, campaign)
             out['is_dm'] = True
+        else:
+            out = self._player(request, campaign)
+            out['is_dm'] = False
 
-        if (player.count()):
-            out['player'] = player[0]
+        out['campaign'] = campaign,
 
+        # Make sure syncrae know which campaign to log you into
         request.session['cid'] = campaign.id
 
         return render_to_response('play.html',
             out,
             context_instance=RequestContext(request)
         )
+
+    def _dm(self, request, campaign):
+
+        return {
+
+        }
+
+    def _player(self, request, campaign):
+        player = campaign.players.get(user=request.user)
+
+        if player.cur_char and player.cur_char.status != 'Dead':
+            char = player.cur_char
+        else:
+            char = False
+
+        return {
+            'player': player,
+            'char': char,
+        }
+
 
 
 

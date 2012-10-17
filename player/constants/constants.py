@@ -12,3 +12,10 @@ WEAPON_PLUSES = (
     ('4', '+4'),
     ('5', '+5')
 )
+
+CHARACTER_STATUSES = (
+    ('main', 'Main'),
+    ('dead', 'Dead'),
+    ('unsd', 'Unused'),
+    ('comp', 'Companion'),
+)

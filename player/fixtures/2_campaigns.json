@@ -12,10 +12,9 @@
         "pk": 1,
         "model": "player.player",
         "fields": {
-            "characters": [],
             "can_dm": false,
             "is_spectator": false,
-            "user": 3,
+            "user": 2,
             "campaign": 1
         }
     },
@@ -23,10 +22,9 @@
         "pk": 2,
         "model": "player.player",
         "fields": {
-            "characters": [],
             "can_dm": false,
             "is_spectator": false,
-            "user": 4,
+            "user": 3,
             "campaign": 1
         }
     },
@@ -34,11 +32,30 @@
         "pk": 3,
         "model": "player.player",
         "fields": {
-            "characters": [],
             "can_dm": false,
             "is_spectator": false,
-            "user": 5,
+            "user": 4,
             "campaign": 1
+        }
+    },
+
+    {
+        "pk": 2,
+        "model": "player.campaign",
+        "fields": {
+            "owner": 2,
+            "rp_system": "dnd35",
+            "name": "Ordero"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "player.player",
+        "fields": {
+            "can_dm": false,
+            "is_spectator": false,
+            "user": 1,
+            "campaign": 2
         }
     }
 ]

@@ -35,24 +35,35 @@
     <!-- Main Body -->
     <div class="container centered">
 
+        {% if not is_dm %}
         <!-- Character Sheet -->
-
+            <div class="char-sheets"></div>
         <!-- End Sheet -->
+        {% endif %}
 
         <!-- Messenger -->
-        <div style="display: none;">
+        <div id="chat">
             <div class="container-fluid" id="messages">
 
             </div>
 
-            <div class="container-fluid" id="form">
+            <div class="container-fluid">
                 <div class="row-fluid message type">
                     <div class="span2 name">
-                        {{ user.name }}
+                        <span class="user-name">
+                            {{ user.name }}
+                        </span>
+                        <span class="char-name">
+                            {% if is_dm %}
+                                DM
+                            {% elif char %}
+                                {{ char.name }}
+                            {% endif %}
+                        </span>
                     </div>
                     <div class="span10 body">
-                        <form class="form-inline">
-                            <input class="span10" type="text" name="msg" placeholder="Say...">
+                        <form class="form-inline" id="msg-form">
+                            <input class="span10" type="text" name="msg" placeholder="Say..." id="msg-input">
                         </form>
                     </div>
                 </div>

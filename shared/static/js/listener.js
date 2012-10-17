@@ -1,4 +1,25 @@
 
+new_message = function(data) {
+
+    if (data.name == 'system') {
+        data.type = 'notification';
+    }
+
+    var message = $(Mustache.templates.message(data))
+        .css('opacity', 0)
+        .css('position', 'relative')
+        .css('left', '-200px')
+        .appendTo('#messages')
+        .animate({
+            opacity: 1,
+            left: 0
+        });
+
+    var elem = $('#messages')[0];
+    elem.scrollTop = elem.scrollHeight;
+};
+
+
 // Reconnection timer
 syncrae.retry_timer.listen(function(sec) {
     var timer = $('.connection');
@@ -36,13 +57,7 @@ syncrae.subscribe('/sessions/status', function(data) {
     } else {
         console.warn('unknown status: ', data.status);
     }
-    $(Mustache.templates.message(msgdata))
-        .addClass('notification')
-        .css('opacity', 0)
-        .appendTo('#messages')
-        .animate({
-            opacity: 1
-        });
+    new_message(data);
 });
 
 syncrae.subscribe('/sessions/error', function(data) {
@@ -50,31 +65,11 @@ syncrae.subscribe('/sessions/error', function(data) {
         name: 'system',
         msg: data.error
     };
-    var message = $(Mustache.templates.message(data))
-        .css('opacity', 0)
-        .css('position', 'relative')
-        .css('left', '-200px')
-        .appendTo('#messages')
-        .animate({
-            opacity: 1,
-            left: 0
-        });
-
+    new_message(data);
 });
 
 syncrae.subscribe('/messages/new', function(data) {
-    // idea... if the message comes from you it should
-    // slide in from the bottom up
-    // if it comes from someone else it slides in from the side
-    var message = $(Mustache.templates.message(data))
-        .css('opacity', 0)
-        .css('position', 'relative')
-        .css('left', '-200px')
-        .appendTo('#messages')
-        .animate({
-            opacity: 1,
-            left: 0
-        });
+    new_message(data);
 });
 
 syncrae.subscribe('/terminal/result', function(data) {
@@ -91,15 +86,10 @@ syncrae.subscribe('/messages/started-typing', function(data) {
     // handle started typing
     data = {
         name: data['name'],
-        msg: 'started typing...'
+        msg: 'started typing...',
+        type: 'typing'
     };
-    $(Mustache.templates.message(data))
-        .addClass('typing')
-        .css('opacity', 0)
-        .appendTo('#messages')
-        .animate({
-            opacity: 1
-        });
+    new_message(data);
 });
 
 syncrae.subscribe('/messages/stopped-typing', function(data) {
@@ -108,29 +98,29 @@ syncrae.subscribe('/messages/stopped-typing', function(data) {
 
 $(function() {
     // auto focus to the chat body when loading the page
-    $('#form input[name=msg]').focus();
+    $('#msg-input').focus();
 
     // send messages when form is changed
-    $('#form form').submit(function(e) {
+    $('#msg-form').submit(function(e) {
         e.preventDefault();
 
         // notify that typing has stopped
         syncrae.publish('/messages/stopped-typing');
 
         var data = {
-            msg: $(this).find('input[name=msg]').val()
+            msg: $(this).find('#msg-input').val()
         };
 
         // send message
         syncrae.publish('/messages/new', data);
 
         // reset form
-        $(this).find('input[name=msg]').val('');
+        $(this).find('#msg-input').val('');
     });
 
     // track typing
     var typing = false;
-    $('#form input[name=msg]').keyup(function(e) {
+    $('#msg-input').keyup(function(e) {
         // notify that typing has started
         if (typing && $(this).val().length === 0) {
             typing = false;
