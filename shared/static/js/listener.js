@@ -14,33 +14,44 @@ syncrae.retry_timer.listen(function(sec) {
     format(time);
 });
 
-syncrae.on(function() {
-    $('.connection').addClass('status-on')
-        .removeClass('status-off')
-        .fadeIn(100);
+(function() {
+    var connected = false;
 
-    // Show a terminal message on websocket connect
-    $(Mustache.templates['terminal-log']({
-        level: 'info',
-        log: 'websocket connected'
-    })).appendTo('#terminal-logs');
+    syncrae.on(function() {
+        connected = true;
 
-    var elem = $('#terminal-logs')[0];
-    elem.scrollTop = elem.scrollHeight;
-});
-syncrae.off(function() {
-    $('.connection').addClass('status-off')
-        .removeClass('status-on');
+        $('.connection').addClass('status-on')
+            .removeClass('status-off')
+            .fadeIn(100);
 
-    // Show a Terminal message on websocket disconnect
-    $(Mustache.templates['terminal-log']({
-        level: 'warn',
-        log: 'websocket disconnected'
-    })).appendTo('#terminal-logs');
+        // Show a terminal message on websocket connect
+        $(Mustache.templates['terminal-log']({
+            level: 'info',
+            log: 'websocket connected'
+        })).appendTo('#terminal-logs');
 
-    var elem = $('#terminal-logs')[0];
-    elem.scrollTop = elem.scrollHeight;
-});
+        var elem = $('#terminal-logs')[0];
+        elem.scrollTop = elem.scrollHeight;
+    });
+    syncrae.off(function() {
+        if (!connected) {
+            return; // Don't display the messag twice
+        }
+        connected = false;
+
+        $('.connection').addClass('status-off')
+            .removeClass('status-on');
+
+        // Show a Terminal message on websocket disconnect
+        $(Mustache.templates['terminal-log']({
+            level: 'warn',
+            log: 'websocket disconnected'
+        })).appendTo('#terminal-logs');
+
+        var elem = $('#terminal-logs')[0];
+        elem.scrollTop = elem.scrollHeight;
+    });
+})();
 
 syncrae.subscribe('/sessions/status', function(data) {
     msgdata = {
