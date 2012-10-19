@@ -28,6 +28,9 @@ COMPRESS_ENABLED = not DEBUG
 PRETTIFY_HTML = False#DEBUG
 
 
+# format: 'major.minor.bug name'
+VERSION = '0.1.0 BETA'
+
 
 ##################################################
 # App settings
@@ -302,7 +305,6 @@ USE_L10N = True
 SECRET_KEY = '1t2h3i4s5i6s7a8v9e0rysecretkeybecauseitisv0e9r8y7s6e5c4r3e2t1'
 
 
-
 MIDDLEWARE_CLASSES = (
     'shared.middleware.HtmlPrettifyMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -326,8 +328,15 @@ USER_CHAR_RE = re.compile(r'[^.@-_a-zA-Z0-9]*')
 from alerts.settings import *
 
 
+def version_check(webdnd, syncrae):
+    return '.'.join(webdnd.split('.')[:2]) == '.'.join(syncrae.split('.')[:2])
+
 # Syncrae
 from syncrae.config.settings import *
+
+# make sure you're using matching versions
+if not version_check(VERSION, SYNCRAE_VERSION):
+    raise AssertionError('Invalid Syncrae Version: %s', SYNCRAE_VERSION)
 
 
 # Local Settings File
