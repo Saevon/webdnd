@@ -31,9 +31,29 @@
     clear: both;
     font-size: 9pt;
 }
+
+/* Terminal Colors */
 .terminal-log {
-    /*float: right;*/
+    color: white;
 }
-.terminal-cmd {
-    float: left;
+.terminal-log.cmd,
+.terminal-cmd.cmd {
+    color: #8888AA;
 }
+.terminal-log.info {
+    color: lightBlue;
+}
+.terminal-log.warn {
+    color: orange;
+}
+.terminal-log.error {
+    color: red;
+}
+.terminal-log.critical {
+    color: white;
+    background-color: red
+}
+.terminal-log.muted {
+    color: #888;
+}
+
