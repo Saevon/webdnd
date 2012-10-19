@@ -4,7 +4,6 @@ from django.contrib import admin
 from webdnd.player.admin.user import AccountAdmin
 from webdnd.player.models.accounts import Preference
 from webdnd.player.models.campaigns import Campaign
-from webdnd.player.models.campaigns import Game
 from webdnd.player.models.players import Player
 
 
@@ -14,7 +13,6 @@ admin.site.register(User, AccountAdmin)
 
 admin.site.register(Preference)
 admin.site.register(Campaign)
-admin.site.register(Game)
 admin.site.register(Player)
 
 
