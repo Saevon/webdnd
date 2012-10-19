@@ -57,11 +57,11 @@ INSTALLED_APPS = (
     'compressor',
     'django.contrib.staticfiles',
 
-    # Alerts
-    'webdnd.alerts',
-
     # Syncrae: Tornado websockets app
     'webdnd.syncrae',
+
+    # Alerts
+    'webdnd.alerts',
 )
 
 DATABASES = {
