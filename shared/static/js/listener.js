@@ -96,10 +96,13 @@ syncrae.subscribe('/messages/new', function(data) {
 });
 
 syncrae.subscribe('/terminal/result', function(data) {
-    $(Mustache.templates['terminal-cmd'](data))
-        .appendTo('#terminal-logs');
-    $(Mustache.templates['terminal-log'](data))
-        .appendTo('#terminal-logs');
+    if (data.cmd === true) {
+        $(Mustache.templates['terminal-cmd'](data))
+            .appendTo('#terminal-logs');
+    } else {
+        $(Mustache.templates['terminal-log'](data))
+            .appendTo('#terminal-logs');
+    }
 
     var elem = $('#terminal-logs')[0];
     elem.scrollTop = elem.scrollHeight;
