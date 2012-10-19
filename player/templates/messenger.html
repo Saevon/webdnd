@@ -2,7 +2,7 @@
 
 {% mustache 'message' %}
     <div class="row-fluid message <% type %>" data-id="<% id %>">
-        <div class="span2 name"><% name %></div>
-        <div class="span10 body"><% msg %></div>
+        <span class="name"><% name %></span>:
+        <span class="msg"><% msg %></span>
     </div>
 {% endmustache %}

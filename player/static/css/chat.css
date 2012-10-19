@@ -1,0 +1,49 @@
+/* Chat window Styles */
+#chat {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 400px;
+    width: 200px;
+
+    border: 1px solid #888;
+}
+#messages {
+    height: 300px;
+    overflow-y: scroll;
+}
+
+.char-sheets {
+    width: 50%;
+    height: 100%;
+}
+
+.message {
+    color: #eee;
+    font-weight: bold;
+    font-size: 12px;
+    margin-top: 10px;
+}
+.message:hover:not(.type) {
+    background-color: #445;
+}
+.message.type {
+    margin-top: 0px;
+}
+#msg-input {
+    height: 12px;
+    font-size: 12px;
+}
+.message.type .msg {
+    color: #666;
+    font-weight: normal;
+}
+.message.notification .msg {
+    color: lightblue;
+    font-weight: normal;
+}
+.message .name {
+    color: #999;
+    text-align: right;
+}
+

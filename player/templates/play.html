@@ -14,13 +14,10 @@
     <title>{{ campaign.name }}</title>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{% static 'shared/css/bootstrap.css' %}" type="text/css" charset="utf-8">
     {% compress css %}
-      <link rel="stylesheet" href="{% static 'shared/css/bootstrap.extra.css' %}" type="text/css" charset="utf-8">
       <link rel="stylesheet" href="{% static 'shared/css/base.css' %}" type="text/css" charset="utf-8">
-      <link rel="stylesheet" href="{% static 'player/css/base.css' %}" type="text/css" charset="utf-8">
-      <link rel="stylesheet" href="{% static 'player/css/user.css' %}" type="text/css" charset="utf-8">
       <link rel="stylesheet" href="{% static 'player/css/play.css' %}" type="text/css" charset="utf-8">
+      <link rel="stylesheet" href="{% static 'player/css/chat.css' %}" type="text/css" charset="utf-8">
       <link rel="stylesheet" href="{% static 'player/css/terminal.css' %}" type="text/css" charset="utf-8">
     {% endcompress %}
 
@@ -33,13 +30,16 @@
 
 
     <!-- Main Body -->
-    <div class="container centered">
+    <div class="hsplit">
 
-        {% if not is_dm %}
-        <!-- Character Sheet -->
+        <div class="hsplit-left">
+        </div>
+
+        <div class="hsplit-right">
+            <!-- Character Sheet -->
             <div class="char-sheets"></div>
-        <!-- End Sheet -->
-        {% endif %}
+            <!-- End Sheet -->
+
 
         <!-- Messenger -->
         <div id="chat">
@@ -73,18 +73,22 @@
         </div>
         <!-- End Messenger -->
 
-        <!-- Connection Status -->
-        <div class="connection status-off">
-            <span class="reconnect-time time-sec">&nbsp;</span>
-        </div>
-        <!-- End Connection Status -->
-
         <!-- Terminal -->
         <div id="terminal" class="terminal-bg hide">
             <div class="terminal-logs" id="terminal-logs"></div>
-            <div>
-                <input type="text" id="terminal-cmd" placeholder="Command">
+            <div id="terminal-input" class="terminal-bg">
+                <span class="terminal-cmd prefix cmd">
+                    <span class="end-char">~ </span>
+                </span>
+                <input type="text" placeholder="Command" class="terminal-bg cmd terminal-cmd user-cmd">
             </div>
+
+            <!-- Connection Status -->
+            <div class="connection status-off">
+                <span class="reconnect-time time-sec">&nbsp;</span>
+            </div>
+            <!-- End Connection Status -->
+
         </div>
 
         {% include 'terminal.html' %}
@@ -109,6 +113,7 @@
       </script>
       <script type="text/javascript" src="{% static 'syncrae/js/syncrae.js' %}"></script>
       <script type="text/javascript" src="{% static 'shared/js/listener.js' %}"></script>
+      <script type="text/javascript" src="{% static 'shared/js/terminal.js' %}"></script>
     {% endcompress %}
 
     <!-- Dynamic Javascript -->

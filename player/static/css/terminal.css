@@ -12,12 +12,24 @@
 .terminal-bg {
     background: #000;
 }
-#terminal-cmd {
+#terminal-input {
     width: 95%;
-    height: 1em;
     font-size: 9pt;
     margin-right: 3px;
     margin-left: 3px;
+    margin-bottom: 3px;
+}
+#terminal-input .prefix {
+    width: 10%;
+}
+#terminal-input .user-cmd {
+    border: 0;
+    height: 1.2em;
+    width: 90%;
+    font-size: 9pt;
+}
+#terminal-input .user-cmd:focus {
+    outline: none;
 }
 
 /* Output */
@@ -32,8 +44,59 @@
     font-size: 9pt;
 }
 .terminal-log {
+    color: white;
     /*float: right;*/
 }
 .terminal-cmd {
-    float: left;
+    
 }
+
+/* Terminal Colors */
+.terminal-log.cmd,
+.terminal-cmd.cmd {
+    color: #8888AA;
+}
+.terminal-log.info {
+    color: lightBlue;
+}
+.terminal-log.warn {
+    color: orange;
+}
+.terminal-log.error {
+    color: red;
+}
+.terminal-log.critical {
+    color: white;
+    background-color: red
+}
+.terminal-log.muted {
+    color: #888;
+}
+
+
+
+
+/* Connection Pill */
+.connection {
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+
+    color: white;
+    font-size: smaller;
+    text-align: center;
+    width: 16px;
+    height: 16px;
+    /*cursor: pointer;*/
+
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+}
+.connection.status-on {
+    background-color: #596;
+}
+.connection.status-off {
+    background-color: #956;
+}
+

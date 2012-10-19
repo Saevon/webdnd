@@ -39,10 +39,24 @@ syncrae.on(function() {
     $('.connection').addClass('status-on')
         .removeClass('status-off')
         .fadeIn(100);
+    $(Mustache.templates['terminal-log']({
+        level: 'info',
+        log: 'websocket connected'
+    })).appendTo('#terminal-logs');
+
+    var elem = $('#terminal-logs')[0];
+    elem.scrollTop = elem.scrollHeight;
 });
 syncrae.off(function() {
     $('.connection').addClass('status-off')
         .removeClass('status-on');
+    $(Mustache.templates['terminal-log']({
+        level: 'warn',
+        log: 'websocket disconnected'
+    })).appendTo('#terminal-logs');
+
+    var elem = $('#terminal-logs')[0];
+    elem.scrollTop = elem.scrollHeight;
 });
 
 syncrae.subscribe('/sessions/status', function(data) {
@@ -57,7 +71,7 @@ syncrae.subscribe('/sessions/status', function(data) {
     } else {
         console.warn('unknown status: ', data.status);
     }
-    new_message(data);
+    new_message(msgdata);
 });
 
 syncrae.subscribe('/sessions/error', function(data) {
@@ -73,27 +87,16 @@ syncrae.subscribe('/messages/new', function(data) {
 });
 
 syncrae.subscribe('/terminal/result', function(data) {
-    $(Mustache.templates['terminal-cmd'](data))
-        .appendTo('#terminal-logs');
-    $(Mustache.templates['terminal-log'](data))
-        .appendTo('#terminal-logs');
+    if (data.cmd === true) {
+        $(Mustache.templates['terminal-cmd'](data))
+            .appendTo('#terminal-logs');
+    } else {
+        $(Mustache.templates['terminal-log'](data))
+            .appendTo('#terminal-logs');
+    }
 
     var elem = $('#terminal-logs')[0];
     elem.scrollTop = elem.scrollHeight;
-});
-
-syncrae.subscribe('/messages/started-typing', function(data) {
-    // handle started typing
-    data = {
-        name: data['name'],
-        msg: 'started typing...',
-        type: 'typing'
-    };
-    new_message(data);
-});
-
-syncrae.subscribe('/messages/stopped-typing', function(data) {
-   $('.typing').remove();
 });
 
 $(function() {
