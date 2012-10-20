@@ -13,7 +13,7 @@ class HistoryLog(AbstractPlayerModel):
         unique_together = ('cmd', 'user', 'campaign',)
         ordering = ('updated',)
 
-    count = models.PositiveIntegerField(blank=False, null=False, default=0)
+    counter = models.PositiveIntegerField(blank=False, null=False, default=0)
     updated = models.DateTimeField(auto_now=True)
     
     cmd = models.CharField(
@@ -54,14 +54,19 @@ class HistoryLog(AbstractPlayerModel):
             'cmd': cmd,
             'user__id': uid,
         }
+        defaults = {
+            'cmd': cmd,
+            'user_id': uid,
+            'campaign_id': cid,
+        }
         if not cid is None:
-            log = HistoryLog.objects.get_or_create(campaign__id=cid, **args)
-            log.count += 1
+            log, created = HistoryLog.objects.get_or_create(campaign__id=cid, defaults=defaults, **args)
+            log.counter += 1
             log.save()
 
         # always make sure to update the global list
-        log = HistoryLog.objects.get_or_create(**args)
-        log.count += 1
+        log, created = HistoryLog.objects.get_or_create(defaults=defaults, **args)
+        log.counter += 1
         log.save()
 
         return log
