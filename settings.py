@@ -2,6 +2,20 @@
 import os.path
 import re
 
+########################################
+# Local Settings
+########################################
+# The local settings file needs to exist, and have defined certain
+# settings before this project will work
+try:
+    from local_settings import *
+except ImportError:
+    import sys
+    if 'localize' not in sys.argv:
+        raise AssertionError("Local settings file not defined")
+    else:
+        # use the template so that localize can still work
+        from shared.config.settings_tmpl import *
 
 ########################################
 # Testing
@@ -10,22 +24,12 @@ import re
 TEST_RUNNER = "tests.runner.DiscoveryRunner"
 
 # location of the tests folder
-BASE_PATH = os.path.dirname(__file__)
-TEST_DISCOVERY_ROOT = os.path.join(BASE_PATH, "tests")
+BASE_PATH = WEBDND_ROOT
+TEST_DISCOVERY_ROOT = os.path.join(WEBDND_ROOT, "tests")
 
 # Regexp pattern to match when looking for test files
 # The runner will look in these files for TestCase classes
 TEST_FILE_PATTERN = '*_test.py'
-
-DEV_MODE = True
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
-COMPRESS_ENABLED = not DEBUG
-
-# This cleans up the HTML, it should not be doing that...
-# So its disabled for now
-# We need it to NOT autoescape stuff in <script> tags
-PRETTIFY_HTML = False#DEBUG
 
 
 # format: 'major.minor.bug name'
@@ -70,7 +74,7 @@ INSTALLED_APPS = (
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/apps/webdnd/default.sqlite3',
+        'NAME': os.path.join(DATABASE_ROOT, 'webdnd.sqlite3'),
         'USER': '',
         'PASSWORD': '',
         'HOST': '',
@@ -99,20 +103,20 @@ INITIAL_FIXTURE_DIRS = (
 ##################################################
 
 # Absolute path to the directory that holds media.
-MEDIA_ROOT = '/apps/webdnd/media/'
+MEDIA_ROOT = os.path.join(WEBDND_ROOT, 'media/')
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 MEDIA_URL = '/media/'
 
 # Absolute path to the directory that holds static files.
-STATIC_ROOT = '/apps/webdnd/static/'
+STATIC_ROOT = os.path.join(WEBDND_ROOT, 'static/')
 # URL that handles the static files served from STATIC_ROOT.
 STATIC_URL = '/static/'
 # A list of locations of additional static files
 STATICFILES_DIRS = (
-    ('shared', '/apps/webdnd/shared/static/'),
-    ('alerts', '/apps/webdnd/alerts/static/'),
-    ('player', '/apps/webdnd/player/static/'),
-    ('syncrae', '/apps/webdnd/syncrae/static/'),
+    ('shared', os.path.join(WEBDND_ROOT, 'shared/static/')),
+    ('alerts', os.path.join(WEBDND_ROOT, 'alerts/static/')),
+    ('player', os.path.join(WEBDND_ROOT, 'player/static/')),
+    ('syncrae', os.path.join(WEBDND_ROOT, 'syncrae/static/')),
 )
 
 # List of finder classes that know how to find static files in
@@ -127,7 +131,7 @@ STATICFILES_FINDERS = (
 # Parse to use for static file compression
 COMPRESS_PARSER = 'compressor.parser.BeautifulSoupParser'
 # Location of the static files
-COMPRESS_ROOT = '/apps/webdnd/static'
+COMPRESS_ROOT = os.path.join(WEBDND_ROOT, 'static/')
 COMPRESS_OUTPUT_DIR = '/compressed'
 # COMPRESS_JS_FILTERS = ('compressor.filters.yui.YUIJSFilter',)
 # COMPRESS_CSS_FILTERS = ('compressor.filters.yui.YUICSSFilter',)
@@ -149,8 +153,8 @@ COMPRESS_OUTPUT_DIR = '/compressed'
 
 # Locations of the template files
 TEMPLATE_DIRS = (
-    '/apps/webdnd/shared/templates',
-    '/apps/webdnd/player/templates',
+    os.path.join(WEBDND_ROOT, 'shared/templates'),
+    os.path.join(WEBDND_ROOT, 'player/templates'),
 )
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -183,19 +187,10 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 SESSION_COOKIE_AGE = 60 * 60 * 24
 SESSION_COOKIE_NAME = 'webdndID'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
-# TODO: make sure this works on a prod server
-# I can't get it to work in dev :(
-# SESSION_COOKIE_SECURE = True
 
 # Default url to redirect to for login
 LOGIN_URL = '/account/login'
 LOGIN_REDIRECT_URL = '/'
-
-# Api settings
-HTTP_AUTH_USERS = (
-    'syncrae',
-)
-
 
 
 ##################################################
@@ -203,9 +198,9 @@ HTTP_AUTH_USERS = (
 ##################################################
 
 # Site breakdowns
-ADMINS = (
+ADMINS = ADMINS.extend([
     # ('Dmitry Blotsky', 'dmitry.blotsky@gmail.com'),
-)
+])
 # Broken links
 MANAGERS = ADMINS
 # email server emails are sent from
@@ -301,9 +296,6 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = '1t2h3i4s5i6s7a8v9e0rysecretkeybecauseitisv0e9r8y7s6e5c4r3e2t1'
-
 
 MIDDLEWARE_CLASSES = (
     'shared.middleware.HtmlPrettifyMiddleware',
@@ -317,33 +309,35 @@ MIDDLEWARE_CLASSES = (
     'alerts.middleware.FieldHighlightMiddleware',
 )
 
-INDEX_DIR = '/apps/webdnd/index/'
+INDEX_DIR = os.path.join(WEBDND_ROOT, 'index/')
 USER_INDEX_DIR = os.path.join(INDEX_DIR, 'user/')
 
 # Characters that a user can't search for
 USER_CHAR_RE = re.compile(r'[^.@-_a-zA-Z0-9]*')
 
 
+
+##################################################
+# Installed apps settings
+##################################################
+def version(ver):
+    '''
+    Return the major and minor version numbers
+    '''
+    return '.'.join(ver.split('.'[:2]))
+
+
 # Alerts
 from alerts.settings import *
 
-
-def version_check(webdnd, syncrae):
-    return '.'.join(webdnd.split('.')[:2]) == '.'.join(syncrae.split('.')[:2])
 
 # Syncrae
 from syncrae.config.settings import *
 
 # make sure you're using matching versions
-if not version_check(VERSION, SYNCRAE_VERSION):
+if SYNCRAE_VERSION_CHECK and version(VERSION) != version(SYNCRAE_VERSION):
     raise AssertionError('Invalid Syncrae Version: %s', SYNCRAE_VERSION)
 
-
-# Local Settings File
-try:
-    from webdnd.local_settings import *
-except ImportError:
-    pass
 
 
 
