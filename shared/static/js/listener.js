@@ -44,7 +44,9 @@ syncrae.retry_timer.listen(function(sec) {
 
         $('.connection').addClass('status-on')
             .removeClass('status-off')
-            .fadeIn(100);
+            .fadeIn(100)
+            .find('.reconnect-time')
+            .html('&nbsp;');
 
         // Show a terminal message on websocket connect
         $(Mustache.templates['terminal-log']({
