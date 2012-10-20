@@ -4,6 +4,7 @@ from django.db import models
 
 from webdnd.player.models.abstract import AbstractPlayerModel
 from webdnd.player.models.campaigns import Campaign
+from webdnd.player.constants.constants import TERMINAL_MAX_HIST_LEN
 
 
 class HistoryLog(AbstractPlayerModel):
@@ -16,7 +17,7 @@ class HistoryLog(AbstractPlayerModel):
     updated = models.DateTimeField(auto_now=True)
     
     cmd = models.CharField(
-        max_length=settings.SYNCRAE_MAX_HIST_LENGTH,
+        max_length=TERMINAL_MAX_HIST_LEN,
         blank=False,
         null=False
     )

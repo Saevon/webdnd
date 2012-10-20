@@ -24,6 +24,7 @@ new_message = function(data) {
 syncrae.retry_timer.listen(function(sec) {
     var timer = $('.connection');
     var time = timer.find('.reconnect-time');
+
     if (sec <= 0) {
         timer.fadeOut(500);
         time.html('&nbsp;');

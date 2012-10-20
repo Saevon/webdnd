@@ -19,3 +19,5 @@ CHARACTER_STATUSES = (
     ('unsd', 'Unused'),
     ('comp', 'Companion'),
 )
+
+TERMINAL_MAX_HIST_LEN = 255
