@@ -147,7 +147,7 @@ $(function() {
             terminal = $('#terminal');
             terminal.toggle();
             if (terminal.is(':visible')) {
-                terminal.find('#terminal-cmd').focus();
+                terminal.find('#terminal-input .user-cmd').focus();
             }
         } else {
             // Not a global shortcut, continue propogation
@@ -162,20 +162,24 @@ $(function() {
         global_keys[e.keyCode] = undefined;
     });
 
+    $('#terminal').on('click', function() {
+        $(this).find('.user-cmd').focus();
+    });
+
     // Terminal submission
-    $('#terminal-cmd').keyup(function(e) {
+    $('#terminal-input .user-cmd').keyup(function(e) {
         var elem = $(this);
         // Enter key
         if (e.keyCode == 13) {
             data = {
-                cmd: elem.val()
+                cmd: elem.text()
             };
 
             // Send command
             syncrae.publish('/terminal/command', data);
 
             // Clear the input
-            elem.val('');
+            elem.text('');
         }
     });
 });
