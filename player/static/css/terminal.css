@@ -43,15 +43,12 @@
     clear: both;
     font-size: 9pt;
 }
-.terminal-log {
-    color: white;
-    /*float: right;*/
-}
-.terminal-cmd {
-    
-}
 
 /* Terminal Colors */
+.terminal-log {
+    color: white;
+}
+
 .terminal-log.cmd,
 .terminal-cmd.cmd {
     color: #8888AA;

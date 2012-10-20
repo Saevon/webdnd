@@ -1,0 +1,11 @@
+BeautifulSoup==3.2.1
+Django==1.4.1
+Whoosh==2.4.1
+django-appconf==0.5
+django-compressor==1.2
+logutils==0.3.2
+pycrypto==2.6
+simplejson==2.6.2
+ssh==1.7.14
+tornado==2.4
+wsgiref==0.1.2

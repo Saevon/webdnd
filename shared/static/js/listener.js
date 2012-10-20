@@ -35,29 +35,44 @@ syncrae.retry_timer.listen(function(sec) {
     format(time);
 });
 
-syncrae.on(function() {
-    $('.connection').addClass('status-on')
-        .removeClass('status-off')
-        .fadeIn(100);
-    $(Mustache.templates['terminal-log']({
-        level: 'info',
-        log: 'websocket connected'
-    })).appendTo('#terminal-logs');
+(function() {
+    var connected = false;
 
-    var elem = $('#terminal-logs')[0];
-    elem.scrollTop = elem.scrollHeight;
-});
-syncrae.off(function() {
-    $('.connection').addClass('status-off')
-        .removeClass('status-on');
-    $(Mustache.templates['terminal-log']({
-        level: 'warn',
-        log: 'websocket disconnected'
-    })).appendTo('#terminal-logs');
+    syncrae.on(function() {
+        connected = true;
 
-    var elem = $('#terminal-logs')[0];
-    elem.scrollTop = elem.scrollHeight;
-});
+        $('.connection').addClass('status-on')
+            .removeClass('status-off')
+            .fadeIn(100);
+
+        // Show a terminal message on websocket connect
+        $(Mustache.templates['terminal-log']({
+            level: 'info',
+            log: 'websocket connected'
+        })).appendTo('#terminal-logs');
+
+        var elem = $('#terminal-logs')[0];
+        elem.scrollTop = elem.scrollHeight;
+    });
+    syncrae.off(function() {
+        if (!connected) {
+            return; // Don't display the messag twice
+        }
+        connected = false;
+
+        $('.connection').addClass('status-off')
+            .removeClass('status-on');
+
+        // Show a Terminal message on websocket disconnect
+        $(Mustache.templates['terminal-log']({
+            level: 'warn',
+            log: 'websocket disconnected'
+        })).appendTo('#terminal-logs');
+
+        var elem = $('#terminal-logs')[0];
+        elem.scrollTop = elem.scrollHeight;
+    });
+})();
 
 syncrae.subscribe('/sessions/status', function(data) {
     msgdata = {
@@ -107,9 +122,6 @@ $(function() {
     $('#msg-form').submit(function(e) {
         e.preventDefault();
 
-        // notify that typing has stopped
-        syncrae.publish('/messages/stopped-typing');
-
         var data = {
             msg: $(this).find('#msg-input').val()
         };
@@ -119,19 +131,6 @@ $(function() {
 
         // reset form
         $(this).find('#msg-input').val('');
-    });
-
-    // track typing
-    var typing = false;
-    $('#msg-input').keyup(function(e) {
-        // notify that typing has started
-        if (typing && $(this).val().length === 0) {
-            typing = false;
-            syncrae.publish('/messages/stopped-typing');
-        } else if (!typing && $(this).val().length > 0) {
-            typing = true;
-            syncrae.publish('/messages/started-typing');
-        }
     });
 
     // Global Shortcuts
