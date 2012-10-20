@@ -19,7 +19,7 @@ var terminal = {
             _this.store(data.history);
         });
         syncrae.subscribe('/terminal/result', function(data) {
-            if (result.cmd === true) {
+            if (data.cmd === true) {
                 _this.add(data.log);
             }
         });
@@ -129,10 +129,10 @@ $(function() {
         }
     };
 
-    input = $('#terminal-cmd');
+    var input = $('#terminal-cmd');
+    var output = $('');
 
-
-    var obj = $.extend({}, result).elem(output);
+    var obj = $.extend({}, searcher).elem(output);
     obj.refresh = function() {
         var val = input.val();
         if (val.length !== 0) {

@@ -2,14 +2,15 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 
+from webdnd.player.models.abstract import AbstractPlayerModel
 from webdnd.player.models.campaigns import Campaign
 
 
-class HistoryLog(models.Model):
+class HistoryLog(AbstractPlayerModel):
 
-    class Meta:
+    class Meta(AbstractPlayerModel.Meta):
         unique_together = ('cmd', 'user', 'campaign',)
-        ordering = ('updated_at',)
+        ordering = ('updated',)
 
     count = models.PositiveIntegerField(blank=False, null=False, default=0)
     updated = models.DateTimeField(auto_now=True)
@@ -39,11 +40,12 @@ class HistoryLog(models.Model):
         logs = HistoryLog.objects.filter(user__id=uid)
         if not cid is None:
             logs = logs.filter(campaign__id=cid)
+
+        logs = logs.order_by('updated')
+
         if not limit is None:
             logs = logs[:limit]
-
-        logs = logs.order_by('updated_at')
-        return logs
+        return logs.all()
 
     @staticmethod
     def new(cmd, uid, cid=None):

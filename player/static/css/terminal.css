@@ -20,12 +20,18 @@
     margin-bottom: 3px;
 }
 #terminal-input .prefix {
-    width: 10%;
+    max-width: 10%;
+    display: inline-block;
+    height: 1.2em;
+
+    text-overflow: ellipsis;
+    overflow-x: hidden;
 }
 #terminal-input .user-cmd {
+    display: inline-block;
     border: 0;
     height: 1.2em;
-    width: 90%;
+    min-width: 90%;
     font-size: 9pt;
 }
 #terminal-input .user-cmd:focus {
