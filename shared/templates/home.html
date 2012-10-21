@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+
+{% block page_title %}{{ block.super }} ~ Home {% endblock %}
+{% block tab_name %}home{% endblock %}
+
+
+{% block content %}
+<form class="form-horizontal" id="newsletter" method="POST">
+    {% csrf_token %}
+    <legend>
+        Apply for newsletter NOW!!!
+        <div class="pull-right">
+            <small>
+                This many people know about us:
+            </small>
+            <span class="text-info">{{ total_users }}</span>
+        </div>
+    </legend>
+
+    <div class="control-group" id="group-email">
+        <div class="control-label" for="newsletter_email">Email</div>
+        <div class="controls">
+            <input disabled type="text" id="input-email" name="newsletter_email" placeholder="Email">
+            <button disabled type="submit" class="btn" name="newsletter_submit">Submit</button>
+        </div>
+    </div>
+    
+</form>
+
+
+
+
+
+{% endblock content %}
