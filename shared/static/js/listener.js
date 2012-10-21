@@ -87,6 +87,7 @@ syncrae.retry_timer.listen(function(sec) {
     });
 })();
 
+
 syncrae.subscribe('/sessions/status', function(data) {
     msgdata = {
         name: 'system'
@@ -102,21 +103,29 @@ syncrae.subscribe('/sessions/status', function(data) {
     new_message(msgdata);
 });
 
-syncrae.subscribe('/sessions/error', function(data) {
-    term_result({
-        level: data.level || 'error',
-        log: data.err_msg,
-        err_code: data.err_code
-    });
-    new_message({
-        name: 'system',
-        msg: data.error
-    });
+// Base handler
+syncrae.subscribe('/', function(data) {
+    // Adds any errors that are part of the message
+    // to the terminal
+    if (data.err_code) {
+        term_result({
+            level: data.level || 'error',
+            log: data.err_msg,
+            err_code: data.err_code
+        });
+    }
 
     if (data.err_code == '5101') {
         // 'Not Logged In' err
         syncrae.retry_timer.disable();
     }
+});
+
+syncrae.subscribe('/sessions/error', function(data) {
+    new_message({
+        name: 'system',
+        msg: data.error
+    });
 });
 
 syncrae.subscribe('/messages/new', function(data) {
@@ -182,6 +191,7 @@ $(function() {
         // Enter key
         if (e.keyCode == 13) {
             data = {
+                // TODO: trim ending newline?
                 cmd: elem.text()
             };
 
