@@ -1,8 +1,44 @@
 
+var new_message = function(data) {
+    if (data.name == 'system') {
+        if (data.type === undefined) {
+            data.type = 'notification';
+        }
+    }
+
+    var message = $(Mustache.templates.message(data))
+        .css('opacity', 0)
+        .css('position', 'relative')
+        .css('left', '-200px')
+        .appendTo('#messages')
+        .animate({
+            opacity: 1,
+            left: 0
+        });
+
+    var elem = $('#messages')[0];
+    elem.scrollTop = elem.scrollHeight;
+};
+
+var term_result = function(data) {
+    if (data.cmd === true) {
+        $(Mustache.templates['terminal-cmd'](data))
+            .appendTo('#terminal-logs');
+    } else {
+        $(Mustache.templates['terminal-log'](data))
+            .appendTo('#terminal-logs');
+    }
+
+    var elem = $('#terminal-logs')[0];
+    elem.scrollTop = elem.scrollHeight;
+};
+
+
 // Reconnection timer
 syncrae.retry_timer.listen(function(sec) {
     var timer = $('.connection');
     var time = timer.find('.reconnect-time');
+
     if (sec <= 0) {
         timer.fadeOut(500);
         time.html('&nbsp;');
@@ -22,20 +58,20 @@ syncrae.retry_timer.listen(function(sec) {
 
         $('.connection').addClass('status-on')
             .removeClass('status-off')
-            .fadeIn(100);
+            .fadeIn(100)
+            .find('.reconnect-time')
+            .html('&nbsp;');
 
         // Show a terminal message on websocket connect
-        $(Mustache.templates['terminal-log']({
+        term_result({
+            cmd: false,
             level: 'info',
             log: 'websocket connected'
-        })).appendTo('#terminal-logs');
-
-        var elem = $('#terminal-logs')[0];
-        elem.scrollTop = elem.scrollHeight;
+        });
     });
     syncrae.off(function() {
         if (!connected) {
-            return; // Don't display the messag twice
+            return; // Don't display the message twice
         }
         connected = false;
 
@@ -43,15 +79,14 @@ syncrae.retry_timer.listen(function(sec) {
             .removeClass('status-on');
 
         // Show a Terminal message on websocket disconnect
-        $(Mustache.templates['terminal-log']({
+        term_result({
+            cmd: false,
             level: 'warn',
             log: 'websocket disconnected'
-        })).appendTo('#terminal-logs');
-
-        var elem = $('#terminal-logs')[0];
-        elem.scrollTop = elem.scrollHeight;
+        });
     });
 })();
+
 
 syncrae.subscribe('/sessions/status', function(data) {
     msgdata = {
@@ -65,77 +100,59 @@ syncrae.subscribe('/sessions/status', function(data) {
     } else {
         console.warn('unknown status: ', data.status);
     }
-    $(Mustache.templates.message(msgdata))
-        .addClass('notification')
-        .css('opacity', 0)
-        .appendTo('#messages')
-        .animate({
-            opacity: 1
+    new_message(msgdata);
+});
+
+// Base handler
+syncrae.subscribe('/', function(data) {
+    // Adds any errors that are part of the message
+    // to the terminal
+    if (data.err_code) {
+        term_result({
+            level: data.level || 'error',
+            log: data.err_msg,
+            err_code: data.err_code
         });
+    }
+
+    if (data.err_code == '5101') {
+        // 'Not Logged In' err
+        syncrae.retry_timer.disable();
+    }
 });
 
 syncrae.subscribe('/sessions/error', function(data) {
-    data = {
+    new_message({
         name: 'system',
         msg: data.error
-    };
-    var message = $(Mustache.templates.message(data))
-        .css('opacity', 0)
-        .css('position', 'relative')
-        .css('left', '-200px')
-        .appendTo('#messages')
-        .animate({
-            opacity: 1,
-            left: 0
-        });
-
+    });
 });
 
 syncrae.subscribe('/messages/new', function(data) {
-    // idea... if the message comes from you it should
-    // slide in from the bottom up
-    // if it comes from someone else it slides in from the side
-    var message = $(Mustache.templates.message(data))
-        .css('opacity', 0)
-        .css('position', 'relative')
-        .css('left', '-200px')
-        .appendTo('#messages')
-        .animate({
-            opacity: 1,
-            left: 0
-        });
+    new_message(data);
 });
 
 syncrae.subscribe('/terminal/result', function(data) {
-    if (data.cmd === true) {
-        $(Mustache.templates['terminal-cmd'](data))
-            .appendTo('#terminal-logs');
-    } else {
-        $(Mustache.templates['terminal-log'](data))
-            .appendTo('#terminal-logs');
-    }
-
-    var elem = $('#terminal-logs')[0];
-    elem.scrollTop = elem.scrollHeight;
+    term_result(data);
 });
 
 $(function() {
     // auto focus to the chat body when loading the page
-    $('#form input[name=msg]').focus();
+    $('#msg-input').focus();
 
     // send messages when form is changed
-    $('#form form').submit(function(e) {
+    $('#msg-form').submit(function(e) {
         e.preventDefault();
 
         var data = {
-            msg: $(this).find('input[name=msg]').val()
+            msg: $(this).find('#msg-input').val()
         };
 
         // send message
         syncrae.publish('/messages/new', data);
 
         // reset form
-        $(this).find('input[name=msg]').val('');
+        $(this).find('#msg-input').val('');
     });
 
     // Global Shortcuts
@@ -146,10 +163,10 @@ $(function() {
         // Ctrl-t
         // Open-close Terminal
         if (global_keys[17] && global_keys[84]) {
-            terminal = $('#terminal');
-            terminal.toggle();
-            if (terminal.is(':visible')) {
-                terminal.find('#terminal-cmd').focus();
+            var elem = $('#terminal');
+            elem.toggle();
+            if (elem.is(':visible')) {
+                elem.find('#terminal-input .user-cmd').focus();
             }
         } else {
             // Not a global shortcut, continue propogation
@@ -164,21 +181,36 @@ $(function() {
         global_keys[e.keyCode] = undefined;
     });
 
+    $('#terminal').on('click', function() {
+        $(this).find('.user-cmd').focus();
+    });
+
     // Terminal submission
-    $('#terminal-cmd').keyup(function(e) {
+    $('#terminal-input .user-cmd').keyup(function(e) {
         var elem = $(this);
         // Enter key
         if (e.keyCode == 13) {
             data = {
-                cmd: elem.val()
+                // TODO: trim ending newline?
+                cmd: elem.text()
             };
 
             // Send command
             syncrae.publish('/terminal/command', data);
 
             // Clear the input
-            elem.val('');
+            elem.text('');
+            terminal.reset();
+        // Up
+        } else if (e.keyCode == 38) {
+            elem.text(terminal.next());
+        // Down
+        } else if (e.keyCode == 40) {
+            elem.text(terminal.prev());
+        } else {
+            return;
         }
+        return false;
     });
 });
 

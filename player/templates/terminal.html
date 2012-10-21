@@ -1,5 +1,24 @@
 {% load helpers %}
 
+
+<div id="terminal" class="terminal-bg hide">
+    <div class="terminal-logs" id="terminal-logs"></div>
+    <div id="terminal-input" class="terminal-bg">
+        <div class="terminal-cmd prefix cmd">
+            <div class="end-char">~ </div>
+        </div>
+        <div class="terminal-cmd user-cmd cmd" contenteditable></div>
+    </div>
+
+    <!-- Connection Status -->
+    <div class="connection status-off">
+        <span class="reconnect-time time-sec">&nbsp;</span>
+    </div>
+    <!-- End Connection Status -->
+</div>
+
+
+
 {% mustache 'terminal-log' %}
     <div class="<% level %> terminal-log">
         <% log %>
