@@ -33,7 +33,7 @@ TEST_FILE_PATTERN = '*_test.py'
 
 
 # format: 'major.minor.bug name'
-VERSION = '0.1.0 BETA'
+VERSION = '0.2.0 BETA'
 
 
 ##################################################
