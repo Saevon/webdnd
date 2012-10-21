@@ -37,3 +37,10 @@ the bootstrap, or are highly intertwined with it.
 .table tbody tr.muted td {
     background-color: #EEE;
 }
+
+
+
+/* The nav bar repositions improperly when shrunk down */
+.navbar-fixed-top, .navbar-fixed-bottom {
+    position: fixed;
+}
