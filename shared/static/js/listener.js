@@ -105,12 +105,18 @@ syncrae.subscribe('/sessions/status', function(data) {
 syncrae.subscribe('/sessions/error', function(data) {
     term_result({
         level: data.level || 'error',
-        log: data.error
+        log: data.err_msg,
+        err_code: data.err_code
     });
     new_message({
         name: 'system',
         msg: data.error
     });
+
+    if (data.err_code == '5101') {
+        // 'Not Logged In' err
+        syncrae.retry_timer.disable();
+    }
 });
 
 syncrae.subscribe('/messages/new', function(data) {
