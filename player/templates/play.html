@@ -39,6 +39,7 @@
             <!-- Character Sheet -->
             <div class="char-sheets"></div>
             <!-- End Sheet -->
+        </div>
 
 
         <!-- Messenger -->
@@ -74,23 +75,6 @@
         <!-- End Messenger -->
 
         <!-- Terminal -->
-        <div id="terminal" class="terminal-bg hide">
-            <div class="terminal-logs" id="terminal-logs"></div>
-            <div id="terminal-input" class="terminal-bg">
-                <div class="terminal-cmd prefix cmd">
-                    <div class="end-char">~ </div>
-                </div>
-                <div class="terminal-cmd user-cmd cmd" contenteditable></div>
-            </div>
-
-            <!-- Connection Status -->
-            <div class="connection status-off">
-                <span class="reconnect-time time-sec">&nbsp;</span>
-            </div>
-            <!-- End Connection Status -->
-
-        </div>
-
         {% include 'terminal.html' %}
         <!-- End Terminal -->
 
