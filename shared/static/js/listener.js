@@ -19,6 +19,19 @@ new_message = function(data) {
     elem.scrollTop = elem.scrollHeight;
 };
 
+var term_result = function(data) {
+    if (data.cmd === true) {
+        $(Mustache.templates['terminal-cmd'](data))
+            .appendTo('#terminal-logs');
+    } else {
+        $(Mustache.templates['terminal-log'](data))
+            .appendTo('#terminal-logs');
+    }
+
+    var elem = $('#terminal-logs')[0];
+    elem.scrollTop = elem.scrollHeight;
+};
+
 
 // Reconnection timer
 syncrae.retry_timer.listen(function(sec) {
@@ -49,13 +62,11 @@ syncrae.retry_timer.listen(function(sec) {
             .html('&nbsp;');
 
         // Show a terminal message on websocket connect
-        $(Mustache.templates['terminal-log']({
+        term_result({
+            cmd: false,
             level: 'info',
             log: 'websocket connected'
-        })).appendTo('#terminal-logs');
-
-        var elem = $('#terminal-logs')[0];
-        elem.scrollTop = elem.scrollHeight;
+        });
     });
     syncrae.off(function() {
         if (!connected) {
@@ -67,13 +78,11 @@ syncrae.retry_timer.listen(function(sec) {
             .removeClass('status-on');
 
         // Show a Terminal message on websocket disconnect
-        $(Mustache.templates['terminal-log']({
+        term_result({
+            cmd: false,
             level: 'warn',
             log: 'websocket disconnected'
-        })).appendTo('#terminal-logs');
-
-        var elem = $('#terminal-logs')[0];
-        elem.scrollTop = elem.scrollHeight;
+        });
     });
 })();
 
@@ -105,16 +114,7 @@ syncrae.subscribe('/messages/new', function(data) {
 });
 
 syncrae.subscribe('/terminal/result', function(data) {
-    if (data.cmd === true) {
-        $(Mustache.templates['terminal-cmd'](data))
-            .appendTo('#terminal-logs');
-    } else {
-        $(Mustache.templates['terminal-log'](data))
-            .appendTo('#terminal-logs');
-    }
-
-    var elem = $('#terminal-logs')[0];
-    elem.scrollTop = elem.scrollHeight;
+    term_result(data);
 });
 
 $(function() {
