@@ -1,4 +1,13 @@
 /* Campaign Overview lists */
+
+/* Provides space for the nav-bar */
+body {
+    padding-top: 60px;
+}
+.footer {
+    padding-top: 100px;
+}
+
 .user:hover,
 .campaign:hover {
     background-color: #EEF;

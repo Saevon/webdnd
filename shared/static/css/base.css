@@ -1,12 +1,14 @@
-/*!
+/**
  * Base CSS for the whole app
  */
 
-/* Creates space for the nav bar */
-body {
-    padding-top: 60px;
+
+
+
+.hide {
+    display: none;
 }
-.footer {
-    padding-top: 100px;
+.clearb {
+    clear: both;
 }
 
