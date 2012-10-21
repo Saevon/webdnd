@@ -39,11 +39,12 @@ alerts.highlight = (function() {
 
         // Allow non-unique selectors
         groups.each(function() {
-            var group = $(this)
+            var group = $(this);
 
-            var inputs = group.find('input');
-            inputs.add(group.find('select'))
-            inputs.add(group.find('textarea'));
+            var inputs = group.find('input')
+                .add(group.find('select'))
+                .add(group.find('textarea'))
+                .add(group.find('button'));
 
             // Muted means we disable everything in the group
             if (level == 'muted' || level == 'disabled') {
