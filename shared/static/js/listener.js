@@ -163,10 +163,10 @@ $(function() {
         // Ctrl-t
         // Open-close Terminal
         if (global_keys[17] && global_keys[84]) {
-            terminal = $('#terminal');
-            terminal.toggle();
-            if (terminal.is(':visible')) {
-                terminal.find('#terminal-input .user-cmd').focus();
+            var elem = $('#terminal');
+            elem.toggle();
+            if (elem.is(':visible')) {
+                elem.find('#terminal-input .user-cmd').focus();
             }
         } else {
             // Not a global shortcut, continue propogation
@@ -200,7 +200,17 @@ $(function() {
 
             // Clear the input
             elem.text('');
+            terminal.reset();
+        // Up
+        } else if (e.keyCode == 38) {
+            elem.text(terminal.next());
+        // Down
+        } else if (e.keyCode == 40) {
+            elem.text(terminal.prev());
+        } else {
+            return;
         }
+        return false;
     });
 });
 

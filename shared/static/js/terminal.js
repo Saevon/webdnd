@@ -1,15 +1,21 @@
+// Terminal History Log
+// Stores the typed values so you can find
+// them again later
 var terminal = {
     history: [],
     index: 0,
 
     store: function(arr) {
-        this.history = arr;
-        this.index = this.history.length;
+        this.history = [];
+        this.history[-1] = '';
+        for (var key in arr) {
+            this.add(key);
+        }
         return this;
     },
     add: function(cmd) {
         this.history.push(cmd);
-        this.index = this.history.length;
+        this.index = -1;
         return this;
     },
 
@@ -28,30 +34,35 @@ var terminal = {
 
     // Usage functions
     next: function() {
-        if (this.index == -1) {
-            this.index = this.history.length;
-        } else if (this.index < 0) {
-            this.index = -1;
-            return '';
-        }
-        this.index--;
+        this.set_index(this.index + 1, 1);
         return this.history[this.index];
     },
     prev: function() {
-        this.index++;
-        if (this.index >= this.history.length) {
-            this.index = -1;
-            return '';
-        }
-        
+        this.set_index(this.index - 1, -1);
         return this.history[this.index];
     },
+    counter: 0,
+    set_index: function(val, dir) {
+        dir = dir || 1;
+        var start = this.index;
+        this._set_index(val);
+    },
+    _set_index: function(val) {
+        if (val >= this.history.length || val <= -2) {
+            this.index = -1;
+        } else if (val == -1) {
+            this.index = this.history.length;
+        } else {
+            this.index = val;
+        }
+    },
     reset: function() {
-        this.index = this.history.length;
+        this.index = -1;
         return this;
     }
 };
 terminal.listen();
+terminal.history[-1] = '';
 
 
 $(function() {
