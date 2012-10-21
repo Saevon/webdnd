@@ -1,8 +1,9 @@
 
-new_message = function(data) {
-
+var new_message = function(data) {
     if (data.name == 'system') {
-        data.type = 'notification';
+        if (data.type === undefined) {
+            data.type = 'notification';
+        }
     }
 
     var message = $(Mustache.templates.message(data))
@@ -70,7 +71,7 @@ syncrae.retry_timer.listen(function(sec) {
     });
     syncrae.off(function() {
         if (!connected) {
-            return; // Don't display the messag twice
+            return; // Don't display the message twice
         }
         connected = false;
 
@@ -102,11 +103,14 @@ syncrae.subscribe('/sessions/status', function(data) {
 });
 
 syncrae.subscribe('/sessions/error', function(data) {
-    data = {
+    term_result({
+        level: data.level || 'error',
+        log: data.error
+    });
+    new_message({
         name: 'system',
         msg: data.error
-    };
-    new_message(data);
+    });
 });
 
 syncrae.subscribe('/messages/new', function(data) {
