@@ -6,11 +6,21 @@ var new_message = function(data) {
         }
     }
 
-    var message = $(Mustache.templates.message(data))
-        .css('opacity', 0)
+    var prev = $('#messages .message:last-child');
+    var prev_name = prev.find('.name').text();
+    var msg;
+
+    if (prev_name == data.name) {
+        msg = $(Mustache.templates.message(data)).find('.msg')
+            .appendTo(prev);
+    } else {
+        msg = $(Mustache.templates.message(data))
+            .appendTo('#messages');
+    }
+
+    msg.css('opacity', 0)
         .css('position', 'relative')
         .css('left', '-200px')
-        .appendTo('#messages')
         .animate({
             opacity: 1,
             left: 0
