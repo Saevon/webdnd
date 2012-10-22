@@ -160,14 +160,14 @@ $(function() {
         // Means Ctrl-? on Mac
         // or Alt-? on windows
         if (OSName != 'MacOS') {
-            if (key == 18) {
-                key = 17;
-            } else if (key == 17) {
+            if (code == 18) {
+                code = 17;
+            } else if (code == 17) {
                 // Ignore the real Ctrl
                 return false;
             }
         }
-        return key;
+        return code;
     };
 
     // Global Shortcuts
