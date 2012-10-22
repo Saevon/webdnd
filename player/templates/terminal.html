@@ -19,14 +19,14 @@
 
 
 
-{% mustache 'terminal-log' %}
+{% template 'terminal-log' %}
     <div class="<% level %> terminal-log">
-        <% log %>
+        <% text %>
     </div>
-{% endmustache %}
+{% endtemplate %}
 
-{% mustache 'terminal-cmd' %}
+{% template 'terminal-cmd' %}
     <div class="<% level %> terminal-cmd">
-        ≈ <% log %>
+        ≈ <% text %>
     </div>
-{% endmustache %}
+{% endtemplate %}

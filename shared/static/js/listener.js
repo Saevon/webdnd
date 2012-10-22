@@ -11,10 +11,10 @@ var new_message = function(data) {
     var msg;
 
     if (data.name != 'system' && prev_name == data.name) {
-        msg = $(Mustache.templates.message(data)).find('.msg')
+        msg = $(Templates.message(data)).find('.msg')
             .appendTo(prev);
     } else {
-        msg = $(Mustache.templates.message(data))
+        msg = $(Templates.message(data))
             .appendTo(chat.find('.messages'));
     }
 
@@ -32,10 +32,10 @@ var new_message = function(data) {
 
 var term_result = function(data) {
     if (data.cmd === true) {
-        $(Mustache.templates['terminal-cmd'](data))
+        $(Templates['terminal-cmd'](data))
             .appendTo('#terminal-logs');
     } else {
-        $(Mustache.templates['terminal-log'](data))
+        $(Templates['terminal-log'](data))
             .appendTo('#terminal-logs');
     }
 
@@ -76,7 +76,7 @@ syncrae.retry_timer.listen(function(sec) {
         term_result({
             cmd: false,
             level: 'info',
-            log: 'websocket connected'
+            text: 'websocket connected'
         });
     });
     syncrae.off(function() {
@@ -92,7 +92,7 @@ syncrae.retry_timer.listen(function(sec) {
         term_result({
             cmd: false,
             level: 'warn',
-            log: 'websocket disconnected'
+            text: 'websocket disconnected'
         });
     });
 })();
@@ -120,7 +120,7 @@ syncrae.subscribe('/', function(data) {
     if (data.err_code) {
         term_result({
             level: data.level || 'error',
-            log: data.err_msg,
+            text: data.err_msg,
             err_code: data.err_code
         });
     }

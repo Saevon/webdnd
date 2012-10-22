@@ -132,10 +132,10 @@ $(function() {
             this._elem.empty();
 
             if (!response.paging.length) {
-                this._elem.append(Mustache.templates[this.template_empty](response.output));
+                this._elem.append(Templates[this.template_empty](response.output));
             } else {
                 var data = {'cmds': response.output};
-                this._elem.append(Mustache.templates[this.template](data));
+                this._elem.append(Templates[this.template](data));
             }
         },
 

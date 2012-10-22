@@ -135,19 +135,26 @@ COMPRESS_ROOT = os.path.join(WEBDND_ROOT, 'static/')
 COMPRESS_OUTPUT_DIR = '/compressed'
 # COMPRESS_JS_FILTERS = ('compressor.filters.yui.YUIJSFilter',)
 # COMPRESS_CSS_FILTERS = ('compressor.filters.yui.YUICSSFilter',)
+
 # COMPRESS_PRECOMPILERS = (
-#     # CSS Pre-compilers
-#     ('text/css', 'cat {infile} > {outfile}'),
-#     # ('text/less', 'lessc {infile} {outfile}'),
+    # CSS Pre-compilers
+    # ('text/css', 'cat {infile} > {outfile}'),
+    # ('text/less', 'lessc {infile} {outfile}'),
 
-#     # JS Pre-Compilers
-#     ('text/js', 'cat {infile} > {outfile}'),
-#     # ('text/coffeescript', 'coffee --compile --stdio'),
+    # JS Pre-Compilers
+    # ('text/javascript', 'cat {infile} > {outfile}'),
+    # ('text/x-handlebars-template', 'echo'),
+    # ('text/x-handlebars-template',
+    #     'handlebars {infile} --output {outfile}'
+    #     # Minimize compiled template in production
+    #     + (' --min' if DEBUG else '')
+    # ),
 
-#     # Some Examples
-#     # ('text/x-sass', 'sass {infile} {outfile}'),
-#     # ('text/x-scss', 'sass --scss {infile} {outfile}'),
-#     # ('text/foobar', 'path.to.MyPrecompilerFilter'),
+
+    # e.g. of using classes
+    # ('text/foobar', 'path.to.MyPrecompilerFilter'),
+    # e.g.
+    # ('text/coffeescript', 'coffee --compile --stdio'),
 # )
 
 

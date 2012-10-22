@@ -22,11 +22,11 @@
 </div>
 
 
-{% mustache 'message' %}
+{% template 'message' %}
     <div class="row-fluid msg-row <% type %>" data-id="<% id %>">
         <span class="prefix">
             <span class="name"><% name %></span>:
         </span>
         <span class="msg"><% msg %><br/></span>
     </div>
-{% endmustache %}
+{% endtemplate %}

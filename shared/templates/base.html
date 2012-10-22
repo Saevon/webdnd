@@ -109,8 +109,8 @@
     <script type="text/javascript" src="{% static 'shared/js/jquery.js' %}"></script>
     <script type="text/javascript" src="{% static 'shared/js/bootstrap.js' %}"></script>
     {% compress js %}
-      <script type="text/javascript" src="{% static 'shared/js/mustache.js' %}"></script>
-      <script type="text/javascript" src="{% static 'shared/js/mustache-plugins.js' %}"></script>
+      <script type="text/javascript" src="{% static 'shared/js/handlebars.js' %}"></script>
+      {% compile_templates 6 %}
       <script type="text/javascript" src="{% static 'shared/js/bootstrap-plugins.js' %}"></script>
       <script type="text/javascript" src="{% static 'alerts/alert.js' %}"></script>
       <script type="text/javascript" src="{% static 'alerts/highlighter.js' %}"></script>
