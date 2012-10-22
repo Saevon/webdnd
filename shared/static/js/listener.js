@@ -1,21 +1,21 @@
 
 var new_message = function(data) {
+    var chat = $('#chat-campaign');
+
     if (data.name == 'system') {
-        if (data.type === undefined) {
-            data.type = 'notification';
-        }
+        data.type = 'system';
     }
 
-    var prev = $('#messages .message:last-child');
+    var prev = chat.find('.messages .msg-row:last-child');
     var prev_name = prev.find('.name').text();
     var msg;
 
-    if (prev_name == data.name) {
+    if (data.name != 'system' && prev_name == data.name) {
         msg = $(Mustache.templates.message(data)).find('.msg')
             .appendTo(prev);
     } else {
         msg = $(Mustache.templates.message(data))
-            .appendTo('#messages');
+            .appendTo(chat.find('.messages'));
     }
 
     msg.css('opacity', 0)
@@ -26,7 +26,7 @@ var new_message = function(data) {
             left: 0
         });
 
-    var elem = $('#messages')[0];
+    var elem = $('#chat-campaign .messages')[0];
     elem.scrollTop = elem.scrollHeight;
 };
 
@@ -149,21 +149,21 @@ syncrae.subscribe('/terminal/result', function(data) {
 $(function() {
     terminal.elem.input($('#terminal-input'));
     // auto focus to the chat body when loading the page
-    $('#msg-input').focus();
+    $('#chat-campaign .msg-input').focus();
 
     // send messages when form is changed
-    $('#msg-form').submit(function(e) {
+    $('#chat-campaign .msg-form').submit(function(e) {
         e.preventDefault();
 
         var data = {
-            msg: $(this).find('#msg-input').val()
+            msg: $(this).find('.msg-input').val()
         };
 
         // send message
         syncrae.publish('/messages/new', data);
 
         // reset form
-        $(this).find('#msg-input').val('');
+        $(this).find('.msg-input').val('');
     });
 
     // Global Shortcuts

@@ -1,11 +1,32 @@
+
 html, body {
     height: 100%;
     background: #333;
 }
 
 
+/* Chat Window */
+.chat-border {
+    height: 100%;
 
-/* Horiontal split */
+    border-right: 1px solid #888;
+}
+.chat {
+    height: 100%;
+    width: 95%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+/* Char Sheets */
+.char-sheets {
+    width: 50%;
+    height: 100%;
+}
+
+
+/* Horizontal split */
 .hsplit,
 .hsplit .hsplit-left,
 .hsplit-right {

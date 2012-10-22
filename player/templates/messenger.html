@@ -1,10 +1,10 @@
 {% load helpers %}
-<div id="chat">
-    <div id="messages">
+<div class="chat" id="chat-campaign">
+    <div class="messages">
 
     </div>
 
-    <div class="row-fluid message type">
+    <form class="row-fluid msg-row msg-form">
         <div class="span12 name">
             <span class="user-name">
                 {{ user.name }}
@@ -17,18 +17,16 @@
                 {% endif %}
             </span>
         </div>
-        <div class="span12 body">
-            <form class="form-inline" id="msg-form">
-                <input class="span12" type="text" name="msg" placeholder="Say..." id="msg-input" autocomplete="off">
-            </form>
-        </div>
+        <input class="span12 msg-input" type="text" name="msg" placeholder="Say..." autocomplete="off">
     </div>
 </div>
 
 
 {% mustache 'message' %}
-    <div class="row-fluid message <% type %>" data-id="<% id %>">
-        <span class="name"><% name %></span>:
+    <div class="row-fluid msg-row <% type %>" data-id="<% id %>">
+        <span class="prefix">
+            <span class="name"><% name %></span>:
+        </span>
         <span class="msg"><% msg %><br/></span>
     </div>
 {% endmustache %}

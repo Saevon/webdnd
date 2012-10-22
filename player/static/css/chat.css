@@ -1,53 +1,21 @@
-/* Chat window Styles */
-.chat-border {
-    height: 100%;
-
-    border-right: 1px solid #888;
-}
-#chat {
-    height: 100%;
-    width: 95%;
-    margin-right: auto;
-    margin-left: auto;
-}
-#messages {
+/* Overall Styling */
+.messages {
     height: 85%;
     overflow: scroll;
 }
 
-.char-sheets {
-    width: 50%;
-    height: 100%;
-}
-
-.message {
-    color: #eee;
-    font-weight: bold;
-    font-size: 12px;
-    margin-top: 10px;
-}
-.message .body {
-    margin-left: 0;
-}
-.message:hover:not(.type) {
-    background-color: #445;
-}
-.message.type {
-    margin-top: 0px;
-}
-#msg-input {
+.msg-input {
     height: 12px;
     font-size: 12px;
 }
-.message.type .msg {
-    color: #666;
-    font-weight: normal;
+
+/* Message Rows */
+.msg-row:hover:not(.msg-form) {
+    background-color: #445;
 }
-.message.notification .msg {
-    color: lightblue;
-    font-weight: normal;
-}
-.message .name {
+
+/* Message Row Names */
+.msg-row .name {
     color: #999;
 }
 
@@ -56,6 +24,26 @@
 }
 .char-name:after {
     content: ")";
+}
+
+/* Actual message text */
+.msg {
+    color: #EEE;
+    font-weight: bold;
+    font-size: 12px;
+}
+.msg-form .msg {
+    color: #666;
+    font-weight: normal;
+}
+
+/* System messages */
+.msg-row.system .prefix {
+    display: none;
+}
+.msg-row.system .msg {
+    color: lightblue;
+    font-weight: normal;
 }
 
 
