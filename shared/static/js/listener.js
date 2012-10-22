@@ -155,10 +155,7 @@ $(function() {
         $(this).find('#msg-input').val('');
     });
 
-    // Global Shortcuts
-    var global_keys = {};
-    $('body').keydown(function(e) {
-        var key = e.keyCode;
+    var get_key = function(code) {
         // Glb-?
         // Means Ctrl-? on Mac
         // or Alt-? on windows
@@ -167,8 +164,18 @@ $(function() {
                 key = 17;
             } else if (key == 17) {
                 // Ignore the real Ctrl
-                return;
+                return false;
             }
+        }
+        return key;
+    };
+
+    // Global Shortcuts
+    var global_keys = {};
+    $('body').keydown(function(e) {
+        var key = get_key(e.keyCode);
+        if (key === false) {
+            return;
         }
         global_keys[key] = true;
 
@@ -189,7 +196,11 @@ $(function() {
         return false;
     });
     $('body').keyup(function(e) {
-        global_keys[e.keyCode] = undefined;
+        var key = get_key(e.keyCode);
+        if (key === false) {
+            return;
+        }
+        global_keys[key] = undefined;
     });
 
     $('#terminal').on('click', function() {
