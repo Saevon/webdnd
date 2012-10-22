@@ -155,33 +155,15 @@ $(function() {
         $(this).find('#msg-input').val('');
     });
 
-    var get_key = function(code) {
-        // Glb-?
-        // Means Ctrl-? on Mac
-        // or Alt-? on windows
-        if (OSName != 'MacOS') {
-            if (code == 18) {
-                code = 17;
-            } else if (code == 17) {
-                // Ignore the real Ctrl
-                return false;
-            }
-        }
-        return code;
-    };
-
     // Global Shortcuts
     var global_keys = {};
     $('body').keydown(function(e) {
-        var key = get_key(e.keyCode);
-        if (key === false) {
-            return;
-        }
+        var key = e.keyCode;
         global_keys[key] = true;
 
         // Main-t
         // Open-close Terminal
-        if (global_keys[17] && global_keys[84]) {
+        if (global_keys[16] && global_keys[32]) {
             var elem = $('#terminal');
             elem.toggle();
             if (elem.is(':visible')) {
@@ -196,10 +178,7 @@ $(function() {
         return false;
     });
     $('body').keyup(function(e) {
-        var key = get_key(e.keyCode);
-        if (key === false) {
-            return;
-        }
+        var key = e.keyCode;
         global_keys[key] = undefined;
     });
 
