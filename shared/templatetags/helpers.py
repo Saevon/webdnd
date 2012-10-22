@@ -37,9 +37,7 @@ class MustachedNode(template.Node):
     TMPL = dedent("""
         %(templates)s
         <script type="text/javascript">
-        $(function() {
             %(lines)s
-        });
         </script>
     """)
 

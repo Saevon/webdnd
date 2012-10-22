@@ -66,6 +66,10 @@
     {% compress js %}
       <script type="text/javascript" src="{% static 'shared/js/mustache.js' %}"></script>
       <script type="text/javascript" src="{% static 'shared/js/mustache-plugins.js' %}"></script>
+        <!-- Mustache Templates -->
+        {% mustache_templates 6 %}
+        <!-- End Mustache Templates -->
+
       <script type="text/javascript" src="{% static 'shared/js/bootstrap-plugins.js' %}"></script>
       <script type="text/javascript" src="{% static 'shared/js/formatting.js' %}"></script>
       <script type="text/javascript">
@@ -83,10 +87,6 @@
         });
     </script>
     <!-- End Javascript -->
-
-    <!-- Mustache Templates -->
-    {% mustache_templates 6 %}
-    <!-- End Mustache Templates -->
 
   </body>
 </html>
