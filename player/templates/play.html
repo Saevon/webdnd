@@ -14,7 +14,9 @@
     <title>{{ campaign.name }}</title>
 
     <!-- Styles -->
+    <link rel="stylesheet" href="{% static 'shared/css/bootstrap.css' %}" type="text/css" charset="utf-8">
     {% compress css %}
+      <link rel="stylesheet" href="{% static 'shared/css/bootstrap.extra.css' %}" type="text/css" charset="utf-8">
       <link rel="stylesheet" href="{% static 'shared/css/base.css' %}" type="text/css" charset="utf-8">
       <link rel="stylesheet" href="{% static 'player/css/play.css' %}" type="text/css" charset="utf-8">
       <link rel="stylesheet" href="{% static 'player/css/chat.css' %}" type="text/css" charset="utf-8">
@@ -33,46 +35,20 @@
     <div class="hsplit">
 
         <div class="hsplit-left">
+            <!-- Messenger -->
+            <div class="chat-border">
+                {% include 'messenger.html' %}
+            </div>
+            <!-- End Messenger -->
         </div>
 
         <div class="hsplit-right">
             <!-- Character Sheet -->
-            <div class="char-sheets"></div>
+            <div class="char-sheet-border">
+                <!-- Char Sheet include goes here -->
+            </div>
             <!-- End Sheet -->
         </div>
-
-
-        <!-- Messenger -->
-        <div id="chat">
-            <div class="container-fluid" id="messages">
-
-            </div>
-
-            <div class="container-fluid">
-                <div class="row-fluid message type">
-                    <div class="span2 name">
-                        <span class="user-name">
-                            {{ user.name }}
-                        </span>
-                        <span class="char-name">
-                            {% if is_dm %}
-                                DM
-                            {% elif char %}
-                                {{ char.name }}
-                            {% endif %}
-                        </span>
-                    </div>
-                    <div class="span10 body">
-                        <form class="form-inline" id="msg-form">
-                            <input class="span10" type="text" name="msg" placeholder="Say..." id="msg-input">
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            {% include 'messenger.html' %}
-        </div>
-        <!-- End Messenger -->
 
         <!-- Terminal -->
         {% include 'terminal.html' %}

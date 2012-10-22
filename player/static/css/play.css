@@ -5,14 +5,19 @@ html, body {
 
 
 
-/* Character Sheer */
-.char-name:before {
-    content: "(";
-}
-.char-name:after {
-    content: ")";
+/* Horiontal split */
+.hsplit,
+.hsplit .hsplit-left,
+.hsplit-right {
+    height: 100%;
 }
 
+.hsplit .hsplit-left {
+    width: 30%;
+}
+.hsplit .hsplit-right {
+    width: 70%;
+}
 
 
 
