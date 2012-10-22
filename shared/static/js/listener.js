@@ -158,9 +158,21 @@ $(function() {
     // Global Shortcuts
     var global_keys = {};
     $('body').keydown(function(e) {
+        var key = e.keyCode;
+        // Glb-?
+        // Means Ctrl-? on Mac
+        // or Alt-? on windows
+        if (OSName != 'MacOS') {
+            if (key == 18) {
+                key = 17;
+            } else if (key == 17) {
+                // Ignore the real Ctrl
+                return;
+            }
+        }
         global_keys[e.keyCode] = true;
 
-        // Ctrl-t
+        // Main-t
         // Open-close Terminal
         if (global_keys[17] && global_keys[84]) {
             var elem = $('#terminal');
@@ -175,7 +187,6 @@ $(function() {
         // If one of the commands was activated then stop default action
         // and any other callbacks
         return false;
-
     });
     $('body').keyup(function(e) {
         global_keys[e.keyCode] = undefined;
