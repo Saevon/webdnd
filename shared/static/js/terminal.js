@@ -1,7 +1,8 @@
 // Terminal History Log
 // Stores the typed values so you can find
 // them again later
-var terminal = {
+var terminal = {};
+terminal.history = {
     history: [],
     index: 0,
 
@@ -61,8 +62,38 @@ var terminal = {
         return this;
     }
 };
-terminal.listen();
-terminal.history[-1] = '';
+terminal.history.listen();
+terminal.history.history[-1] = '';
+
+terminal.elem = {
+    input: function(elem) {
+        this._elem = elem;
+        this._text = elem.find('.user-cmd');
+    },
+    get: function() {
+        return this._elem;
+    },
+    focus: function() {
+        this._text.focus();
+    },
+    save: function() {
+    }
+};
+
+
+terminal.reloader = {
+    elem: $(),
+
+    reload: function() {
+        terminal.elem.save();
+        this.elem.focus();
+        this.elem = $();
+    },
+    save: function(elem) {
+        this.elem = elem;
+        terminal.elem.focus();
+    }
+};
 
 
 $(function() {

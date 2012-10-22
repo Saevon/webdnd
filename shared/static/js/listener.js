@@ -137,6 +137,7 @@ syncrae.subscribe('/terminal/result', function(data) {
 });
 
 $(function() {
+    terminal.elem.input($('#terminal-input'));
     // auto focus to the chat body when loading the page
     $('#msg-input').focus();
 
@@ -167,7 +168,10 @@ $(function() {
             var elem = $('#terminal');
             elem.toggle();
             if (elem.is(':visible')) {
-                elem.find('#terminal-input .user-cmd').focus();
+                var last_focused = $(':focus');
+                terminal.reloader.save(last_focused);
+            } else {
+                terminal.reloader.reload();
             }
         } else {
             // Not a global shortcut, continue propogation
@@ -201,13 +205,13 @@ $(function() {
 
             // Clear the input
             elem.text('');
-            terminal.reset();
+            terminal.history.reset();
         // Up
         } else if (e.keyCode == 38) {
-            elem.text(terminal.next());
+            elem.text(terminal.history.next());
         // Down
         } else if (e.keyCode == 40) {
-            elem.text(terminal.prev());
+            elem.text(terminal.history.prev());
         } else {
             return;
         }
