@@ -170,7 +170,7 @@ $(function() {
                 return;
             }
         }
-        global_keys[e.keyCode] = true;
+        global_keys[key] = true;
 
         // Main-t
         // Open-close Terminal
