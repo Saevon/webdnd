@@ -1,0 +1,20 @@
+
+<div class="characters">
+    {% for character in characters %}
+        <div class="character user"><a class="no-underline" href="{% url game_character_edit chid=character.id %}">
+            <blockquote>
+                <span class="btn 
+                    btn-{% if character.status == 'main' %}success{% elif character.status == 'dead' %}inverse{% elif character.status == 'unsd' %}default{% elif character.status == 'comp' %}info
+                    {% endif %}
+                    btn-mini char-status {{ character.status }}">{{ character.get_status_display }}</span>
+                <span class="capitalize">{{ character.name }}</span>
+                {# <span class="capitalize">{{ character.class }}</span> #}
+            </blockquote>
+        </a></div>
+    {% empty %}
+        <blockquote class="empty span9 muted">
+            You have no characters right now.
+        </blockquote>
+    {% endfor %}
+</div>
+

@@ -12,8 +12,13 @@ body {
 .campaign:hover {
     background-color: #EEF;
 }
-.campaign:hover a {
+
+.no-underline:hover {
     text-decoration: none;
 }
 
+.char-status.main {
+    /*color: #5BB75B;*/
+    font-weight: bolder;
+}
 

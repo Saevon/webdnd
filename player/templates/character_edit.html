@@ -1,0 +1,25 @@
+{% extends "account/base.html" %}
+
+
+{% block page_title %} {{ block.super }} ~ Characters{% endblock %}
+{% block tab_name %}characters{% endblock %}
+
+
+{% block content %}
+    <legend>
+        Characters
+        <div class="control-group pull-right">
+            <div class='controls'>
+                <a class="btn btn-success" href="{% url game_character_create %}">
+                    <i class="icon-plus icon-white"></i>
+                    <b>New Character</b>
+                </a>
+            </div>
+        </div>
+    </legend>
+
+    {% include '_character_list.html' %}
+
+{% endblock content %}
+
+

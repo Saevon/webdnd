@@ -9,6 +9,7 @@ from django.db.models import Q
 
 from webdnd.player.constants.campaign import ROLEPLAYING_SYSTEMS
 from webdnd.player.models.campaigns import Campaign
+from webdnd.player.models.players import Character
 from webdnd.player.models.players import Player
 from webdnd.shared.views import LoginRequiredMixin
 
@@ -23,6 +24,7 @@ class CampaignListView(LoginRequiredMixin, View):
             out,
             context_instance=RequestContext(request)
         )
+
 
 def my_campaigns(user):
     # Get all players that represent you
@@ -183,3 +185,18 @@ class PlayView(LoginRequiredMixin, View):
 
 
 
+class CharacterListView(LoginRequiredMixin, View):
+    def get(self, request):
+        characters = Character.objects.filter(player__user=request.user)
+        out = {
+            'characters': characters,
+        }
+        return render_to_response('character_list.html',
+            out,
+            context_instance=RequestContext(request)
+        )
+
+
+
+class CharacterEditView(LoginRequiredMixin, View):
+    pass

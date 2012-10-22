@@ -14,7 +14,10 @@
     {% include '_campaign_list.html' %}
 {% endif %}
 
-<legend>Characters</legend>
+{% if characters %}
+    <legend>Characters</legend>
 
+    {% include '_character_list.html' %}
+{% endif %}
 {% endblock content %}
 

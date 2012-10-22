@@ -11,6 +11,7 @@ from webdnd.shared.views import LoginRequiredMixin
 from webdnd.shared.utils.quotes import blurb
 from webdnd.shared.views import AjaxApi
 
+from webdnd.player.models.players import Character
 from webdnd.player.views.index import UserIndex
 from webdnd.player.views.game import my_campaigns
 
@@ -19,11 +20,13 @@ class AccountHomeView(LoginRequiredMixin, View):
 
     def get(self, request):
         campaigns = my_campaigns(request.user)
+        characters = Character.objects.filter(player__user=request.user, status='main')
 
         return render_to_response(
             'account/home.html',
             {
                 'campaigns': campaigns,
+                'characters': characters,
 
             },
             context_instance=RequestContext(request)
