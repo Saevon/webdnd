@@ -29,7 +29,6 @@
 /* Actual message text */
 .msg {
     color: #EEE;
-    font-weight: bold;
     font-size: 12px;
 }
 .msg-form .msg {
