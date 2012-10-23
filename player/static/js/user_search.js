@@ -131,7 +131,7 @@ friends.search = (function() {
                 });
                 if (!kept) {
                     this._elem.append(
-                        Templates['users'](response.output)
+                        Templates['search-user-empty'](response.output)
                     );
                 }
             }
@@ -161,9 +161,7 @@ friends.search = (function() {
         var obj = $.extend({}, result).elem(output);
         obj.refresh = function() {
             var val = input.val();
-            if (val.length !== 0) {
-                obj.request(val);
-            }
+            obj.request(val);
         };
 
         input.on('change', function() {
