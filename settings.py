@@ -138,7 +138,14 @@ COMPRESS_OUTPUT_DIR = '/compressed'
 
 COMPRESS_PRECOMPILERS = (
     # CSS Pre-compilers
-    ('text/less', 'lessc {infile} {outfile}'),
+    ('text/less', 'lessc {infile} {outfile} --verbose'
+        # Prevent bad debug messages, e.g. [31m that form colors
+        + (' --no-color' if DEBUG else '')
+        # Compress output on Prod
+        + ('' if DEBUG else ' -x')
+        # Show line numbers in compiled code as comments
+        + (' --line-numbers="comments"' if LESS_DEBUG else '')
+    ),
 
     # JS Pre-Compilers
     # ('text/x-handlebars-template',
