@@ -19,8 +19,3 @@ admin.site.register(Player)
 admin.site.register(Character)
 admin.site.register(Alignment)
 
-<<<<<<< HEAD
-admin.site.register(HistoryLog)
-=======
-
->>>>>>> 6740a75602942cc20bc7add3a54357bb8883eadc
