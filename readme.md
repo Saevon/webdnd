@@ -1,9 +1,7 @@
-*********************************************************************
-* README File
-* 
-* Web DnD Application
-* 
+# Web D&D (Web-App)
+
 * Created by Dmitry Blotsky and Serghei Filippov on January 9th, 2011
+
 *********************************************************************
 
 
@@ -17,26 +15,31 @@
 git clone WEBDND(https://github.com/dblotsky/webdnd)
 cd webdnd && git clone SYNCRAE(https://github.com/BlastofWind/syncrae)
 ```
+
 * (OPTIONAL) Create a virtualenv
 ```bash
 virtualenv ../webdnd-env
 source ../webdnd-env/bin/activate
 ```
+
 * Update python packages
 ```bash
 pip install -r shared/config/requirements.txt
 ```
-* Adding a local
+
+* Create the local settings file.
+** This will create the file from a template
+** Change this file to reflect personal customizations
 ```bash
 python manage.py localize
 vim local_settings.py
 ```
-** You can now change this file to reflect personal customizations
+
 * Install http://nodejs.org/
 * Install NPM (which might come with node.js)
-* Pre-compiler setup
+* Setup the precompile scripts
 ```bash
-npm install handlebars
-npm install less
+npm install handlebars -g
+npm install less -g
 ```
 
