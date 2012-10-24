@@ -136,26 +136,23 @@ COMPRESS_OUTPUT_DIR = '/compressed'
 # COMPRESS_JS_FILTERS = ('compressor.filters.yui.YUIJSFilter',)
 # COMPRESS_CSS_FILTERS = ('compressor.filters.yui.YUICSSFilter',)
 
-# COMPRESS_PRECOMPILERS = (
+COMPRESS_PRECOMPILERS = (
     # CSS Pre-compilers
-    # ('text/css', 'cat {infile} > {outfile}'),
-    # ('text/less', 'lessc {infile} {outfile}'),
+    ('text/less', 'lessc {infile} {outfile}'),
 
     # JS Pre-Compilers
-    # ('text/javascript', 'cat {infile} > {outfile}'),
-    # ('text/x-handlebars-template', 'echo'),
     # ('text/x-handlebars-template',
     #     'handlebars {infile} --output {outfile}'
-    #     # Minimize compiled template in production
+        # Minimize compiled template in production
     #     + (' --min' if DEBUG else '')
     # ),
 
 
-    # e.g. of using classes
+    # e.g. using classes
     # ('text/foobar', 'path.to.MyPrecompilerFilter'),
     # e.g.
     # ('text/coffeescript', 'coffee --compile --stdio'),
-# )
+)
 
 
 # Locations of the template files

@@ -16,11 +16,11 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{% static 'shared/css/bootstrap.css' %}" type="text/css" charset="utf-8">
     {% compress css %}
-      <link rel="stylesheet" href="{% static 'shared/css/bootstrap.extra.css' %}" type="text/css" charset="utf-8">
-      <link rel="stylesheet" href="{% static 'shared/css/base.css' %}" type="text/css" charset="utf-8">
-      <link rel="stylesheet" href="{% static 'player/css/play.css' %}" type="text/css" charset="utf-8">
-      <link rel="stylesheet" href="{% static 'player/css/chat.css' %}" type="text/css" charset="utf-8">
-      <link rel="stylesheet" href="{% static 'player/css/terminal.css' %}" type="text/css" charset="utf-8">
+      <link rel="stylesheet" href="{% static 'shared/css/bootstrap.extra.less' %}" type="text/less" charset="utf-8">
+      <link rel="stylesheet" href="{% static 'shared/css/base.less' %}" type="text/less" charset="utf-8">
+      <link rel="stylesheet" href="{% static 'player/css/play.less' %}" type="text/less" charset="utf-8">
+      <link rel="stylesheet" href="{% static 'player/css/chat.less' %}" type="text/less" charset="utf-8">
+      <link rel="stylesheet" href="{% static 'player/css/terminal.less' %}" type="text/less" charset="utf-8">
     {% endcompress %}
 
     <!-- Dynamic Styles -->
@@ -63,14 +63,15 @@
     <script type="text/javascript" src="{% static 'shared/js/platform.js' %}"></script>
     <script type="text/javascript" src="{% static 'shared/js/jquery.js' %}"></script>
     <script type="text/javascript" src="{% static 'shared/js/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'shared/js/handlebars.js' %}"></script>
+    {% compile_templates 6 %}
+
     {% compress js %}
-      <script type="text/javascript" src="{% static 'shared/js/handlebars.js' %}"></script>
-      {% compile_templates 6 %}
       <script type="text/javascript" src="{% static 'shared/js/bootstrap-plugins.js' %}"></script>
       <script type="text/javascript" src="{% static 'shared/js/formatting.js' %}"></script>
       <script type="text/javascript">
           // Needed to connect using syncrae.js
-          var HOST = window.location.hostname + ':{% setting 'SYNCRAE_PORT' %}';
+          var HOST = window.location.hostname + ':{% setting "SYNCRAE_PORT" %}';
       </script>
       <script type="text/javascript" src="{% static 'syncrae/js/syncrae.js' %}"></script>
       <script type="text/javascript" src="{% static 'shared/js/history.js' %}"></script>
@@ -79,8 +80,6 @@
     {% endcompress %}
 
     <!-- Dynamic Javascript -->
-    <script type="text/javascript">
-    </script>
     <!-- End Javascript -->
 
   </body>
