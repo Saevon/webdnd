@@ -1,21 +1,21 @@
 # Django settings for webdnd project.
 import os.path
 import re
+import sys
 
 ########################################
 # Local Settings
 ########################################
 # The local settings file needs to exist, and have defined certain
 # settings before this project will work
-try:
-    from local_settings import *
-except ImportError:
-    import sys
-    if 'localize' not in sys.argv:
+if 'localize' in sys.argv:
+    # use the template so that localize can still work
+    from shared.config.settings_tmpl import *
+else:
+    try:
+        from local_settings import *
+    except ImportError:
         raise AssertionError("Local settings file not defined")
-    else:
-        # use the template so that localize can still work
-        from shared.config.settings_tmpl import *
 
 ########################################
 # Testing
