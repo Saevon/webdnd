@@ -318,7 +318,6 @@ MIDDLEWARE_CLASSES = (
 
 INDEX_DIR = os.path.join(WEBDND_ROOT, 'index/')
 USER_INDEX_DIR = os.path.join(INDEX_DIR, 'user/')
-TERMINAL_INDEX_DIR = os.path.join(INDEX_DIR, 'terminal/')
 
 # Characters that a user can't search for
 USER_CHAR_RE = re.compile(r'[^.@-_a-zA-Z0-9]*')
