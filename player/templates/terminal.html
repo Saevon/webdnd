@@ -7,7 +7,8 @@
         <div class="terminal-cmd prefix cmd">
             <div class="end-char">~ </div>
         </div>
-        <div class="terminal-cmd user-cmd cmd" contenteditable></div>
+        {# This must not have type="text" otherwise it get taken over by Bootstrap styles #}
+        <input class="terminal-cmd terminal-bg user-cmd cmd" value="" name="user-cmd">
     </div>
 
     <!-- Connection Status -->

@@ -206,15 +206,14 @@ $(function() {
         // Enter key
         if (e.keyCode == 13) {
             data = {
-                // TODO: trim ending newline?
-                cmd: elem.text()
+                cmd: elem.val()
             };
 
             // Send command
             syncrae.publish('/terminal/command', data);
 
             // Clear the input
-            elem.text('');
+            elem.val('');
             terminal.history.add(data.cmd);
         // Up
         } else if (e.keyCode == 38) {
