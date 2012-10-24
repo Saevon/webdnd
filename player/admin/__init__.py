@@ -7,7 +7,6 @@ from webdnd.player.models.alignment import Alignment
 from webdnd.player.models.campaigns import Campaign
 from webdnd.player.models.players import Character
 from webdnd.player.models.players import Player
-from webdnd.player.models.terminal import HistoryLog
 
 
 # Adds user customizations
@@ -20,4 +19,8 @@ admin.site.register(Player)
 admin.site.register(Character)
 admin.site.register(Alignment)
 
+<<<<<<< HEAD
 admin.site.register(HistoryLog)
+=======
+
+>>>>>>> 6740a75602942cc20bc7add3a54357bb8883eadc

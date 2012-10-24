@@ -14,7 +14,9 @@
     <title>{{ campaign.name }}</title>
 
     <!-- Styles -->
+    <link rel="stylesheet" href="{% static 'shared/css/bootstrap.css' %}" type="text/css" charset="utf-8">
     {% compress css %}
+      <link rel="stylesheet" href="{% static 'shared/css/bootstrap.extra.css' %}" type="text/css" charset="utf-8">
       <link rel="stylesheet" href="{% static 'shared/css/base.css' %}" type="text/css" charset="utf-8">
       <link rel="stylesheet" href="{% static 'player/css/play.css' %}" type="text/css" charset="utf-8">
       <link rel="stylesheet" href="{% static 'player/css/chat.css' %}" type="text/css" charset="utf-8">
@@ -33,46 +35,20 @@
     <div class="hsplit">
 
         <div class="hsplit-left">
+            <!-- Messenger -->
+            <div class="chat-border">
+                {% include 'messenger.html' %}
+            </div>
+            <!-- End Messenger -->
         </div>
 
         <div class="hsplit-right">
             <!-- Character Sheet -->
-            <div class="char-sheets"></div>
+            <div class="char-sheet-border">
+                <!-- Char Sheet include goes here -->
+            </div>
             <!-- End Sheet -->
         </div>
-
-
-        <!-- Messenger -->
-        <div id="chat">
-            <div class="container-fluid" id="messages">
-
-            </div>
-
-            <div class="container-fluid">
-                <div class="row-fluid message type">
-                    <div class="span2 name">
-                        <span class="user-name">
-                            {{ user.name }}
-                        </span>
-                        <span class="char-name">
-                            {% if is_dm %}
-                                DM
-                            {% elif char %}
-                                {{ char.name }}
-                            {% endif %}
-                        </span>
-                    </div>
-                    <div class="span10 body">
-                        <form class="form-inline" id="msg-form">
-                            <input class="span10" type="text" name="msg" placeholder="Say..." id="msg-input">
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            {% include 'messenger.html' %}
-        </div>
-        <!-- End Messenger -->
 
         <!-- Terminal -->
         {% include 'terminal.html' %}
@@ -88,8 +64,8 @@
     <script type="text/javascript" src="{% static 'shared/js/jquery.js' %}"></script>
     <script type="text/javascript" src="{% static 'shared/js/bootstrap.js' %}"></script>
     {% compress js %}
-      <script type="text/javascript" src="{% static 'shared/js/mustache.js' %}"></script>
-      <script type="text/javascript" src="{% static 'shared/js/mustache-plugins.js' %}"></script>
+      <script type="text/javascript" src="{% static 'shared/js/handlebars.js' %}"></script>
+      {% compile_templates 6 %}
       <script type="text/javascript" src="{% static 'shared/js/bootstrap-plugins.js' %}"></script>
       <script type="text/javascript" src="{% static 'shared/js/formatting.js' %}"></script>
       <script type="text/javascript">
@@ -97,20 +73,15 @@
           var HOST = window.location.hostname + ':{% setting 'SYNCRAE_PORT' %}';
       </script>
       <script type="text/javascript" src="{% static 'syncrae/js/syncrae.js' %}"></script>
+      <script type="text/javascript" src="{% static 'shared/js/history.js' %}"></script>
       <script type="text/javascript" src="{% static 'shared/js/listener.js' %}"></script>
       <script type="text/javascript" src="{% static 'shared/js/terminal.js' %}"></script>
     {% endcompress %}
 
     <!-- Dynamic Javascript -->
     <script type="text/javascript">
-        $(function() {
-        });
     </script>
     <!-- End Javascript -->
-
-    <!-- Mustache Templates -->
-    {% mustache_templates 6 %}
-    <!-- End Mustache Templates -->
 
   </body>
 </html>

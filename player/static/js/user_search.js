@@ -85,8 +85,8 @@ friends.user = (function() {
 friends.search = (function() {
     var result  = {
         endpoint: '/api/account/search/',
-        template: '#template-user',
-        template_empty: '#template-search-empty',
+        template: 'search-user',
+        template_empty: 'search-user-empty',
         _request: false,
 
         elem: function(elem) {
@@ -94,22 +94,20 @@ friends.search = (function() {
             return this;
         },
 
-        compile: function() {
-            this.ctemplate = Mustache.compile($(this.template).html());
-            this.ctemplate_empty = Mustache.compile($(this.template_empty).html());
-            return this;
-        },
-
         clear: function() {
             this._elem.empty();
-            this._elem.append(this.ctemplate_empty({}));
+            this._elem.append(
+                Templates['search-user-empty']({})
+            );
         },
 
         render: function(response) {
             this._elem.empty();
 
             if (!response.paging.length) {
-                this._elem.append(this.ctemplate_empty(response.output));
+                this._elem.append(
+                    Templates['search-user-empty'](response.output)
+                );
             } else {
                 var data = {'players': response.output};
                 var length = data.players.length;
@@ -117,7 +115,9 @@ friends.search = (function() {
                     data.players[i].type = "search-user";
                 }
 
-                this._elem.append(this.ctemplate(data));
+                this._elem.append(
+                    Templates['users'](data)
+                );
 
                 var kept = 0;
                 this._elem.find('.user').each(function() {
@@ -130,7 +130,9 @@ friends.search = (function() {
                     }
                 });
                 if (!kept) {
-                    this._elem.append(this.ctemplate_empty(response.output));
+                    this._elem.append(
+                        Templates['search-user-empty'](response.output)
+                    );
                 }
             }
         },
@@ -156,12 +158,10 @@ friends.search = (function() {
     };
 
     var search = function(input, output) {
-        var obj = $.extend({}, result).compile().elem(output);
+        var obj = $.extend({}, result).elem(output);
         obj.refresh = function() {
             var val = input.val();
-            if (val.length !== 0) {
-                obj.request(val);
-            }
+            obj.request(val);
         };
 
         input.on('change', function() {

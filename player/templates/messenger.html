@@ -1,8 +1,32 @@
 {% load helpers %}
+<div class="chat" id="chat-campaign">
+    <div class="messages">
 
-{% mustache 'message' %}
-    <div class="row-fluid message <% type %>" data-id="<% id %>">
-        <span class="name"><% name %></span>:
-        <span class="msg"><% msg %></span>
     </div>
-{% endmustache %}
+
+    <form class="row-fluid msg-row msg-form">
+        <div class="span12 name">
+            <span class="user-name">
+                {{ user.name }}
+            </span>
+            <span class="char-name">
+                {% if is_dm %}
+                    DM
+                {% elif char %}
+                    {{ char.name }}
+                {% endif %}
+            </span>
+        </div>
+        <input class="span12 msg-input" type="text" name="msg" placeholder="Say..." autocomplete="off">
+    </form>
+</div>
+
+
+{% template 'message' %}
+    <div class="row-fluid msg-row <% type %>" data-id="<% id %>">
+        <span class="prefix">
+            <span class="name"><% name %></span>:
+        </span>
+        <span class="msg"><% msg %><br/></span>
+    </div>
+{% endtemplate %}

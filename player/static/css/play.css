@@ -1,16 +1,48 @@
+
 html, body {
     height: 100%;
+}
+
+
+/* Horizontal split */
+.hsplit,
+.hsplit-left,
+.hsplit-right {
+    height: 100%;
+}
+.hsplit-left,
+.hsplit-right {
+    display: inline-block;
+}
+
+.hsplit-left {
+    width: 29%; /* We have a border around chat */
+    float: left;
+}
+.hsplit-right {
+    width: 70%;
+    float: right;
+}
+
+
+/* Chat Window */
+.chat-border {
+    height: 100%;
+    border-right: 1px solid #888;
     background: #333;
 }
-
-
-
-/* Character Sheer */
-.char-name:before {
-    content: "(";
+.chat {
+    height: 100%;
+    width: 95%;
+    margin-right: auto;
+    margin-left: auto;
 }
-.char-name:after {
-    content: ")";
+
+
+/* Char Sheets */
+.char-sheet-border {
+    height: 100%;
+    width: 100%;
 }
 
 

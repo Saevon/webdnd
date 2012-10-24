@@ -1,31 +1,41 @@
 
 var new_message = function(data) {
+    var chat = $('#chat-campaign');
+
     if (data.name == 'system') {
-        if (data.type === undefined) {
-            data.type = 'notification';
-        }
+        data.type = 'system';
     }
 
-    var message = $(Mustache.templates.message(data))
-        .css('opacity', 0)
+    var prev = chat.find('.messages .msg-row:last-child');
+    var prev_name = prev.find('.name').text();
+    var msg;
+
+    if (data.name != 'system' && prev_name == data.name) {
+        msg = $(Templates.message(data)).find('.msg')
+            .appendTo(prev);
+    } else {
+        msg = $(Templates.message(data))
+            .appendTo(chat.find('.messages'));
+    }
+
+    msg.css('opacity', 0)
         .css('position', 'relative')
         .css('left', '-200px')
-        .appendTo('#messages')
         .animate({
             opacity: 1,
             left: 0
         });
 
-    var elem = $('#messages')[0];
+    var elem = $('#chat-campaign .messages')[0];
     elem.scrollTop = elem.scrollHeight;
 };
 
 var term_result = function(data) {
     if (data.cmd === true) {
-        $(Mustache.templates['terminal-cmd'](data))
+        $(Templates['terminal-cmd'](data))
             .appendTo('#terminal-logs');
     } else {
-        $(Mustache.templates['terminal-log'](data))
+        $(Templates['terminal-log'](data))
             .appendTo('#terminal-logs');
     }
 
@@ -66,7 +76,7 @@ syncrae.retry_timer.listen(function(sec) {
         term_result({
             cmd: false,
             level: 'info',
-            log: 'websocket connected'
+            text: 'websocket connected'
         });
     });
     syncrae.off(function() {
@@ -82,7 +92,7 @@ syncrae.retry_timer.listen(function(sec) {
         term_result({
             cmd: false,
             level: 'warn',
-            log: 'websocket disconnected'
+            text: 'websocket disconnected'
         });
     });
 })();
@@ -110,7 +120,7 @@ syncrae.subscribe('/', function(data) {
     if (data.err_code) {
         term_result({
             level: data.level || 'error',
-            log: data.err_msg,
+            text: data.err_msg,
             err_code: data.err_code
         });
     }
@@ -137,22 +147,23 @@ syncrae.subscribe('/terminal/result', function(data) {
 });
 
 $(function() {
+    terminal.elem($('#terminal-input'));
     // auto focus to the chat body when loading the page
-    $('#msg-input').focus();
+    $('#chat-campaign .msg-input').focus();
 
     // send messages when form is changed
-    $('#msg-form').submit(function(e) {
+    $('#chat-campaign .msg-form').submit(function(e) {
         e.preventDefault();
 
         var data = {
-            msg: $(this).find('#msg-input').val()
+            msg: $(this).find('.msg-input').val()
         };
 
         // send message
         syncrae.publish('/messages/new', data);
 
         // reset form
-        $(this).find('#msg-input').val('');
+        $(this).find('.msg-input').val('');
     });
 
     // Global Shortcuts
@@ -167,7 +178,10 @@ $(function() {
             var elem = $('#terminal');
             elem.toggle();
             if (elem.is(':visible')) {
-                elem.find('#terminal-input .user-cmd').focus();
+                var last_focused = $(':focus');
+                terminal.reloader.save(last_focused);
+            } else {
+                terminal.reloader.reload();
             }
         } else {
             // Not a global shortcut, continue propogation
@@ -192,22 +206,21 @@ $(function() {
         // Enter key
         if (e.keyCode == 13) {
             data = {
-                // TODO: trim ending newline?
-                cmd: elem.text()
+                cmd: elem.val()
             };
 
             // Send command
             syncrae.publish('/terminal/command', data);
 
             // Clear the input
-            elem.text('');
-            terminal.reset();
+            elem.val('');
+            terminal.history.add(data.cmd);
         // Up
         } else if (e.keyCode == 38) {
-            elem.text(terminal.next());
+            elem.text(terminal.history.next());
         // Down
         } else if (e.keyCode == 40) {
-            elem.text(terminal.prev());
+            elem.text(terminal.history.prev());
         } else {
             return;
         }

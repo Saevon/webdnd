@@ -30,7 +30,6 @@
 #terminal-input .user-cmd {
     display: inline-block;
     border: 0;
-    height: 1.2em;
     min-width: 90%;
     font-size: 9pt;
 }

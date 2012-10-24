@@ -1,5 +1,7 @@
 {% extends "account/base.html" %}
 {% load staticfiles %}
+{% load helpers %}
+
 
 {% block page_title %}
     {{ block.super }} ~ Friends
@@ -44,24 +46,23 @@
     </div>
 
 
-    <!-- Templates -->
-    <script type="text/x-mustache-template" id="template-user">
+    {% template 'users' %}
         <%#players%>
-        <blockquote class="user span2 <%type%>" data-type="<%type%>" data-id="<%id%>">
+        <blockquote class="user span2 <% type %>" data-type="<% type %>" data-id="<% id %>">
             <span class="pull-right action text-success add">✔</span>
             <span class="pull-right action text-error remove">✘</span>
-            <span class="username"> <%name%> <span>
-            <input class="hide" name="<%type%>s[]" value="<%id%>"></input>
+            <span class="username"> <% name %> <span>
+            <input class="hide" name="<% type %>s[]" value="<% id %>"></input>
         </blockquote>
         <%/players%>
-    </script>
+    {% endtemplate %}
 
-    <script type="text/x-mustache-template" id="template-search-empty">
+    {% template 'search-user-empty' %}
         <blockquote class="empty span9 text-warning">No users found.</blockquote>
-    </script>
+    {% endtemplate %}
 
-    <script type="text/x-mustache-template" id="template-user-empty">
-    </script>
+    {% template 'users-empty' %}
+    {% endtemplate %}
 
 </form>
 
@@ -87,8 +88,7 @@ $(function() {
     if (data.players.length !== 0) {
         $('#input-friends .empty').hide();
 
-        tmpl = $('#template-user').html();
-        $('#input-friends').append(Mustache.render(tmpl, data));
+        $('#input-friends').append(Templates['users'](data));
         $('#input-friends .user').each(function() {
             var elem = $(this);
             if (friends.unique(elem, true)) {
