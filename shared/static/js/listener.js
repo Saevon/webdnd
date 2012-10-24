@@ -215,7 +215,7 @@ $(function() {
 
             // Clear the input
             elem.text('');
-            terminal.history.reset();
+            terminal.history.add(data.cmd);
         // Up
         } else if (e.keyCode == 38) {
             elem.text(terminal.history.next());
