@@ -147,7 +147,7 @@ syncrae.subscribe('/terminal/result', function(data) {
 });
 
 $(function() {
-    terminal.elem.input($('#terminal-input'));
+    terminal.elem($('#terminal-input'));
     // auto focus to the chat body when loading the page
     $('#chat-campaign .msg-input').focus();
 

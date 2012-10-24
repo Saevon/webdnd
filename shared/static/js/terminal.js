@@ -1,20 +1,28 @@
 // Terminal helper code
 
 terminal = {};
-terminal.elem = {
-    input: function(elem) {
-        this._elem = elem;
-        this._text = elem.find('.user-cmd');
-    },
-    get: function() {
-        return this._elem;
-    },
-    focus: function() {
-        this._text.focus();
-    },
-    save: function() {
-    }
-};
+terminal.elem = (function() {
+    var term;
+    var input;
+    var wrapper = function get(arg) {
+        if (arg === undefined) {
+            return term;
+        } else if (arg == 'text') {
+            return input;
+        } else {
+            wrapper.input(arg);
+        }
+    };
+
+    $.extend(wrapper, {
+        input: function(elem) {
+            term = elem;
+            input = term.find('.user-cmd');
+        }
+    });
+
+    return wrapper;
+})();
 
 terminal.history = History();
 
@@ -22,13 +30,12 @@ terminal.reloader = {
     elem: $(),
 
     reload: function() {
-        terminal.elem.save();
         this.elem.focus();
         this.elem = $();
     },
     save: function(elem) {
         this.elem = elem;
-        terminal.elem.focus();
+        terminal.elem('text').focus();
     }
 };
 
