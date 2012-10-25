@@ -22,23 +22,25 @@
     margin-right: 3px;
     margin-left: 3px;
     margin-bottom: 3px;
-}
-#terminal-input .prefix {
-    max-width: 10%;
-    display: inline-block;
-    height: 1.2em;
 
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-#terminal-input .user-cmd {
-    display: inline-block;
-    border: 0;
-    min-width: 90%;
-    font-size: 9pt;
-}
-#terminal-input .user-cmd:focus {
-    outline: none;
+    .prefix {
+        max-width: 10%;
+        display: inline-block;
+        height: 1.2em;
+
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+    .user-cmd {
+        display: inline-block;
+        border: 0;
+        min-width: 90%;
+        font-size: 9pt;
+        &:focus {
+            outline: none;
+        }
+    }
+
 }
 
 /* Output */
@@ -53,32 +55,34 @@
     font-size: 9pt;
 }
 
+.terminal-cmd.cmd {
+    color: @cmd;
+
 /* Terminal Colors */
 .terminal-log {
     color: white;
-}
 
-.terminal-log.cmd,
-.terminal-cmd.cmd {
-    color: #8888AA;
+    &.muted {
+        color: #888;
+    }
+    &.cmd {
+        color: @cmd;
+    }
+    &.info {
+        color: lightBlue;
+    }
+    &.warn {
+        color: orange;
+    }
+    &.error {
+        color: red;
+    }
+    &.critical {
+        color: white;
+        background-color: red;
+    }
 }
-.terminal-log.info {
-    color: lightBlue;
 }
-.terminal-log.warn {
-    color: orange;
-}
-.terminal-log.error {
-    color: red;
-}
-.terminal-log.critical {
-    color: white;
-    background-color: red
-}
-.terminal-log.muted {
-    color: #888;
-}
-
 
 
 
@@ -98,11 +102,12 @@
     position: absolute;
     bottom: 1px;
     right: 1px;
-}
-.connection.status-on {
-    background-color: #596;
-}
-.connection.status-off {
-    background-color: #956;
+
+    &.status-on {
+        background-color: #596;
+    }
+    &.status-off {
+        background-color: #956;
+    }
 }
 
