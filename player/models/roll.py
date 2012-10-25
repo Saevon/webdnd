@@ -23,7 +23,7 @@ class Roll(AbstractPlayerModel):
     2  |  2    |  d6
 
 
-    id | symbol | roll | type | roll | type 
+    id | symbol | roll | type | roll | type
     1  | *      | 1    |  die |  2   |  roll
     2  | +      | 3    | roll |  4   | roll
     3  | +      | 2    |  die |  12  |  num
@@ -91,8 +91,11 @@ class Roll(AbstractPlayerModel):
 
     def roll(self, character=None):
         return reduce(lambda a, b: a + b, [
-            randint(1, int(self.die)) for n in range(int(self.num))
+            randint(self.random()) for n in range(int(self.num))
         ])
+
+    def random(self):
+        return randint(1, self.die)
 
 
 ROLLABLE_RE = re.compile(

@@ -21,7 +21,7 @@ else:
 # Testing
 ########################################
 
-TEST_RUNNER = "tests.runner.DiscoveryRunner"
+TEST_RUNNER = "webdnd.tests.runner.DiscoveryRunner"
 
 # location of the tests folder
 BASE_PATH = WEBDND_ROOT
