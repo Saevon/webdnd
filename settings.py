@@ -21,11 +21,12 @@ else:
 # Testing
 ########################################
 
-TEST_RUNNER = "webdnd.tests.runner.DiscoveryRunner"
+TEST_RUNNER = "discover_runner.runner.DiscoverRunner"
 
 # location of the tests folder
 BASE_PATH = WEBDND_ROOT
 TEST_DISCOVERY_ROOT = os.path.join(WEBDND_ROOT, "tests")
+TEST_DISCOVER_TOP_LEVEL = os.path.dirname(__file__)
 
 # Regexp pattern to match when looking for test files
 # The runner will look in these files for TestCase classes

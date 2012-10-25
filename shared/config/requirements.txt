@@ -3,6 +3,7 @@ Django==1.4.1
 Whoosh==2.4.1
 django-appconf==0.5
 django-compressor==1.2
+django-discover-runner==0.2.2
 logutils==0.3.2
 pycrypto==2.6
 simplejson==2.6.2
