@@ -1,0 +1,74 @@
+/*************************************************
+*
+* Less Helper Mixins
+*
+*************************************************/
+
+
+
+/*************************************************
+* User Select mixin
+* 
+* @what: Prevents users from selecting the element's
+*        text
+*
+* @params: @val,        default = none
+*************************************************/
+.user-select (@val: none) {
+    -webkit-touch-callout: @val;
+    -webkit-user-select: @val;
+    -moz-user-select: @val;
+    -ms-user-select: @val;
+    user-select: @val;
+}
+
+
+
+/*************************************************
+* Border Radius mixin
+* 
+* @what: Shorthand for the border-radius property
+*
+* @params:  dir, @val
+*           @val
+*           
+*************************************************/
+// Diagonal Direction
+.border-radius (tl, @val) {
+    border-radius-top-left: @val;
+}
+.border-radius (bl, @val) {
+    border-radius-bottom-left: @val;
+}
+.border-radius (br, @val) {
+    border-radius-bottom-right: @val;
+}
+.border-radius (tr, @val) {
+    border-radius-top-right: @val;
+}
+// Main four directions
+.border-radius (right, @val) {
+    border-radius-top-right: @val;
+    border-radius-bottom-right: @val;
+}
+.border-radius (left, @val) {
+    border-radius-top-left: @val;
+    border-radius-bottom-left: @val;
+}
+.border-radius (bottom, @val) {
+    border-radius-bottom-right: @val;
+    border-radius-bottom-left: @val;
+}
+.border-radius (top, @val) {
+    border-radius-top-right: @val;
+    border-radius-top-left: @val;
+}
+// Make them all the same
+.border-radius (@val) {
+    border-radius: @val, @val, @val, @val;
+}
+
+
+
+
+
