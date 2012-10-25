@@ -26,7 +26,6 @@ class Alerts(list):
             important = level in settings.ALERT_IMPORTANT_LEVELS
         alert.closable = not important
 
-        alert.save()
         self.append(alert)
         return alert
 
@@ -42,7 +41,7 @@ class Alerts(list):
 
     def delay(self):
         """
-        Removes any alerts that are beign shown, delaying them for the next call
+        Removes any alerts that are being shown, delaying them for the next call
         """
         for alert in self:
             alert.save()

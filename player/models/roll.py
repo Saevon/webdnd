@@ -7,7 +7,6 @@ import re
 
 
 class Roll(AbstractPlayerModel):
-
     '''
     ROUGH OUTLINE/ Thoughts
 
@@ -100,10 +99,10 @@ class Roll(AbstractPlayerModel):
 
 ROLLABLE_RE = re.compile(
     '((?P<dice>[0-9]+d[0-9]+)'
-        + '(?P<bonus> *' # Modifier flag (use it as a boolean)
+        + '(?P<bonus> *'  # Modifier flag (use it as a boolean)
             + '(?P<symbol>[+-])'
             + ' *(?P<mod>[0-9]+)'
-        + ')?' # Make the bonus group optional
+        + ')?'  # Make the bonus group optional
     + ')'
 )
 
