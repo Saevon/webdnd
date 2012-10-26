@@ -94,6 +94,12 @@ syncrae.retry_timer.listen(function(sec) {
             level: 'warn',
             text: 'websocket disconnected'
         });
+
+        // Show a chat message on websocket disconnect
+        new_message({
+            name: 'system',
+            msg: 'You have been disconnected.'
+        });
     });
 })();
 
