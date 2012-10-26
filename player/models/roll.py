@@ -90,11 +90,11 @@ class Roll(AbstractPlayerModel):
 
     def roll(self, character=None):
         return reduce(lambda a, b: a + b, [
-            randint(self.random()) for n in range(int(self.num))
+            self.random() for n in range(int(self.num))
         ])
 
     def random(self):
-        return randint(1, self.die)
+        return randint(1, int(self.die))
 
 
 ROLLABLE_RE = re.compile(
