@@ -112,7 +112,7 @@ class CampaignEditView(LoginRequiredMixin, View):
             campaign.rp_system = system
             campaign.save()
 
-            cur_players = set(str(p.user.id) for p in campaign.players.all())
+            cur_players = set(str(p.user.id) for p in campaign.players.all()) + request.user.id
             keep = set()
             for id in players:
                 Player.objects.get_or_create(user=User.objects.get(id=id), campaign=campaign)

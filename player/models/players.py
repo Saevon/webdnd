@@ -70,6 +70,12 @@ class Character(AbstractPlayerModel):
         blank=False,
         null=False
     )
+    # Nickname, what to actually show on the chat
+    nick = models.CharField(
+        max_length=settings.STND_CHAR_LIMIT,
+        blank=False,
+        null=False
+    )
 
     status = models.CharField(
         max_length=settings.STND_ID_CHAR_LIMIT,
@@ -119,6 +125,9 @@ class Character(AbstractPlayerModel):
         null=False
     )
 
+
+    def __unicode__(self):
+        return self.name
 
 
 

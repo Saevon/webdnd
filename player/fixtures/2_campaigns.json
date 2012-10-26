@@ -14,12 +14,23 @@
         "fields": {
             "can_dm": false,
             "is_spectator": false,
+            "user": 1,
+            "campaign": 1
+        }
+    },
+
+    {
+        "pk": 2,
+        "model": "player.player",
+        "fields": {
+            "can_dm": false,
+            "is_spectator": false,
             "user": 2,
             "campaign": 1
         }
     },
     {
-        "pk": 2,
+        "pk": 3,
         "model": "player.player",
         "fields": {
             "can_dm": false,
@@ -29,7 +40,7 @@
         }
     },
     {
-        "pk": 3,
+        "pk": 4,
         "model": "player.player",
         "fields": {
             "can_dm": false,
@@ -49,7 +60,17 @@
         }
     },
     {
-        "pk": 2,
+        "pk": 5,
+        "model": "player.player",
+        "fields": {
+            "can_dm": false,
+            "is_spectator": false,
+            "user": 2,
+            "campaign": 2
+        }
+    },
+    {
+        "pk": 6,
         "model": "player.player",
         "fields": {
             "can_dm": false,

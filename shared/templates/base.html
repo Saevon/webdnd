@@ -111,15 +111,14 @@
     <script type="text/javascript" src="{% static 'shared/js/platform.js' %}"></script>
     <script type="text/javascript" src="{% static 'shared/js/jquery.js' %}"></script>
     <script type="text/javascript" src="{% static 'shared/js/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'shared/js/handlebars.js' %}"></script>
+    {% compile_templates 6 %}
+
     {% compress js %}
-      <script type="text/javascript" src="{% static 'shared/js/handlebars.js' %}"></script>
-      {% compile_templates 6 %}
       <script type="text/javascript" src="{% static 'shared/js/bootstrap-plugins.js' %}"></script>
       <script type="text/javascript" src="{% static 'alerts/alert.js' %}"></script>
       <script type="text/javascript" src="{% static 'alerts/highlighter.js' %}"></script>
       <script type="text/javascript" src="{% static 'shared/js/formatting.js' %}"></script>
-    {% endcompress %}
-    {% compress js %}
       {% block compress_js %}{% endblock compress_js %}
     {% endcompress %}
 
