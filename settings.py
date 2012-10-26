@@ -65,6 +65,9 @@ INSTALLED_APPS = (
     'compressor',
     'django.contrib.staticfiles',
 
+    # Debug toolbar
+    'debug_toolbar',
+
     # Syncrae: Tornado websockets app
     'webdnd.syncrae',
 
@@ -310,7 +313,11 @@ USE_L10N = True
 
 
 MIDDLEWARE_CLASSES = (
-    'shared.middleware.HtmlPrettifyMiddleware',
+    # Debug toolbar
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
+    # 'shared.middleware.HtmlPrettifyMiddleware',
+
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',

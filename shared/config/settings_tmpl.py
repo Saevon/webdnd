@@ -31,3 +31,45 @@ ADMINS = [
 ]
 
 SECRET_KEY = '%(SECRET_KEY)s'
+
+
+########################################
+# Debug Toolbar Customization
+########################################
+
+# Order of enabled toolbar panels
+DEBUG_TOOLBAR_PANELS = (
+    'debug_toolbar.panels.version.VersionDebugPanel',
+    'debug_toolbar.panels.timer.TimerDebugPanel',
+    'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
+    'debug_toolbar.panels.headers.HeaderDebugPanel',
+    'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
+    'debug_toolbar.panels.template.TemplateDebugPanel',
+    'debug_toolbar.panels.sql.SQLDebugPanel',
+    'debug_toolbar.panels.signals.SignalDebugPanel',
+    'debug_toolbar.panels.logger.LoggingPanel',
+)
+
+# Allowed IPS that will see the debug toolbar
+# Only works if the original show_toolbar function is used (None)
+INTERNAL_IPS = (
+    '127.0.0.1',
+    'localhost',
+)
+
+# Creates a function that checks when to show the debug toolbar
+show_toolbar = None
+# def show_toolba():
+#     return DEBUG
+
+DEBUG_TOOLBAR_CONFIG = {
+    # Shows an Intermidiate page upon redirect to debug
+    # variables
+    'INTERCEPT_REDIRECTS': True,
+    'SHOW_TOOLBAR_CALLBACK': show_toolbar,
+    # Don't show django code in SQL backtraces
+    'HIDE_DJANGO_SQL': True,
+
+}
+
+
