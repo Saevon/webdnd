@@ -1,15 +1,25 @@
 @import "shared/static/css/colors.less";
 
+.chat {
+    display: none;
+    height: 95%;
+    &.active {
+        display: block;
+    }
+}
 
 /* Overall Styling */
 .messages {
     height: 85%;
-    overflow: scroll;
+    overflow: auto;
 }
 
-.msg-input {
-    height: 12px;
-    font-size: 12px;
+.msg-form {
+    .msg-input {
+        height: 12px;
+        width: 95%;
+        font-size: 12px;
+    }
 }
 
 /* Message Rows */
@@ -20,13 +30,16 @@
 /* Message Row Names */
 .msg-row .name {
     color: #999;
+    text-align: right;
 }
 
-.char-name:before {
-    content: "(";
-}
-.char-name:after {
-    content: ")";
+.char-name {
+    &:before {
+        content: "(";
+    }
+    &:after {
+        content: ")";
+    }
 }
 
 /* Actual message text */
@@ -40,12 +53,14 @@
 }
 
 /* System messages */
-.msg-row.system .prefix {
-    display: none;
-}
-.msg-row.system .msg {
-    color: lightblue;
-    font-weight: normal;
+.msg-row.system {
+    & .prefix {
+        display: none;
+    }
+    & .msg {
+        color: lightblue;
+        font-weight: normal;
+    }
 }
 
 

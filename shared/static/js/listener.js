@@ -1,6 +1,11 @@
 
 var new_message = function(data) {
-    var chat = $('#chat-campaign');
+    var chatid = data.chatid;
+    if (chatid === undefined) {
+        chatid = 'campaign';
+    }
+
+    var chat = $('#chat-' + chatid);
 
     if (data.name == 'system') {
         data.type = 'system';
@@ -19,11 +24,8 @@ var new_message = function(data) {
     }
 
     msg.css('opacity', 0)
-        .css('position', 'relative')
-        .css('left', '-200px')
         .animate({
-            opacity: 1,
-            left: 0
+            opacity: 1
         });
 
     var elem = $('#chat-campaign .messages')[0];
@@ -41,6 +43,29 @@ var term_result = function(data) {
 
     var elem = $('#terminal-logs')[0];
     elem.scrollTop = elem.scrollHeight;
+};
+
+var new_chat = function(data) {
+    var chat = $(Templates['chat'](data));
+    $('.chat-group').append(chat);
+
+    if (data.name === undefined) {
+        data.name = data.id;
+    }
+
+    var btn = $('.chat-btns').append($(Templates['chat-btn'](data)));
+
+    return chat;
+};
+
+var switch_chat = function(id) {
+    var btns = $('.chat-btn').removeClass('active');
+    var btn = btns.filter('[data-id="' + id + '"]')
+        .addClass('active');
+
+    var chats = $('.chat').removeClass('active');
+    var chat = chats.filter('#chat-' + id)
+        .addClass('active');
 };
 
 
@@ -104,6 +129,17 @@ syncrae.retry_timer.listen(function(sec) {
 })();
 
 
+syncrae.subscribe('/chat/open', function(data) {
+    var chat_data = {
+        id: data.chatid
+    };
+
+    var chat = $('#chat-' + data.chatid);
+    if (chat.length === 0) {
+        chat = new_chat(chat_data);
+    }
+});
+
 syncrae.subscribe('/sessions/status', function(data) {
     msgdata = {
         name: 'system'
@@ -158,7 +194,10 @@ $(function() {
     $('#chat-campaign .msg-input').focus();
 
     // send messages when form is changed
-    $('#chat-campaign .msg-form').submit(function(e) {
+    $('#chat-campaign .msg-form').on('keydown', function(e) {
+        if (e.keyCode != 13) {
+            return;
+        }
         e.preventDefault();
 
         var data = {
@@ -231,6 +270,11 @@ $(function() {
             return;
         }
         return false;
+    });
+
+    $('.chat-sidebar').on('click', '.chat-btn', function() {
+        var elem = $(this);
+        switch_chat(elem.data('id'));
     });
 });
 

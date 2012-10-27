@@ -1,13 +1,13 @@
 {% load helpers %}
 
 {% template 'chat' %}
-<div class="chat" id="chat-<% id %>">
+<div class="chat <% active %>" id="chat-<% id %>">
     <div class="messages">
 
     </div>
 
-    <form class="row-fluid msg-row msg-form">
-        <div class="span12 name">
+    <div class="msg-row msg-form">
+        <div class="name">
             <span class="user-name">
                 {{ user.name }}
             </span>
@@ -19,12 +19,27 @@
                 {% endif %}
             </span>
         </div>
-        <input data-id="<% id %>" class="span12 msg-input" type="text" name="msg" placeholder="Say..." autocomplete="off">
-    </form>
+        <input data-id="<% id %>" class="msg-input" type="text" name="msg" placeholder="Say..." autocomplete="off">
+    </div>
 </div>
 {% endtemplate %}
 
-{% render_template 'chat' '{"id": "campaign"}' %}
+{% template 'chat-btn' %}
+    <button class="chat-btn btn btn-mini <% classes %>" data-id="<% id %>">
+        <% name %>
+    </button>
+{% endtemplate %}
+
+
+
+<div class="chat-group">
+    <div class="chat-sidebar chat-btns">
+        {% render_template 'chat-btn' '{"id": "campaign", "classes": "active btn-info", "name": "Campaign"}' %}
+    </div>
+    {% render_template 'chat' '{"id": "campaign", "active": "active"}' %}
+</div>
+
+
 
 {% template 'message' %}
     <div class="row-fluid msg-row <% type %>" data-id="<% id %>">
