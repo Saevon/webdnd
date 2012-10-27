@@ -18,6 +18,7 @@
     {% compress css %}
       <link rel="stylesheet" href="{% static 'shared/css/bootstrap.extra.less' %}" type="text/less" charset="utf-8">
       <link rel="stylesheet" href="{% static 'shared/css/base.less' %}" type="text/less" charset="utf-8">
+      <link rel="stylesheet" href="{% static 'shared/css/tooltip.less' %}" type="text/less" charset="utf-8">
       <link rel="stylesheet" href="{% static 'player/css/play.less' %}" type="text/less" charset="utf-8">
       <link rel="stylesheet" href="{% static 'player/css/chat.less' %}" type="text/less" charset="utf-8">
       <link rel="stylesheet" href="{% static 'player/css/terminal.less' %}" type="text/less" charset="utf-8">
@@ -54,6 +55,10 @@
         {% include 'terminal.html' %}
         <!-- End Terminal -->
 
+        <!-- Tooltips -->
+        {% include '_tooltips.html' %}
+        <!-- End Tooltips -->
+
     </div>
     <!-- End Main Body -->
 
@@ -75,6 +80,7 @@
       </script>
       <script type="text/javascript" src="{% static 'syncrae/js/syncrae.js' %}"></script>
       <script type="text/javascript" src="{% static 'shared/js/history.js' %}"></script>
+      <script type="text/javascript" src="{% static 'shared/js/tooltip.js' %}"></script>
       <script type="text/javascript" src="{% static 'shared/js/listener.js' %}"></script>
       <script type="text/javascript" src="{% static 'shared/js/terminal.js' %}"></script>
     {% endcompress %}
