@@ -91,73 +91,76 @@
 
 
 <script type="text/javascript">
-$(function() {
-    $('#syncrae-debug').on('click', '.collapser .id-title', function() {
-        var elem = $(this).parents('.collapser').find('.collapsing');
-        elem.toggleClass('collapsed');
-    })
+var $, syncrae;
+if ($ !== undefined && syncrae !== undefined) {
+    $(function() {
+        $('#syncrae-debug').on('click', '.collapser .id-title', function() {
+            var elem = $(this).parents('.collapser').find('.collapsing');
+            elem.toggleClass('collapsed');
+        })
 
-    var tmpl = $('#debug-syncrae-group').html()
-        .replace(new RegExp('<%', 'g'), '{{')
-        .replace(new RegExp('%>', 'g'), '}}');
-    var syncrae_group = Handlebars.compile(tmpl);
-    var tmpl = $('#debug-syncrae-row').html()
-        .replace(new RegExp('<%', 'g'), '{{')
-        .replace(new RegExp('%>', 'g'), '}}');
-    var syncrae_row = Handlebars.compile(tmpl);
+        var tmpl = $('#debug-syncrae-group').html()
+            .replace(new RegExp('<%', 'g'), '{{')
+            .replace(new RegExp('%>', 'g'), '}}');
+        var syncrae_group = Handlebars.compile(tmpl);
+        var tmpl = $('#debug-syncrae-row').html()
+            .replace(new RegExp('<%', 'g'), '{{')
+            .replace(new RegExp('%>', 'g'), '}}');
+        var syncrae_row = Handlebars.compile(tmpl);
 
-    var add_to_group = function(type, id, msg) {
-        var row = syncrae_row(msg);
-        var key = type + '-' + id;
-        var table = $('.syncrae-group[data-id="' + key + '"] table')
+        var add_to_group = function(type, id, msg) {
+            var row = syncrae_row(msg);
+            var key = type + '-' + id;
+            var table = $('.syncrae-group[data-id="' + key + '"] table')
 
-        if (!table.length) {
-            table = $(syncrae_group({id: key}));
+            if (!table.length) {
+                table = $(syncrae_group({id: key}));
 
-            $('#' + type + 's .contents').append(table);
-            table = table.find('table')
-        }
-        table =table.find('tbody');
-        table.append(row);
-    };
-
-    var message = function(data, topic) {
-        var msg = {
-            data: JSON.stringify(data),
-            topic: topic,
-            timestamp: new Date().toString()
+                $('#' + type + 's .contents').append(table);
+                table = table.find('table')
+            }
+            table =table.find('tbody');
+            table.append(row);
         };
 
-        var id, type;
-        if (data.chatid) {
-            id = data.chatid;
-            type = 'chat';
-        } else if (data.cid) {
-            id = data.cid;
-            type = 'campaign';
-        } else if (topic.substr(0, '/terminal'.length) == '/terminal') {
-            id = 'terminal';
-            type = 'global';
-        } else {
-            id = 'unknown';
-            type = 'global';
+        var message = function(data, topic) {
+            var msg = {
+                data: JSON.stringify(data),
+                topic: topic,
+                timestamp: new Date().toString()
+            };
+
+            var id, type;
+            if (data.chatid) {
+                id = data.chatid;
+                type = 'chat';
+            } else if (data.cid) {
+                id = data.cid;
+                type = 'campaign';
+            } else if (topic.substr(0, '/terminal'.length) == '/terminal') {
+                id = 'terminal';
+                type = 'global';
+            } else {
+                id = 'unknown';
+                type = 'global';
+            }
+
+            add_to_group('global', 'all', msg);
+            // Non globals have a combined group as well
+            if (type != 'global') {
+                add_to_group(type, '', msg);
+            }
+            add_to_group(type, id, msg);
+        };
+     
+        // Read what already happened
+        var msgs = syncrae.storage.read();
+        var length = msgs.length;
+        for (var i=0; i < length; i++) {
+            message(msgs[i].data, msgs[i].topic);
         }
 
-        add_to_group('global', 'all', msg);
-        // Non globals have a combined group as well
-        if (type != 'global') {
-            add_to_group(type, '', msg);
-        }
-        add_to_group(type, id, msg);
-    };
- 
-    // Read what already happened
-    var msgs = syncrae.storage.read();
-    var length = msgs.length;
-    for (var i=0; i < length; i++) {
-        message(msgs[i].data, msgs[i].topic);
-    }
-
-    syncrae.subscribe('/', message);
-});
+        syncrae.subscribe('/', message);
+    });
+}
 </script>
