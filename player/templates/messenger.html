@@ -1,5 +1,7 @@
 {% load helpers %}
-<div class="chat" id="chat-campaign">
+
+{% template 'chat' %}
+<div class="chat" id="chat-<% id %>">
     <div class="messages">
 
     </div>
@@ -17,9 +19,12 @@
                 {% endif %}
             </span>
         </div>
-        <input class="span12 msg-input" type="text" name="msg" placeholder="Say..." autocomplete="off">
+        <input data-id="<% id %>" class="span12 msg-input" type="text" name="msg" placeholder="Say..." autocomplete="off">
     </form>
 </div>
+{% endtemplate %}
+
+{% render_template 'chat' '{"id": "campaign"}' %}
 
 {% template 'message' %}
     <div class="row-fluid msg-row <% type %>" data-id="<% id %>">

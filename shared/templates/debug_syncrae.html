@@ -146,9 +146,9 @@ if ($ !== undefined && syncrae !== undefined) {
             }
 
             add_to_group('global', 'all', msg);
-            // Non globals have a combined group as well
+            // Non globals have another combined group
             if (type != 'global') {
-                add_to_group(type, '', msg);
+                add_to_group(type, 'all', msg);
             }
             add_to_group(type, id, msg);
         };

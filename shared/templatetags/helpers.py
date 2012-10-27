@@ -1,37 +1,49 @@
 from django import template
 from django.conf import settings
 
-from textwrap import dedent, TextWrapper
-from pprint import pformat
+from textwrap import dedent
+from pybars import Compiler
 import logging
+import simplejson
 logging = logging.getLogger('templatetags')
 
 register = template.Library()
 
+compiler = Compiler()
 
-class NullNode(template.Node):
-    def render(*args, **kwargs):
-        return ''
 
 @register.simple_tag
-def setting(k, default=None):
-    return get_setting(k, default)
+def setting(key, default=None):
+    return get_setting(key, default)
 
 @register.assignment_tag
-def setting_var(k, default=None):
-    return get_setting(k, default)
+def setting_var(key, default=None):
+    return get_setting(key, default)
 
-def get_setting(k, default=None):
-    if hasattr(settings, k):
-        return getattr(settings, k)
+def get_setting(key, default=None):
+    if hasattr(settings, key):
+        return getattr(settings, key)
     else:
-        logging.warn('Setting not found: "%s"' % k)
+        logging.warn('Setting not found: "%s"' % key)
     if default is None:
         return ''
     return default
 
 
 # Client template helpers
+class PointerNode(template.Node):
+    '''
+    A Node that waits to pass a Context to a ClientTemplateNode
+    '''
+
+    def __init__(self, name):
+        super(PointerNode, self).__init__()
+        self.name = name
+
+    def render(self, context):
+        ClientTemplateNode.context(self.name, context)
+        return ''
+
 
 class ClientTemplateNode(template.Node):
     TMPL = dedent("""
@@ -61,7 +73,12 @@ class ClientTemplateNode(template.Node):
         lines = []
         templates = []
         for name in ClientTemplateNode.nodes.keys():
-            nodes = ClientTemplateNode.nodes[name]
+            # Ignore templates that have already been output
+            if ClientTemplateNode.nodes[name]['done'] == True:
+                continue
+
+            nodes = ClientTemplateNode.nodes[name]['nodelist']
+            context = ClientTemplateNode.nodes[name]['context']
             lines.append(ClientTemplateNode.LINE_TMPL % {'name': name})
 
             templates.append(ClientTemplateNode.HTML_TMPL % {
@@ -73,8 +90,8 @@ class ClientTemplateNode(template.Node):
                     .replace('\n', '\n' + (4 * ' ')),
             })
 
-        # Clear it for the next use
-        ClientTemplateNode.nodes = {}
+            # Check off that this template has been added already
+            ClientTemplateNode.nodes[name]['done'] = True
 
         return (ClientTemplateNode.TMPL % {
             'lines': '\n'.join(lines).replace('\n', '\n' + (4 * ' ')),
@@ -83,10 +100,42 @@ class ClientTemplateNode(template.Node):
 
     @staticmethod
     def add(name, nodelist):
-        ClientTemplateNode.nodes[name] = nodelist
+        '''
+        Adds another template to the template list
+        '''
+        ClientTemplateNode.nodes[name] = {
+            'done': False,
+        }
+        ClientTemplateNode.nodes[name]['nodelist'] = nodelist
+
+    @staticmethod
+    def context(name, context):
+        '''
+        Saves the context for the given template
+        '''
+        ClientTemplateNode.nodes[name]['context'] = context
+
+    @staticmethod
+    def template(name):
+        '''
+        Returns the template with the given name
+        '''
+        nodes = ClientTemplateNode.nodes[name]['nodelist']
+        context = ClientTemplateNode.nodes[name]['context']
+        tmpl = dedent(nodes.render(context)
+            # Change the delims
+            .replace('<%', '{{')
+            .replace('%>', '}}')
+        )
+
+        return tmpl
+
 
     @staticmethod
     def get():
+        '''
+        Singleton Factory
+        '''
         return ClientTemplateNode()
 
 @register.tag
@@ -117,8 +166,13 @@ def template(parser, token):
     nodelist = parser.parse(('endtemplate',))
     parser.delete_first_token()
     ClientTemplateNode.add(name[1:-1], nodelist)
-    return NullNode()
+    return PointerNode(name[1:-1])
 
+@register.simple_tag
+def render_template(name, args):
+    args = simplejson.loads(args)
+    tmpl = compiler.compile(ClientTemplateNode.template(name))
+    return tmpl(args)
 
 
 
