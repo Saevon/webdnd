@@ -27,6 +27,12 @@ source ../webdnd-env/bin/activate
 pip install -r shared/config/requirements.txt
 ```
 
+1. Download and setup the django debug toolbar from: https://github.com/robhudson/django-debug-toolbar
+```
+cd $(django-debug-toolbar folder)
+python setup.py
+```
+
 1. Create the local settings file.
 ```bash
 python manage.py localize
