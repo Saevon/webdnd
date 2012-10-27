@@ -5,6 +5,7 @@ from django.core import management
 import os
 import re
 
+
 FIXTURE_RE = re.compile(r'^[^.]*.json$')
 
 def load_data(sender, **kwargs):
@@ -26,5 +27,10 @@ def load_data(sender, **kwargs):
             for fixture in fixture_files:
                 print "  >> %s" % (fixture)
                 management.call_command('loaddata', fixture, verbosity=0)
+
+        # Update the index
+        print 'Generating Index'
+        management.call_command('index', 'all', flush=True, verbosity=1)
+
 
 post_syncdb.connect(load_data)
