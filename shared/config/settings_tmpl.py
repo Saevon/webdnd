@@ -39,15 +39,27 @@ SECRET_KEY = '%(SECRET_KEY)s'
 
 # Order of enabled toolbar panels
 DEBUG_TOOLBAR_PANELS = (
-    'debug_toolbar.panels.version.VersionDebugPanel',
-    'debug_toolbar.panels.timer.TimerDebugPanel',
+    'webdnd.shared.utils.debug_toolbars.DividerDebugPanel',
+    # --
+
     'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
     'debug_toolbar.panels.headers.HeaderDebugPanel',
     'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
     'debug_toolbar.panels.template.TemplateDebugPanel',
+
+    # --
+    'webdnd.shared.utils.debug_toolbars.DividerDebugPanel',
+    # --
+
+    'webdnd.shared.utils.debug_toolbars.SyncraeSpyDebugPanel',
     'debug_toolbar.panels.sql.SQLDebugPanel',
-    'debug_toolbar.panels.signals.SignalDebugPanel',
-    'debug_toolbar.panels.logger.LoggingPanel',
+
+    # --
+    'webdnd.shared.utils.debug_toolbars.DividerDebugPanel',
+    # --
+
+    'debug_toolbar.panels.timer.TimerDebugPanel',
+    'webdnd.shared.utils.debug_toolbars.VersionDebugPanel',
 )
 
 # Allowed IPS that will see the debug toolbar
@@ -56,6 +68,8 @@ INTERNAL_IPS = (
     '127.0.0.1',
     'localhost',
 )
+# Required to get debug toolbar to work
+DATABASE_ENGINE = 'django.db.backends.sqlite3'
 
 # Creates a function that checks when to show the debug toolbar
 show_toolbar = None

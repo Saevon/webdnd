@@ -1,0 +1,163 @@
+{% load i18n %}
+
+
+<div id="syncrae-debug">
+    <!-- Global -->
+    <div id="globals">
+        <h1>Global</h1>
+        <div class="contents">
+        </div>
+    </div>
+
+    <!-- Chats -->
+    <div id="chats">
+        <h1>Chats</h1>
+        <div class="contents">
+        </div>
+    </div>
+
+    <!-- Campaigns -->
+    <div id="campaigns">
+        <h1>Campaigns</h1>
+        <div class="contents">
+        </div>
+    </div>
+</div>
+
+
+<script type="text/x-handlebars-template" id="debug-syncrae-group">
+    <div data-id="<% id %>" class="syncrae-group collapser">
+        <h2 class="id-title">
+            <% id %>
+            <button type="button" class="btn btn-info btn-mini">Hide/Show</button>
+        </h2>
+        <table class="collapsing collapsed">
+            <thead><tr>
+                <th class="topic">Topic</th>
+                <th class="data">Data</th>
+                <th class="time">Time</th>
+            </tr></thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</script>
+<script type="text/x-handlebars-template" id="debug-syncrae-row">
+    <tr>
+        <td class="topic"><% topic %></td>
+        <td class="data"><% data %></td>
+        <td class="time"><% timestamp %></td>
+    </tr>
+</script>
+
+
+<style>
+#syncrae-debug .collapsing.collapsed {
+    display: none;
+}
+
+#syncrae-debug .syncrae-group {
+    padding-left: 20px;
+    width: 95%;
+}
+#syncrae-debug .id-title {
+    margin-top: 5px;
+    font-size: larger;
+    vertical-align: center;
+}
+#syncrae-debug h1 {
+    font-size: 16pt;
+}
+#syncrae-debug .syncrae-group thead {
+    border-bottom: 2px solid #CCC;
+}
+#syncrae-debug .syncrae-group tr:nth-child(2n) {
+    background-color: #EEE;
+}
+#syncrae-debug .syncrae-group .topic {
+    text-align: left;
+    width: 10%;
+}
+#syncrae-debug .syncrae-group .data {
+    padding-left: 10px;
+    text-align: left;
+    width: 59%;
+}
+#syncrae-debug .syncrae-group .time {
+    text-align: right;
+    width: 30%;
+}
+</style>
+
+
+<script type="text/javascript">
+$(function() {
+    $('#syncrae-debug').on('click', '.collapser .id-title', function() {
+        var elem = $(this).parents('.collapser').find('.collapsing');
+        elem.toggleClass('collapsed');
+    })
+
+    var tmpl = $('#debug-syncrae-group').html()
+        .replace(new RegExp('<%', 'g'), '{{')
+        .replace(new RegExp('%>', 'g'), '}}');
+    var syncrae_group = Handlebars.compile(tmpl);
+    var tmpl = $('#debug-syncrae-row').html()
+        .replace(new RegExp('<%', 'g'), '{{')
+        .replace(new RegExp('%>', 'g'), '}}');
+    var syncrae_row = Handlebars.compile(tmpl);
+
+    var add_to_group = function(type, id, msg) {
+        var row = syncrae_row(msg);
+        var key = type + '-' + id;
+        var table = $('.syncrae-group[data-id="' + key + '"] table')
+
+        if (!table.length) {
+            table = $(syncrae_group({id: key}));
+
+            $('#' + type + 's .contents').append(table);
+            table = table.find('table')
+        }
+        table =table.find('tbody');
+        table.append(row);
+    };
+
+    var message = function(data, topic) {
+        var msg = {
+            data: JSON.stringify(data),
+            topic: topic,
+            timestamp: new Date().toString()
+        };
+
+        var id, type;
+        if (data.chatid) {
+            id = data.chatid;
+            type = 'chat';
+        } else if (data.cid) {
+            id = data.cid;
+            type = 'campaign';
+        } else if (topic.substr(0, '/terminal'.length) == '/terminal') {
+            id = 'terminal';
+            type = 'global';
+        } else {
+            id = 'unknown';
+            type = 'global';
+        }
+
+        add_to_group('global', 'all', msg);
+        // Non globals have a combined group as well
+        if (type != 'global') {
+            add_to_group(type, '', msg);
+        }
+        add_to_group(type, id, msg);
+    };
+ 
+    // Read what already happened
+    var msgs = syncrae.storage.read();
+    var length = msgs.length;
+    for (var i=0; i < length; i++) {
+        message(msgs[i].data, msgs[i].topic);
+    }
+
+    syncrae.subscribe('/', message);
+});
+</script>
