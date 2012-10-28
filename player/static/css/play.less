@@ -1,4 +1,5 @@
 @import "shared/static/css/colors.less";
+@import "shared/static/css/helpers.less";
 
 
 html, body {
@@ -8,23 +9,24 @@ html, body {
 
 
 /* Horizontal split */
-.hsplit,
-.hsplit-left,
-.hsplit-right {
+.hsplit {
     height: 100%;
-}
-.hsplit-left,
-.hsplit-right {
-    display: inline-block;
-}
 
-.hsplit-left {
-    width: 29%; /* We have a border around chat */
-    float: left;
-}
-.hsplit-right {
-    width: 70%;
-    float: right;
+    .hsplit-left,
+    .hsplit-right {
+        height: 100%;
+        display: inline-block;
+    }
+
+    .hsplit-left {
+        // We have a border around chat so -1%
+        width: 29%;
+        float: left;
+    }
+    .hsplit-right {
+        width: 70%;
+        float: right;
+    }
 }
 
 
@@ -49,6 +51,60 @@ html, body {
 }
 
 
+/* Disconnected message */
+.connection.disc-msg {
+    position: absolute;
+    top: 10%;
+    left: 70%;
+
+    color: @error;
+    background-color: @error-bg;
+    border: 1px solid @error-border;
+    .border-radius(20px);
+
+    padding: 20px 20px;
+    padding-right: 40px;
+
+    // Only appears when you aren't connected
+    &.status-on,
+    &.disabled {
+        display: none;
+    }
+
+    // Arrow
+    @arrow: 12px;
+    @arrow-pos: 20px;
+    &:before, &:after {
+        content: "";
+
+        position: absolute;
+        top: 100%;
+        left: @arrow-pos;
+
+        width: 0;
+        height: 0;
+
+        border: @arrow solid transparent;
+    }
+
+    &:before {
+        border-width: @arrow + 2px;
+        border-top-color: @error-border;
+    }
+    &:after {
+        left: @arrow-pos + 1px;
+        border-top-color: @error-bg;
+    }
+
+    // Close button
+    .close {
+        position: absolute;
+        right: 10px;
+        top: 18px;
+
+        .user-select(none);
+    }
+}
 
 
 

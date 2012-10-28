@@ -71,7 +71,7 @@ var switch_chat = function(id) {
 
 // Reconnection timer
 syncrae.retry_timer.listen(function(sec) {
-    var timer = $('.connection');
+    var timer = $('.connection.timer');
     var time = timer.find('.reconnect-time');
 
     if (sec <= 0) {
@@ -93,6 +93,8 @@ syncrae.retry_timer.listen(function(sec) {
 
         $('.connection').addClass('status-on')
             .removeClass('status-off')
+            .removeClass('disabled')
+            .filter('.timer')
             .fadeIn(100)
             .find('.reconnect-time')
             .html('&nbsp;');
@@ -111,7 +113,8 @@ syncrae.retry_timer.listen(function(sec) {
         connected = false;
 
         $('.connection').addClass('status-off')
-            .removeClass('status-on');
+            .removeClass('status-on')
+            .removeClass('disabled');
 
         // Show a Terminal message on websocket disconnect
         term_result({
@@ -275,6 +278,9 @@ $(function() {
     $('.chat-sidebar').on('click', '.chat-btn', function() {
         var elem = $(this);
         switch_chat(elem.data('id'));
+    });
+    $('.connection.disc-msg .close').on('click', function() {
+         $('.connection.disc-msg').addClass('disabled');
     });
 });
 
