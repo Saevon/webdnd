@@ -197,21 +197,26 @@ $(function() {
     $('#chat-campaign .msg-input').focus();
 
     // send messages when form is changed
-    $('#chat-campaign .msg-form').on('keydown', function(e) {
+    $('.chat-group').on('keydown', '.msg-input', function(e) {
         if (e.keyCode != 13) {
             return;
         }
         e.preventDefault();
 
+        var elem = $(this);
+
         var data = {
-            msg: $(this).find('.msg-input').val()
+            msg: elem.val()
         };
+
+        var chatid = elem.parents('.chat').data('id');
+        data.chatid = chatid;
 
         // send message
         syncrae.publish('/messages/new', data);
 
         // reset form
-        $(this).find('.msg-input').val('');
+        elem.val('');
     });
 
     // Global Shortcuts
