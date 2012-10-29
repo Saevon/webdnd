@@ -65,7 +65,9 @@ var switch_chat = function(id) {
 
     var chats = $('.chat').removeClass('active');
     var chat = chats.filter('#chat-' + id)
-        .addClass('active');
+        .addClass('active')
+        .find('.msg-input')
+        .focus();
 };
 
 
