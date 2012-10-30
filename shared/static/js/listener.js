@@ -1,4 +1,3 @@
-
 var new_message = function(data) {
     var chatid = data.chatid;
     if (chatid === undefined) {
@@ -50,7 +49,8 @@ var new_chat = function(data) {
     $('.chat-group').append(chat);
 
     if (data.name === undefined) {
-        data.name = data.id;
+        var uid = data.users.filter(function(uid) {return uid !== webdnd.user.self();})[0];
+        data.name = webdnd.user(uid);
     }
 
     var btn = $('.chat-btns').append($(Templates['chat-btn'](data)));
@@ -135,17 +135,17 @@ syncrae.retry_timer.listen(function(sec) {
 
 
 syncrae.subscribe('/chat/open', function(data) {
-    var chat_data = {
-        id: data.chatid
-    };
-
     var chat = $('#chat-' + data.chatid);
     if (chat.length === 0) {
-        chat = new_chat(chat_data);
+        chat = new_chat(data);
     }
 });
 
 syncrae.subscribe('/sessions/status', function(data) {
+    webdnd.user.update(data.uid, {
+        name: data.name
+    });
+
     msgdata = {
         name: 'system'
     };

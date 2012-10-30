@@ -1,7 +1,7 @@
 {% load helpers %}
 
 {% template 'chat' %}
-<div class="chat <% active %>" id="chat-<% id %>" data-id="<% id %>">
+<div class="chat <% active %>" id="chat-<% chatid %>" data-id="<% chatid %>">
     <div class="messages">
 
     </div>
@@ -19,13 +19,13 @@
                 {% endif %}
             </span>
         </div>
-        <input data-id="<% id %>" class="msg-input" type="text" name="msg" placeholder="Say..." autocomplete="off">
+        <input data-id="<% chatid %>" class="msg-input" type="text" name="msg" placeholder="Say..." autocomplete="off">
     </div>
 </div>
 {% endtemplate %}
 
 {% template 'chat-btn' %}
-    <button class="chat-btn btn btn-mini <% classes %>" data-id="<% id %>">
+    <button class="chat-btn btn btn-mini <% classes %>" data-id="<% chatid %>">
         <% name %>
     </button>
 {% endtemplate %}
@@ -34,9 +34,9 @@
 
 <div class="chat-group">
     <div class="chat-sidebar chat-btns">
-        {% render_template 'chat-btn' '{"id": "campaign", "classes": "active btn-info", "name": "Campaign"}' %}
+        {% render_template 'chat-btn' '{"chatid": "campaign", "classes": "active btn-info", "name": "Campaign"}' %}
     </div>
-    {% render_template 'chat' '{"id": "campaign", "active": "active"}' %}
+    {% render_template 'chat' '{"chatid": "campaign", "active": "active"}' %}
 </div>
 
 

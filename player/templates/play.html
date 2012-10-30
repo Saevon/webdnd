@@ -79,7 +79,11 @@
     {% compress js %}
       <script type="text/javascript" src="{% static 'shared/js/bootstrap-plugins.js' %}"></script>
       <script type="text/javascript" src="{% static 'shared/js/formatting.js' %}"></script>
+      <script type="text/javascript" src="{% static 'shared/js/webdnd.js' %}"></script>
       <script type="text/javascript">
+          // Set the uid for yourself
+          webdnd.user.self('{{ user.id }}');
+
           // Needed to connect using syncrae.js
           var HOST = window.location.hostname + ':{% setting "SYNCRAE_PORT" %}';
       </script>
