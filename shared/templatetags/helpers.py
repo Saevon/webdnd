@@ -64,12 +64,18 @@ def json(string):
 # Working with Dictionaries
 ##################################################
 class DictKeyNode(template.Node):
-    def __init__(self, name, key, val):
+    def __init__(self, name, key, val='', drop=False):
         self.name = name
         self.key = key
         self.val = val
 
+        self.drop = drop
+
     def render(self, context):
+        if self.drop:
+            context[self.name].pop(self.key)
+            return ''
+
         # Allow . seperated attribute access
         val = self.val.split('.')
         value = context[val[0]]
@@ -89,11 +95,27 @@ def set_key(parser, token):
     try:
         tag_name, name, key, val = token.split_contents()
     except ValueError:
-        raise template.TemplateSyntaxError("%r tag requires a three arguments" % token.contents.split()[0])
+        raise template.TemplateSyntaxError("%r tag requires three arguments" % token.contents.split()[0])
     if not (key[0] == key[-1] and key[0] in ('"', "'")):
         raise template.TemplateSyntaxError("%r tag's key should be in quotes" % tag_name)
 
     return DictKeyNode(name, key[1:-1], val)
+
+@register.tag
+def drop_key(parser, token):
+    '''
+    Removes a key in a dictionary
+
+    {% drop_key 'dict' 'key' %}
+    '''
+    try:
+        tag_name, name, key = token.split_contents()
+    except ValueError:
+        raise template.TemplateSyntaxError("%r tag requires two arguments" % token.contents.split()[0])
+    if not (key[0] == key[-1] and key[0] in ('"', "'")):
+        raise template.TemplateSyntaxError("%r tag's key should be in quotes" % tag_name)
+
+    return DictKeyNode(name, key[1:-1], drop=True)
 
 
 ##################################################

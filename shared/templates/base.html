@@ -109,9 +109,10 @@
 
     <!-- Javascript at the bottom for faster page loading -->
     <script type="text/javascript" src="{% static 'shared/js/platform.js' %}"></script>
-    <script type="text/javascript" src="{% static 'shared/js/jquery.js' %}"></script>
-    <script type="text/javascript" src="{% static 'shared/js/bootstrap.js' %}"></script>
-    <script type="text/javascript" src="{% static 'shared/js/handlebars.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-plugins.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/handlebars.js' %}"></script>
     {% compile_templates 6 %}
 
     {% compress js %}
