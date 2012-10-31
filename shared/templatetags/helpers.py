@@ -7,20 +7,37 @@ import logging
 import simplejson
 logging = logging.getLogger('templatetags')
 
-register = template.Library()
 
+register = template.Library()
 compiler = Compiler()
 
 
+##################################################
+# Settings Helpers
+##################################################
 @register.simple_tag
 def setting(key, default=None):
+    '''
+    Outputs the value of the setting directly
+
+    {% setting 'DEBUG' %}
+    '''
     return get_setting(key, default)
 
 @register.assignment_tag
 def setting_var(key, default=None):
+    '''
+    Sets a variable to the value of the settings
+
+    {% settings_var 'DEBUG' as debug %}
+    '''
     return get_setting(key, default)
 
 def get_setting(key, default=None):
+    '''
+    Helper to get the settings at the given key, logs warnings when undefined settings
+    are used
+    '''
     if hasattr(settings, key):
         return getattr(settings, key)
     else:
@@ -30,11 +47,22 @@ def get_setting(key, default=None):
     return default
 
 
+##################################################
 # JSON Parsing
+##################################################
 @register.assignment_tag
 def json(string):
+    '''
+    Json serializes a string turning it into an object
+
+    {% json '{ "json": true }"}' as sample %}
+    '''
     return simplejson.loads(string)
 
+
+##################################################
+# Working with Dictionaries
+##################################################
 class DictKeyNode(template.Node):
     def __init__(self, name, key, val):
         self.name = name
@@ -53,6 +81,11 @@ class DictKeyNode(template.Node):
 
 @register.tag
 def set_key(parser, token):
+    '''
+    Sets a key in a dictionary to the given value (variable)
+
+    {% set_key 'dict' 'key' 'variable.attr' %}
+    '''
     try:
         tag_name, name, key, val = token.split_contents()
     except ValueError:
@@ -62,6 +95,10 @@ def set_key(parser, token):
 
     return DictKeyNode(name, key[1:-1], val)
 
+
+##################################################
+# Templating
+##################################################
 
 # Client template helpers
 class PointerNode(template.Node):
@@ -190,6 +227,13 @@ def compile_templates(parser, token):
 
 @register.tag
 def template(parser, token):
+    '''
+    Adds a new template to the current template list
+
+    {% template 'name' %}
+        ...
+    {% endtemplate %}
+    '''
     try:
         tag_name, name = token.split_contents()
     except ValueError:
@@ -203,6 +247,13 @@ def template(parser, token):
 
 @register.simple_tag
 def render_template(name, args):
+    '''
+    Renders a template serverside with the given args
+
+    {% render_template dict %}
+    OR
+    {% render_template '{"json": true}' %}
+    '''
     # Accept either a dict or a JSON serializable string
     if type(args) != dict:
         args = simplejson.loads(args)
