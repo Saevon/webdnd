@@ -30,13 +30,15 @@
     </button>
 {% endtemplate %}
 
+{% json '{"chatid": "campaign", "classes": "active btn-info", "name": "Campaign", "active": "active"}' as context %}
+{% set_key context 'uid' user.id %}
 
 
 <div class="chat-group">
     <div class="chat-sidebar chat-btns">
-        {% render_template 'chat-btn' '{"chatid": "campaign", "classes": "active btn-info", "name": "Campaign", "uid": "'|add:user.id|add'""}' %}
+        {% render_template 'chat-btn' context %}
     </div>
-    {% render_template 'chat' '{"chatid": "campaign", "active": "active"}' %}
+    {% render_template 'chat' context %}
 </div>
 
 

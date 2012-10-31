@@ -30,6 +30,39 @@ def get_setting(key, default=None):
     return default
 
 
+# JSON Parsing
+@register.assignment_tag
+def json(string):
+    return simplejson.loads(string)
+
+class DictKeyNode(template.Node):
+    def __init__(self, name, key, val):
+        self.name = name
+        self.key = key
+        self.val = val
+
+    def render(self, context):
+        # Allow . seperated attribute access
+        val = self.val.split('.')
+        value = context[val[0]]
+        for key in val[1:]:
+            value = getattr(value, key)
+
+        context[self.name][self.key] = value
+        return ''
+
+@register.tag
+def set_key(parser, token):
+    try:
+        tag_name, name, key, val = token.split_contents()
+    except ValueError:
+        raise template.TemplateSyntaxError("%r tag requires a three arguments" % token.contents.split()[0])
+    if not (key[0] == key[-1] and key[0] in ('"', "'")):
+        raise template.TemplateSyntaxError("%r tag's key should be in quotes" % tag_name)
+
+    return DictKeyNode(name, key[1:-1], val)
+
+
 # Client template helpers
 class PointerNode(template.Node):
     '''
@@ -170,7 +203,10 @@ def template(parser, token):
 
 @register.simple_tag
 def render_template(name, args):
-    args = simplejson.loads(args)
+    # Accept either a dict or a JSON serializable string
+    if type(args) != dict:
+        args = simplejson.loads(args)
+
     tmpl = compiler.compile(ClientTemplateNode.template(name))
     return tmpl(args)
 
