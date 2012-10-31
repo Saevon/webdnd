@@ -16,7 +16,7 @@ webdnd.user = (function() {
                 uid: uid,
                 name: '',
                 color: false,
-                status: 'online'
+                status: 'offline'
             };
         }
         $.extend(users[uid], values);

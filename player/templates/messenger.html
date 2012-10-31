@@ -1,7 +1,7 @@
 {% load helpers %}
 
 {% template 'chat' %}
-<div class="chat <% active %>" id="chat-<% chatid %>" data-chatid="<% chatid %>" data-uid="<% uid %>">
+<div class="chat <% active %> <%#if uid %>player-<% uid %><%/if%>" id="chat-<% chatid %>" data-chatid="<% chatid %>">
     <div class="messages">
 
     </div>
@@ -11,7 +11,7 @@
             <span class="user-name">
                 {{ user.name }}
             </span>
-            <span class="player-color player-<% uid %> char-name">
+            <span class="char-name">
                 {% if is_dm %}
                     DM
                 {% elif char %}
@@ -25,13 +25,12 @@
 {% endtemplate %}
 
 {% template 'chat-btn' %}
-    <button class="player-color player-<% uid %> chat-btn btn btn-mini <% classes %>" data-chatid="<% chatid %>">
+    <button class="<%#if uid %>player-<% uid %> player-btn<%/if%> chat-btn btn btn-mini <% classes %>" data-chatid="<% chatid %>">
         <% name %>
     </button>
 {% endtemplate %}
 
 {% json '{"chatid": "campaign", "classes": "active btn-info", "name": "Campaign", "active": "active"}' as context %}
-{% set_key context 'uid' user.id %}
 
 
 <div class="chat-group">
@@ -41,14 +40,77 @@
     {% render_template 'chat' context %}
 </div>
 
+<!-- Player Color Customizations, div is here to wrap them up -->
+<div id="player-colors">
+    {% template 'player_colors' %}
+    <style id="player-<% uid %>-colors">
+        .player-<% uid %>.player-color,
+        .player-<% uid %> .player-color {
+            color: #<% color %>;
+        }
+        .player-<% uid %>.player-bg,
+        .player-<% uid %> .player-bg {
+            background-color: #<% color %>;
+        }
+        .player-<% uid %>.player-bg-grad,
+        .player-<% uid %> .player-bg-grad {
+            background-image: -webkit-linear-gradient(top, #<% color %>, #<% color %>);
+        }
+
+        .player-<% uid %>.player-btn,
+        .player-<% uid %> .player-btn {
+            background-color: #<% color %>;
+            background-image: -webkit-linear-gradient(top, #<% color %>, #<% color %>);
+        }
+        .player-<% uid %>.player-btn:hover,
+        .player-<% uid %> .player-btn:hover {
+            background-color: #<% color_alt %>;
+            background-image: -webkit-linear-gradient(top, #<% color_alt %>, #<% color_alt %>);
+        }
+    </style>
+    {% endtemplate %}
+    {% template 'player_colors_2' %}
+    <style id="player-<% uid %>-colors" type="text/less">
+        .player-<% uid %> {
+            @color: #<% color %>;
+
+            &.player-color,
+            & .player-color {
+                color: @color;
+            }
+            &.player-bg,
+            & .player-bg {
+                background-color: @color;
+            }
+            &.player-bg-grad,
+            & .player-bg-grad {
+                background-image: -webkit-linear-gradient(top, @color, @color + 10);
+            }
+
+            &.player-btn,
+            & .player-btn {
+                .player-bg-grad;
+                .player-bg;
+            }
+            &.player-btn:hover,
+            & .player-btn:hover {
+                background-color: @color;
+                background-image: -webkit-linear-gradient(top, @color, @color + 10);
+            }
+        }
+    </style>
+    {% endtemplate %}
+</div>
+<!-- End Player Colors -->
+
 
 
 {% template 'message' %}
-    <div class="row-fluid msg-row <% type %>" data-uid="<% uid %>">
+    <div class="row-fluid msg-row <% type %> <%#if uid %>player-<% uid %><%/if%>">
         <span class="prefix">
-            <span class="name"><% name %></span>:
+            <span class="name player-color"><% name %></span>:
         </span>
-        <span class="msg"><% msg %><br/></span>
+        <span class="msg player-color"><% msg %><br/></span>
     </div>
 {% endtemplate %}
 

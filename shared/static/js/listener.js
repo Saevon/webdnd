@@ -20,9 +20,7 @@ var new_message = function(data) {
     } else {
         msg = $(Templates.message(data))
             .appendTo(chat.find('.messages'));
-    }
-    if (data.uid && webdnd.user(data.uid) && webdnd.user(data.uid).color) {
-        msg.css('color', '#' + webdnd.user(data.uid).color);
+        prev = msg;
     }
 
     msg.css('opacity', 0)
@@ -32,6 +30,28 @@ var new_message = function(data) {
 
     var elem = $('#chat-campaign .messages')[0];
     elem.scrollTop = elem.scrollHeight;
+};
+
+var player_colour = function(uid) {
+    var user = webdnd.user(uid);
+    if (user !== undefined && user.color) {
+        // Remove any old styles
+        $('#player-' + uid + '-colors').remove();
+
+        // Render the new styles
+        var data = {
+            color: user.color,
+            color_alt: '#AAB',
+            uid: uid
+        };
+        var styles = Templates['player_colors'](data);
+
+        // Compile the styles using less
+
+
+        // Add it to the DOM
+        $('#player-colors').append(styles);
+    }
 };
 
 var term_result = function(data) {
@@ -48,29 +68,28 @@ var term_result = function(data) {
 };
 
 var new_chat = function(data) {
-    var chat = $(Templates['chat'](data));
-    $('.chat-group').append(chat);
-
+    var uid = data.expected.filter(function(uid) {return uid !== webdnd.user.self();})[0];
+    data.uid = uid;
     if (data.name === undefined) {
-        var uid = data.users.filter(function(uid) {return uid !== webdnd.user.self();})[0];
         data.name = webdnd.user(uid);
     }
 
+    var chat = $(Templates['chat'](data));
+    $('.chat-group').append(chat);
+
+
     var btn = $('.chat-btns').append($(Templates['chat-btn'](data)));
-    if (data.uid && webdnd.user(data.uid).color) {
-        btn.css('color', webdnd.user(data.uid).color);
-    }
 
     return chat;
 };
 
-var switch_chat = function(id) {
+var switch_chat = function(chatid) {
     var btns = $('.chat-btn').removeClass('active');
-    var btn = btns.filter('[data-id="' + id + '"]')
+    var btn = btns.filter('[data-chatid="' + chatid + '"]')
         .addClass('active');
 
     var chats = $('.chat').removeClass('active');
-    var chat = chats.filter('#chat-' + id)
+    var chat = chats.filter('#chat-' + chatid)
         .addClass('active')
         .find('.msg-input')
         .focus();
@@ -148,28 +167,38 @@ syncrae.subscribe('/chat/open', function(data) {
 });
 
 syncrae.subscribe('/session/update', function(data) {
-    var old_status = webdnd.user(data.uid);
+    var user = webdnd.user(data.uid);
+
+    // TODO: statuses don't work right now
+    // var old_status;
+    // if (user !== undefined) {
+    //     old_status = user.status;
+    // }
+
+
     webdnd.user.update(data.uid, data);
+    user = webdnd.user(data.uid);
 
+    // Update all colors
     if (data.color) {
-        $('.msg[data-uid]')
+        player_colour(data.uid);
     }
 
-    if (old_status != webdnd.user(data.uid).status) {
-        // TODO: this is just wrong right now
-        // msgdata = {
-        //     name: 'system'
-        // };
+    // if ((old_status === undefined && user.status !== undefined) ||
+    // (old_status !== undefined && old_status != user.status)) {
+    //     msgdata = {
+    //         name: 'system'
+    //     };
 
-        // if (webdnd.user(data.uid).status == 'offline') {
-        //     msgdata['msg'] = webdnd.user(data.uid).name + ' just left';
-        // } else if (webdnd.user(data.uid).status == 'online') {
-        //     msgdata['msg'] = webdnd.user(data.uid).name + ' just joined us';
-        // } else {
-        //     console.warn('unknown status: ', webdnd.user(data.uid).status);
-        // }
-        // new_message(msgdata);
-    }
+    //     if (webdnd.user(data.uid).status == 'offline') {
+    //         msgdata['msg'] = webdnd.user(data.uid).name + ' just left';
+    //     } else if (webdnd.user(data.uid).status == 'online') {
+    //         msgdata['msg'] = webdnd.user(data.uid).name + ' just joined us';
+    //     } else {
+    //         console.warn('unknown status: ', webdnd.user(data.uid).status);
+    //     }
+    //     new_message(msgdata);
+    // }
 });
 
 // Base handler
@@ -297,7 +326,7 @@ $(function() {
 
     $('.chat-sidebar').on('click', '.chat-btn', function() {
         var elem = $(this);
-        switch_chat(elem.data('id'));
+        switch_chat(elem.data('chatid'));
     });
     $('.connection.disc-msg .close').on('click', function() {
          $('.connection.disc-msg').addClass('disabled');
