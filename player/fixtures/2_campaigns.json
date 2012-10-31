@@ -26,7 +26,8 @@
             "can_dm": false,
             "is_spectator": false,
             "user": 2,
-            "campaign": 1
+            "campaign": 1,
+            "color": "99F"
         }
     },
     {

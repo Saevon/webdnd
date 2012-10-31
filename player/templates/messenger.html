@@ -1,7 +1,7 @@
 {% load helpers %}
 
 {% template 'chat' %}
-<div class="chat <% active %>" id="chat-<% chatid %>" data-id="<% chatid %>">
+<div class="chat <% active %>" id="chat-<% chatid %>" data-chatid="<% chatid %>" data-uid="<% uid %>">
     <div class="messages">
 
     </div>
@@ -11,7 +11,7 @@
             <span class="user-name">
                 {{ user.name }}
             </span>
-            <span class="char-name">
+            <span class="player-color player-<% uid %> char-name">
                 {% if is_dm %}
                     DM
                 {% elif char %}
@@ -25,7 +25,7 @@
 {% endtemplate %}
 
 {% template 'chat-btn' %}
-    <button class="chat-btn btn btn-mini <% classes %>" data-id="<% chatid %>">
+    <button class="player-color player-<% uid %> chat-btn btn btn-mini <% classes %>" data-chatid="<% chatid %>">
         <% name %>
     </button>
 {% endtemplate %}
@@ -34,7 +34,7 @@
 
 <div class="chat-group">
     <div class="chat-sidebar chat-btns">
-        {% render_template 'chat-btn' '{"chatid": "campaign", "classes": "active btn-info", "name": "Campaign"}' %}
+        {% render_template 'chat-btn' '{"chatid": "campaign", "classes": "active btn-info", "name": "Campaign", "uid": "'|add:user.id|add'""}' %}
     </div>
     {% render_template 'chat' '{"chatid": "campaign", "active": "active"}' %}
 </div>
@@ -42,7 +42,7 @@
 
 
 {% template 'message' %}
-    <div class="row-fluid msg-row <% type %>" data-id="<% id %>">
+    <div class="row-fluid msg-row <% type %>" data-uid="<% uid %>">
         <span class="prefix">
             <span class="name"><% name %></span>:
         </span>

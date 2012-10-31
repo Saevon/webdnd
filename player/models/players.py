@@ -7,6 +7,11 @@ from webdnd.player.models.alignment import Alignment
 from webdnd.player.models.campaigns import Campaign
 from webdnd.player.constants.constants import CHARACTER_STATUSES
 
+import re
+
+
+# Any 3 or 6 digit hex code
+COLOR_RE = re.compile(r'[A-Fa-f0-9]{3}([A-Fa-f0-9]{3})?')
 
 class Player(AbstractPlayerModel):
     """
@@ -45,12 +50,24 @@ class Player(AbstractPlayerModel):
     # For people to spectate
     is_spectator = models.BooleanField(default=False)
 
+    # Color for this user
+    color = models.CharField(
+        max_length=6,
+        blank=True,
+        null=True
+    )
+
     @property
     def name(self):
         return unicode(self)
 
     def __unicode__(self):
         return u'%s' % (self.user.name)
+
+    def save(self, *args, **kwargs):
+        if COLOR_RE.match(self.color) is None:
+            self.color = None
+
 
 class Character(AbstractPlayerModel):
     '''

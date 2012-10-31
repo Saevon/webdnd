@@ -21,6 +21,9 @@ var new_message = function(data) {
         msg = $(Templates.message(data))
             .appendTo(chat.find('.messages'));
     }
+    if (data.uid && webdnd.user(data.uid) && webdnd.user(data.uid).color) {
+        msg.css('color', '#' + webdnd.user(data.uid).color);
+    }
 
     msg.css('opacity', 0)
         .animate({
@@ -54,6 +57,9 @@ var new_chat = function(data) {
     }
 
     var btn = $('.chat-btns').append($(Templates['chat-btn'](data)));
+    if (data.uid && webdnd.user(data.uid).color) {
+        btn.css('color', webdnd.user(data.uid).color);
+    }
 
     return chat;
 };
@@ -141,23 +147,29 @@ syncrae.subscribe('/chat/open', function(data) {
     }
 });
 
-syncrae.subscribe('/sessions/status', function(data) {
-    webdnd.user.update(data.uid, {
-        name: data.name
-    });
+syncrae.subscribe('/session/update', function(data) {
+    var old_status = webdnd.user(data.uid);
+    webdnd.user.update(data.uid, data);
 
-    msgdata = {
-        name: 'system'
-    };
-
-    if (data.status == 'offline') {
-        msgdata['msg'] = data.name + ' just left';
-    } else if (data.status == 'online') {
-        msgdata['msg'] = data.name + ' just joined us';
-    } else {
-        console.warn('unknown status: ', data.status);
+    if (data.color) {
+        $('.msg[data-uid]')
     }
-    new_message(msgdata);
+
+    if (old_status != webdnd.user(data.uid).status) {
+        // TODO: this is just wrong right now
+        // msgdata = {
+        //     name: 'system'
+        // };
+
+        // if (webdnd.user(data.uid).status == 'offline') {
+        //     msgdata['msg'] = webdnd.user(data.uid).name + ' just left';
+        // } else if (webdnd.user(data.uid).status == 'online') {
+        //     msgdata['msg'] = webdnd.user(data.uid).name + ' just joined us';
+        // } else {
+        //     console.warn('unknown status: ', webdnd.user(data.uid).status);
+        // }
+        // new_message(msgdata);
+    }
 });
 
 // Base handler
@@ -178,7 +190,7 @@ syncrae.subscribe('/', function(data) {
     }
 });
 
-syncrae.subscribe('/sessions/error', function(data) {
+syncrae.subscribe('/session/error', function(data) {
     new_message({
         name: 'system',
         msg: data.error
@@ -213,6 +225,7 @@ $(function() {
 
         var chatid = elem.parents('.chat').data('id');
         data.chatid = chatid;
+        data.uid = webdnd.user.self();
 
         // send message
         syncrae.publish('/messages/new', data);
