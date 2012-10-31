@@ -14,7 +14,7 @@
     <title>{{ campaign.name }}</title>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{% static 'shared/css/bootstrap.css' %}" type="text/css" charset="utf-8">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" type="text/css" charset="utf-8">
     {% compress css %}
       <link rel="stylesheet" href="{% static 'shared/css/bootstrap.extra.less' %}" type="text/less" charset="utf-8">
       <link rel="stylesheet" href="{% static 'shared/css/base.less' %}" type="text/less" charset="utf-8">
@@ -71,9 +71,9 @@
     <!-- Scripts -->
     <!-- Javascript at the bottom for faster page loading -->
     <script type="text/javascript" src="{% static 'shared/js/platform.js' %}"></script>
-    <script type="text/javascript" src="{% static 'shared/js/jquery.js' %}"></script>
-    <script type="text/javascript" src="{% static 'shared/js/bootstrap.js' %}"></script>
-    <script type="text/javascript" src="{% static 'shared/js/handlebars.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/handlebars.js' %}"></script>
     {% compile_templates 6 %}
 
     {% compress js %}
