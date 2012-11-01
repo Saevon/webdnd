@@ -1,5 +1,15 @@
+
+.bg-grad (@from, @to, @dir: top) {
+    background-image: -webkit-linear-gradient(@dir, @from, @to);
+    background-image: -moz-linear-gradient(@dir, @from, @to);
+    background-image: -o-linear-gradient(@dir, @from, @to);
+    background-image: -ms-linear-gradient(@dir, @from, @to);
+    background-image: linear-gradient(@dir, @from, @to);
+}
+
 .player-<@ uid @> {
     @color: #<@ color @>;
+    @contrast-less: contrast(@color, darken(@color, 10%), lighten(@color, 10%));
     @contrast: contrast(@color, darken(@color, 20%), lighten(@color, 20%));
     @contrast-more: contrast(@color, darken(@color, 30%), lighten(@color, 30%));
     @contrast-text: contrast(@color, #EEE, #222);
@@ -26,40 +36,27 @@
     & .active.player-bg-grad,
     &.player-bg-grad,
     & .player-bg-grad {
-        background-image: -webkit-linear-gradient(top, @color, @contrast);
-        background-image: -moz-linear-gradient(top, @color, @contrast);
-        background-image: -o-linear-gradient(top, @color, @contrast);
-        background-image: -ms-linear-gradient(top, @color, @contrast);
-        background-image: linear-gradient(top, @color, @contrast);
+        .bg-grad(@color, @contrast, top);
     }
 
     &.player-btn,
     & .player-btn {
-        background-image: -webkit-linear-gradient(top, @color, @contrast);
-        background-image: -moz-linear-gradient(top, @color, @contrast);
-        background-image: -o-linear-gradient(top, @color, @contrast);
-        background-image: -ms-linear-gradient(top, @color, @contrast);
-        background-image: linear-gradient(top, @color, @contrast);
-        background-color: @color;
+        .bg-grad(@color, @contrast, top);
+        background-color: @contrast;
+        border-color: @contrast;
     }
     &.player-btn:hover,
     & .player-btn:hover {
-        background-image: -webkit-linear-gradient(top, @color, @contrast);
-        background-image: -moz-linear-gradient(top, @color, @contrast);
-        background-image: -o-linear-gradient(top, @color, @contrast);
-        background-image: -ms-linear-gradient(top, @color, @contrast);
-        background-image: linear-gradient(top, @color, @contrast);
-        background-color: @contrast;
+        .bg-grad(@color, @contrast-less, top);
+        background-color: @contrast-less;
+        border-color: @contrast;
     }
     &.player-btn:active,
     & .player-btn:active,
     &.player-btn.active,
     & .player-btn.active {
-        background-image: -webkit-linear-gradient(top, @contrast-more, @contrast);
-        background-image: -moz-linear-gradient(top, @contrast-more, @contrast);
-        background-image: -o-linear-gradient(top, @contrast-more, @contrast);
-        background-image: -ms-linear-gradient(top, @contrast-more, @contrast);
-        background-image: linear-gradient(top, @contrast-more, @contrast);
+        .bg-grad(@contrast-more, @contrast, top);
         background-color: @contrast;
+        border-color: @contrast;
     }
 }
