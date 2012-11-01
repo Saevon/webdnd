@@ -41,7 +41,6 @@
             <div class="chat-group-border">
                 {% include 'messenger.html' %}
             </div>
-            <!-- End Messenger -->
         </div>
 
         <div class="hsplit-right">
@@ -49,7 +48,12 @@
             <div class="char-sheet-border">
                 <!-- Char Sheet include goes here -->
             </div>
-            <!-- End Sheet -->
+        </div>
+
+        <!-- Disconnected Msg -->
+        <div class="connection disc-msg status-off">
+            <span> You are NOT Connected </span>
+            <button type="button" class="close">✘</button>
         </div>
 
         <!-- Terminal -->
@@ -61,44 +65,43 @@
         <!-- End Tooltips -->
 
     </div>
-
-    <div class="connection disc-msg status-off">
-        <span> You are NOT Connected </span>
-        <button type="button" class="close">✘</button>
-    </div>
     <!-- End Main Body -->
 
 
+    {% include 'player-colors.html' %}
+
+
     <!-- Scripts -->
-    <!-- Javascript at the bottom for faster page loading -->
-    <script type="text/javascript" src="{% static 'shared/js/platform.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/handlebars.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/less.js' %}"></script>
-    {% compile_templates 6 %}
+    <openscripts>
+      <!-- Javascript at the bottom for faster page loading -->
+      <script type="text/javascript" src="{% static 'shared/js/platform.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/handlebars.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/less.js' %}"></script>
+      {% compile_templates 6 %}
 
-    {% compress js %}
-      <script type="text/javascript" src="{% static 'shared/js/jquery-plugins.js' %}"></script>
-      <script type="text/javascript" src="{% static 'shared/js/bootstrap-plugins.js' %}"></script>
-      <script type="text/javascript" src="{% static 'shared/js/formatting.js' %}"></script>
-      <script type="text/javascript" src="{% static 'shared/js/webdnd.js' %}"></script>
-      <script type="text/javascript">
-          // Set the uid for yourself
-          webdnd.user.self('{{ user.id }}');
+      {% compress js %}
+        <script type="text/javascript" src="{% static 'shared/js/jquery-plugins.js' %}"></script>
+        <script type="text/javascript" src="{% static 'shared/js/bootstrap-plugins.js' %}"></script>
+        <script type="text/javascript" src="{% static 'shared/js/formatting.js' %}"></script>
+        <script type="text/javascript" src="{% static 'shared/js/webdnd.js' %}"></script>
+        <script type="text/javascript">
+            // Set the uid for yourself
+            webdnd.user.self('{{ user.id }}');
 
-          // Needed to connect using syncrae.js
-          var HOST = window.location.hostname + ':{% setting "SYNCRAE_PORT" %}';
-      </script>
-      <script type="text/javascript" src="{% static 'syncrae/js/syncrae.js' %}"></script>
-      <script type="text/javascript" src="{% static 'shared/js/history.js' %}"></script>
-      <script type="text/javascript" src="{% static 'shared/js/tooltip.js' %}"></script>
-      <script type="text/javascript" src="{% static 'shared/js/listener.js' %}"></script>
-      <script type="text/javascript" src="{% static 'shared/js/terminal.js' %}"></script>
-    {% endcompress %}
+            // Needed to connect using syncrae.js
+            var HOST = window.location.hostname + ':{% setting "SYNCRAE_PORT" %}';
+        </script>
+        <script type="text/javascript" src="{% static 'syncrae/js/syncrae.js' %}"></script>
+        <script type="text/javascript" src="{% static 'shared/js/history.js' %}"></script>
+        <script type="text/javascript" src="{% static 'shared/js/tooltip.js' %}"></script>
+        <script type="text/javascript" src="{% static 'shared/js/listener.js' %}"></script>
+        <script type="text/javascript" src="{% static 'shared/js/terminal.js' %}"></script>
+      {% endcompress %}
 
-    <!-- Dynamic Javascript -->
-    <!-- End Javascript -->
+      <!-- Dynamic Javascript -->
+    </openscripts>
 
   </body>
 </html>

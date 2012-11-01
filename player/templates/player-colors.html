@@ -1,0 +1,17 @@
+{% load helpers %}
+
+
+<!-- Player Color Customizations -->
+<openPlayerColors id="player-colors">
+    {% template 'player_colors_wrapper' %}
+    <style id="player-<% uid %>-colors">
+        <% css %>
+    </style>
+    {% endtemplate %}
+
+    {% template 'player_colors' %}
+        {% include 'player-colors.tmpl.less' %}
+    {% endtemplate %}
+</openPlayerColors>
+
+
