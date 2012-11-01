@@ -67,6 +67,7 @@ class Player(AbstractPlayerModel):
     def save(self, *args, **kwargs):
         if COLOR_RE.match(self.color) is None:
             self.color = None
+        super(Player, self).save(*args, **kwargs)
 
 
 class Character(AbstractPlayerModel):
