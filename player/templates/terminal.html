@@ -21,13 +21,13 @@
 
 
 {% template 'terminal-log' %}
-    <div class="<% level %> terminal-log">
-        <% text %>
+    <div class="<@ level @> terminal-log">
+        <@ text @>
     </div>
 {% endtemplate %}
 
 {% template 'terminal-cmd' %}
-    <div class="<% level %> terminal-cmd">
-        ≈ <% text %>
+    <div class="<@ level @> terminal-cmd">
+        ≈ <@ text @>
     </div>
 {% endtemplate %}

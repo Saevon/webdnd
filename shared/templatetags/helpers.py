@@ -177,8 +177,8 @@ class ClientTemplateNode(template.Node):
                 'name': name,
                 'content': dedent(nodes.render(context))
                     # Change the delims
-                    .replace('<%', '{{')
-                    .replace('%>', '}}')
+                    .replace('<@', '{{')
+                    .replace('@>', '}}')
                     .replace('\n', '\n' + (4 * ' ')),
             })
 
@@ -216,8 +216,8 @@ class ClientTemplateNode(template.Node):
         context = ClientTemplateNode.nodes[name]['context']
         tmpl = dedent(nodes.render(context)
             # Change the delims
-            .replace('<%', '{{')
-            .replace('%>', '}}')
+            .replace('<@', '{{')
+            .replace('@>', '}}')
         )
 
         return tmpl

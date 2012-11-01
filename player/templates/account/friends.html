@@ -47,14 +47,14 @@
 
 
     {% template 'users' %}
-        <%#players%>
-        <blockquote class="user span2 <% type %>" data-type="<% type %>" data-id="<% id %>">
+        <@#players@>
+        <blockquote class="user span2 <@ type @>" data-type="<@ type @>" data-id="<@ id @>">
             <span class="pull-right action text-success add">✔</span>
             <span class="pull-right action text-error remove">✘</span>
-            <span class="username"> <% name %> <span>
-            <input class="hide" name="<% type %>s[]" value="<% id %>"></input>
+            <span class="username"> <@ name @> <span>
+            <input class="hide" name="<@ type @>s[]" value="<@ id @>"></input>
         </blockquote>
-        <%/players%>
+        <@/players@>
     {% endtemplate %}
 
     {% template 'search-user-empty' %}

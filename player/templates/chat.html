@@ -1,7 +1,7 @@
 {% load helpers %}
 
 {% template 'chat' %}
-<div class="chat <% active %> <%#if uid %>player-<% uid %><%/if%>" id="chat-<% chatid %>" data-chatid="<% chatid %>">
+<div class="chat <@ active @> <@#if uid @>player-<@ uid @><@/if@>" id="chat-<@ chatid @>" data-chatid="<@ chatid @>">
     <div class="messages">
 
     </div>
@@ -19,13 +19,13 @@
                 {% endif %}
             </span>
         </div>
-        <input data-id="<% chatid %>" class="msg-input" type="text" name="msg" placeholder="Say..." autocomplete="off">
+        <input data-id="<@ chatid @>" class="msg-input" type="text" name="msg" placeholder="Say..." autocomplete="off">
     </div>
 </div>
 {% endtemplate %}
 
 {% template 'chat-btn' %}
-    <button class="<%#if uid %>player-<% uid %> player-btn<%/if%> chat-btn btn btn-mini <% classes %>" data-chatid="<% chatid %>">
+    <button class="<@#if uid @>player-<@ uid @> player-btn<@/if@> chat-btn btn btn-mini <@ classes @>" data-chatid="<@ chatid @>">
         <div class="active-indicate"></div>
         <i class="icon-comments-alt has-msgs player-atext"></i>
     </button>
@@ -43,11 +43,11 @@
 
 
 {% template 'message' %}
-    <div class="row-fluid msg-row <% type %> <%#if uid %>player-<% uid %><%/if%>">
+    <div class="row-fluid msg-row <@ type @> <@#if uid @>player-<@ uid @><@/if@>">
         <span class="prefix">
-            <span class="name player-color"><% name %></span>:
+            <span class="name player-color"><@ name @></span>:
         </span>
-        <span class="msg player-color"><% msg %><br/></span>
+        <span class="msg player-color"><@ msg @><br/></span>
     </div>
 {% endtemplate %}
 

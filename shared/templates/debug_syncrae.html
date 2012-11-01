@@ -26,9 +26,9 @@
 
 
 <script type="text/x-handlebars-template" id="debug-syncrae-group">
-    <div data-id="<% id %>" class="syncrae-group collapser">
+    <div data-id="<@ id @>" class="syncrae-group collapser">
         <h2 class="id-title">
-            <% id %>
+            <@ id @>
             <button type="button" class="btn btn-info btn-mini">Hide/Show</button>
         </h2>
         <table class="collapsing collapsed">
@@ -44,9 +44,9 @@
 </script>
 <script type="text/x-handlebars-template" id="debug-syncrae-row">
     <tr>
-        <td class="topic"><% topic %></td>
-        <td class="data"><% data %></td>
-        <td class="time"><% timestamp %></td>
+        <td class="topic"><@ topic @></td>
+        <td class="data"><@ data @></td>
+        <td class="time"><@ timestamp @></td>
     </tr>
 </script>
 
@@ -100,12 +100,12 @@ if ($ !== undefined && syncrae !== undefined) {
         })
 
         var tmpl = $('#debug-syncrae-group').html()
-            .replace(new RegExp('<%', 'g'), '{{')
-            .replace(new RegExp('%>', 'g'), '}}');
+            .replace(new RegExp('<@', 'g'), '{{')
+            .replace(new RegExp('@>', 'g'), '}}');
         var syncrae_group = Handlebars.compile(tmpl);
         var tmpl = $('#debug-syncrae-row').html()
-            .replace(new RegExp('<%', 'g'), '{{')
-            .replace(new RegExp('%>', 'g'), '}}');
+            .replace(new RegExp('<@', 'g'), '{{')
+            .replace(new RegExp('@>', 'g'), '}}');
         var syncrae_row = Handlebars.compile(tmpl);
 
         var add_to_group = function(type, id, msg) {
