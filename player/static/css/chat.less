@@ -32,7 +32,7 @@
     &.active .active-indicate {
         border-width: @act-ind-size - 1;
 
-        left: 8px;
+        left: 12 - @act-ind-size;
         border-color: #20C2A2;
     }
 }
@@ -42,6 +42,7 @@
 .has-msgs {
     color: transparent;
     font-size: larger;
+    text-shadow: none;
 }
 .new-msgs .has-msgs {
     color: white;
