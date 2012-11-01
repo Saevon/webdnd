@@ -85,7 +85,7 @@ friends.user = (function() {
 friends.search = (function() {
     var result  = {
         endpoint: '/api/account/search/',
-        template: 'search-user',
+        template: 'users',
         template_empty: 'search-user-empty',
         _request: false,
 
@@ -97,7 +97,7 @@ friends.search = (function() {
         clear: function() {
             this._elem.empty();
             this._elem.append(
-                Templates['search-user-empty']({})
+                Templates[this.template_empty]({})
             );
         },
 
@@ -106,7 +106,7 @@ friends.search = (function() {
 
             if (!response.paging.length) {
                 this._elem.append(
-                    Templates['search-user-empty'](response.output)
+                    Templates[this.template_empty](response.output)
                 );
             } else {
                 var data = {'players': response.output};
@@ -116,7 +116,7 @@ friends.search = (function() {
                 }
 
                 this._elem.append(
-                    Templates['users'](data)
+                    Templates[this.template](data)
                 );
 
                 var kept = 0;
@@ -131,7 +131,7 @@ friends.search = (function() {
                 });
                 if (!kept) {
                     this._elem.append(
-                        Templates['search-user-empty'](response.output)
+                        Templates[this.template_empty](response.output)
                     );
                 }
             }

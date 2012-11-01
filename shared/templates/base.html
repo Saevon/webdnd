@@ -57,7 +57,7 @@
                   <i class="icon-globe"></i> Campaigns
                 </a></li>
                 <li id="nav_chars"><a href="{% url game_character_list %}">
-                  <i class="icon-certificate"></i> Characters
+                  <i class="icon-user"></i> Characters
                 </a></li>
               {% else %}
                 <li id="nav_home"><a href="{% url main_home %}">
@@ -68,7 +68,7 @@
             <ul class="nav pull-right">
               {% if user.is_active %}
                 <li id="nav_friends"><a href="{% url account_friends %}">
-                    <i class="icon-user"></i> Friends
+                    <i class="icon-heart"></i> Friends
                 </a></li>
                 <li id="nav_settings"><a href="{% url account_settings %}">
                     <i class="icon-wrench"></i> Settings

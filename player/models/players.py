@@ -59,10 +59,10 @@ class Player(AbstractPlayerModel):
 
     @property
     def name(self):
-        return unicode(self)
+        return u'%s' % (self.user.name)
 
     def __unicode__(self):
-        return u'%s' % (self.user.name)
+        return u'(%s) %s' % (self.campaign, self.user.name)
 
     def save(self, *args, **kwargs):
         if COLOR_RE.match(self.color) is None:

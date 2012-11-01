@@ -21,6 +21,8 @@ class UserMixin(ModelMixin):
 
     @property
     def name(self):
+        if not self.last_name and not self.first_name:
+            return unicode(self.username)
         return u'%s %s' % (self.last_name, self.first_name)
 
 
