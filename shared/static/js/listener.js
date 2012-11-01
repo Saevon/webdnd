@@ -113,6 +113,7 @@ var switch_chat = function(chatid) {
     var btn = btns.filter('[data-chatid="' + chatid + '"]')
         .addClass('active')
         .removeClass('new-msgs');
+    btn.find('.has-msgs').removeClass('player-text');
 
     var chats = $('.chat').removeClass('active');
     var chat = chats.filter('#chat-' + chatid)
@@ -258,6 +259,7 @@ syncrae.subscribe('/messages/new', function(data) {
         var btn = $('.chat-btn[data-chatid="' + data.chatid + '"]');
         if (!btn.hasClass('active')) {
             btn.addClass('new-msgs');
+            btn.find('.has-msgs').addClass('player-text');
         }
     }
 

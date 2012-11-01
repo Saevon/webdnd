@@ -12,8 +12,9 @@
     @contrast-less: contrast(@color, darken(@color, 10%), lighten(@color, 10%));
     @contrast: contrast(@color, darken(@color, 20%), lighten(@color, 20%));
     @contrast-more: contrast(@color, darken(@color, 30%), lighten(@color, 30%));
-    @contrast-text: contrast(@color, #EEE, #222);
+    @contrast-text: contrast(@color, #222, #EEE);
 
+    // Font Styling
     &.active.player-acolor,
     & .active.player-acolor,
     &.player-color,
@@ -26,6 +27,22 @@
     & .player-text {
         color: @contrast-text;
     }
+    &.active.player-ashadow,
+    & .active.player-ashadow,
+    &.player-shadow,
+    & .player-shadow {
+        text-shadow: @contrast 1px 1px 1px;
+    }
+    &.active.player-atext-shadow,
+    & .active.player-atext-shadow,
+    &.player-text-shadow,
+    & .player-text-shadow {
+        text-shadow: @color 1px 1px 1px;
+    }
+
+
+
+
     &.active.player-abg,
     & .active.player-abg,
     &.player-bg,
