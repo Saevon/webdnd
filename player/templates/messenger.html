@@ -26,7 +26,8 @@
 
 {% template 'chat-btn' %}
     <button class="<%#if uid %>player-<% uid %> player-btn<%/if%> chat-btn btn btn-mini <% classes %>" data-chatid="<% chatid %>">
-        <% name %>
+        <i class="icon-comments-alt no-msgs"></i>
+        <i class="icon-comments-alt has-msgs"></i>
     </button>
 {% endtemplate %}
 

@@ -8,6 +8,36 @@
     }
 }
 
+.chat-sidebar {
+    position: relative;
+
+    .chat-btn.active {
+        position: relative;
+        top: 5px;
+    }
+    padding-bottom: 5px;
+}
+
+.chat-btn {
+    .no-msgs {
+        color: transparent;
+        font-size: larger;
+    }
+
+    .has-msgs {
+        display: none;
+        font-size: larger;
+    }
+    &.new-msgs .has-msgs {
+        color: white;
+        text-shadow: black 1px 1px 1px;
+        display: inline-block;
+    }
+    &.new-msgs .no-msgs {
+        display: none;
+    }
+}
+
 /* Overall Styling */
 .messages {
     height: 85%;
@@ -28,7 +58,7 @@
 }
 
 /* Message Row Names */
-.msg-row .prefix {
+.msg-row .name {
     color: #999;
 }
 
@@ -61,7 +91,6 @@
         font-weight: normal;
     }
 }
-
 
 
 

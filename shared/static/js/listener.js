@@ -86,7 +86,8 @@ var new_chat = function(data) {
 var switch_chat = function(chatid) {
     var btns = $('.chat-btn').removeClass('active');
     var btn = btns.filter('[data-chatid="' + chatid + '"]')
-        .addClass('active');
+        .addClass('active')
+        .removeClass('new-msgs');
 
     var chats = $('.chat').removeClass('active');
     var chat = chats.filter('#chat-' + chatid)
@@ -227,6 +228,14 @@ syncrae.subscribe('/session/error', function(data) {
 });
 
 syncrae.subscribe('/messages/new', function(data) {
+    if (data.chatid) {
+        // Make sure the new message indicator is showing
+        var btn = $('.chat-btn[data-chatid="' + data.chatid + '"]');
+        if (!btn.hasClass('active')) {
+            btn.addClass('new-msgs');
+        }
+    }
+
     new_message(data);
 });
 
@@ -252,7 +261,7 @@ $(function() {
             msg: elem.val()
         };
 
-        var chatid = elem.parents('.chat').data('id');
+        var chatid = elem.parents('.chat').data('chatid');
         data.chatid = chatid;
         data.uid = webdnd.user.self();
 
