@@ -1,4 +1,6 @@
 @import "shared/static/css/colors.less";
+@import "shared/static/css/helpers.less";
+
 
 .chat {
     display: none;
@@ -8,34 +10,51 @@
     }
 }
 
+@act-ind-size: 5px;
 .chat-sidebar {
-    position: relative;
-
-    .chat-btn.active {
-        position: relative;
-        top: 5px;
-    }
-    padding-bottom: 5px;
+    padding-bottom: 2 * @act-ind-size;
 }
 
 .chat-btn {
-    .no-msgs {
-        color: transparent;
-        font-size: larger;
+    position: relative;
+
+    // Showing Active Chat
+    & .active-indicate {
+        height: 0;
+        width: 0;
+        position: absolute;
+        bottom: -1 - (2 * @act-ind-size);
+
+        border: solid transparent;
+        .border-radius(@act-ind-size);
     }
 
-    .has-msgs {
-        display: none;
-        font-size: larger;
+    &.active .active-indicate {
+        border-width: @act-ind-size - 1;
+
+        left: 8px;
+        border-color: #20D1AE;
     }
-    &.new-msgs .has-msgs {
-        color: white;
-        text-shadow: black 1px 1px 1px;
-        display: inline-block;
-    }
-    &.new-msgs .no-msgs {
-        display: none;
-    }
+}
+
+
+// Showing new-msg notifications
+.no-msgs {
+    color: transparent;
+    font-size: larger;
+}
+
+.has-msgs {
+    display: none;
+    font-size: larger;
+}
+.new-msgs .has-msgs {
+    color: white;
+    text-shadow: black 1px 1px 1px;
+    display: inline-block;
+}
+.new-msgs .no-msgs {
+    display: none;
 }
 
 /* Overall Styling */
