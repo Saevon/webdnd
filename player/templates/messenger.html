@@ -27,8 +27,7 @@
 {% template 'chat-btn' %}
     <button class="<%#if uid %>player-<% uid %> player-btn<%/if%> chat-btn btn btn-mini <% classes %>" data-chatid="<% chatid %>">
         <div class="active-indicate"></div>
-        <i class="icon-comments-alt no-msgs"></i>
-        <i class="icon-comments-alt has-msgs"></i>
+        <i class="icon-comments-alt has-msgs player-atext"></i>
     </button>
 {% endtemplate %}
 
@@ -44,63 +43,78 @@
 
 <!-- Player Color Customizations, div is here to wrap them up -->
 <div id="player-colors">
-    {% template 'player_colors' %}
+    {% template 'player_colors_wrapper' %}
     <style id="player-<% uid %>-colors">
-        .player-<% uid %>.player-color,
-        .player-<% uid %> .player-color {
-            color: #<% color %>;
-        }
-        .player-<% uid %>.player-bg,
-        .player-<% uid %> .player-bg {
-            background-color: #<% color %>;
-        }
-        .player-<% uid %>.player-bg-grad,
-        .player-<% uid %> .player-bg-grad {
-            background-image: -webkit-linear-gradient(top, #<% color %>, #<% color %>);
-        }
-
-        .player-<% uid %>.player-btn,
-        .player-<% uid %> .player-btn {
-            background-color: #<% color %>;
-            background-image: -webkit-linear-gradient(top, #<% color %>, #<% color %>);
-        }
-        .player-<% uid %>.player-btn:hover,
-        .player-<% uid %> .player-btn:hover {
-            background-color: #<% color_alt %>;
-            background-image: -webkit-linear-gradient(top, #<% color_alt %>, #<% color_alt %>);
-        }
+        <% css %>
     </style>
     {% endtemplate %}
-    {% template 'player_colors_2' %}
-    <style id="player-<% uid %>-colors" type="text/less">
+
+    {% template 'player_colors' %}
         .player-<% uid %> {
             @color: #<% color %>;
+            @contrast: contrast(@color, darken(@color, 20%), lighten(@color, 20%));
+            @contrast-more: contrast(@color, darken(@color, 30%), lighten(@color, 30%));
+            @contrast-text: contrast(@color, #EEE, #222);
 
+            &.active.player-acolor,
+            & .active.player-acolor,
             &.player-color,
             & .player-color {
                 color: @color;
             }
+            &.active.player-atext,
+            & .active.player-atext,
+            &.player-text,
+            & .player-text {
+                color: @contrast-text;
+            }
+            &.active.player-abg,
+            & .active.player-abg,
             &.player-bg,
             & .player-bg {
                 background-color: @color;
             }
+            &.active.player-bg-grad,
+            & .active.player-bg-grad,
             &.player-bg-grad,
             & .player-bg-grad {
-                background-image: -webkit-linear-gradient(top, @color, @color + 10);
+                background-image: -webkit-linear-gradient(top, @color, @contrast);
+                background-image: -moz-linear-gradient(top, @color, @contrast);
+                background-image: -o-linear-gradient(top, @color, @contrast);
+                background-image: -ms-linear-gradient(top, @color, @contrast);
+                background-image: linear-gradient(top, @color, @contrast);
             }
 
             &.player-btn,
             & .player-btn {
-                .player-bg-grad;
-                .player-bg;
+                background-image: -webkit-linear-gradient(top, @color, @contrast);
+                background-image: -moz-linear-gradient(top, @color, @contrast);
+                background-image: -o-linear-gradient(top, @color, @contrast);
+                background-image: -ms-linear-gradient(top, @color, @contrast);
+                background-image: linear-gradient(top, @color, @contrast);
+                background-color: @color;
             }
             &.player-btn:hover,
             & .player-btn:hover {
-                background-color: @color;
-                background-image: -webkit-linear-gradient(top, @color, @color + 10);
+                background-image: -webkit-linear-gradient(top, @color, @contrast);
+                background-image: -moz-linear-gradient(top, @color, @contrast);
+                background-image: -o-linear-gradient(top, @color, @contrast);
+                background-image: -ms-linear-gradient(top, @color, @contrast);
+                background-image: linear-gradient(top, @color, @contrast);
+                background-color: @contrast;
+            }
+            &.player-btn:active,
+            & .player-btn:active,
+            &.player-btn.active,
+            & .player-btn.active {
+                background-image: -webkit-linear-gradient(top, @contrast-more, @contrast);
+                background-image: -moz-linear-gradient(top, @contrast-more, @contrast);
+                background-image: -o-linear-gradient(top, @contrast-more, @contrast);
+                background-image: -ms-linear-gradient(top, @contrast-more, @contrast);
+                background-image: linear-gradient(top, @contrast-more, @contrast);
+                background-color: @contrast;
             }
         }
-    </style>
     {% endtemplate %}
 </div>
 <!-- End Player Colors -->

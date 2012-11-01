@@ -32,12 +32,17 @@ var new_message = function(data) {
     elem.scrollTop = elem.scrollHeight;
 };
 
+var less_error = function(err) {
+    console.error('LESS: ' + err.message, err);
+};
+
 var player_colour = function(uid) {
     var user = webdnd.user(uid);
-    if (user !== undefined && user.color) {
-        // Remove any old styles
-        $('#player-' + uid + '-colors').remove();
+    if (user === undefined || !user.color) {
+        return;
+    }
 
+    (function() {
         // Render the new styles
         var data = {
             color: user.color,
@@ -47,11 +52,31 @@ var player_colour = function(uid) {
         var styles = Templates['player_colors'](data);
 
         // Compile the styles using less
+        less.Parser().parse(styles, function(err, compiled) {
+            // Check for errors
+            if (err !== null) {
+                less_error(err);
+                return;
+            }
+            // Remove any old styles
+            $('#player-' + uid + '-colors').remove();
 
+            var css;
+            try {
+                css = compiled.toCSS();
+            } catch(err) {
+                less_error(err);
+                return;
+            }
 
-        // Add it to the DOM
-        $('#player-colors').append(styles);
-    }
+            // Add it to the DOM
+            $('#player-colors').append(
+                Templates['player_colors_wrapper']({
+                    css: css
+                })
+            );
+        });
+    })();
 };
 
 var term_result = function(data) {
