@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.core.validators import email_re
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response
+from webdnd.shared.views import render_to_response
 from django.template import RequestContext
 from django.views.generic import View
 from django.contrib.auth.models import User

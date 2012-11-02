@@ -6,7 +6,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 from django.template import RequestContext
-from django.shortcuts import render_to_response
+from webdnd.shared.views import render_to_response
 
 def tornado_redirect(request):
     return render_to_response(
