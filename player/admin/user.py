@@ -16,6 +16,11 @@ class PreferenceInline(admin.TabularInline):
     max_num = 1000
     extra = 1
 
+class PreferenceAdmin(admin.ModelAdmin):
+    model = Preference
+    fields = ('user', 'preference', 'value')
+
+
 class AccountAdmin(UserAdmin):
     UserAdmin.form.base_fields['friends'] = forms.ModelMultipleChoiceField(
         queryset=User.objects.all()

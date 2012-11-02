@@ -52,6 +52,9 @@ class Preference(AbstractPlayerModel):
         null=False
     )
 
+    def __unicode__(self):
+        return u'(%s) %s' % (self.get_preference_display(), self.value)
+
 
 
 
