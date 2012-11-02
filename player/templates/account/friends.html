@@ -50,7 +50,10 @@
         <@#players@>
         <blockquote class="user span2 <@ type @>" data-type="<@ type @>" data-id="<@ id @>">
             <span class="username">
-                <i class="icon-heart" style="pading-right: 5px;"></i>
+                <i class="icon-heart user-icon friend-icon"></i>
+                <i class="icon-heart-empty user-icon unfriend-icon" style="pading-right: 5px;"></i>
+                <i class="icon-link user-icon newfriend-icon" style="pading-right: 5px;"></i>
+                <i class="icon-share-alt user-icon search-user-icon" style="pading-right: 5px;"></i>
                 <@ name @>
             <span>
             <input class="hide" name="<@ type @>s[]" value="<@ id @>"></input>
@@ -130,5 +133,22 @@ $(function() {
     .new-friend {
         background-color: #DFD;
     }
+
+    .user-icon {
+        display: none;
+    }
+
+    .friend-icon {
+        color: #F99;
+    }
+
+    .unfriend .unfriend-icon,
+    .search-user .search-user-icon,
+    .friend .friend-icon,
+    .new-friend .newfriend-icon {
+        padding-right: 5px;
+        display: inline;
+    }
+
 </style>
 {% endblock compress_css %}
