@@ -2,6 +2,8 @@
 # Wrapper around the config files
 ##################################################
 import sys
+import os
+os.chdir(os.path.dirname(__file__))
 
 
 # Version comparison function
@@ -15,6 +17,7 @@ def version(ver):
 # So no actual settings imports
 if 'localize' in sys.argv:
     INSTALLED_APPS = (
+        # Location of the localize command
         'webdnd.shared'
     )
 else:

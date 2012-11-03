@@ -6,7 +6,7 @@ import re
 # thus no-one changes the settings file unless its a
 # global change. Or at least changes the settings.tmpl file instead
 try:
-    from local_settings import *
+    from .local_settings import *
 except ImportError:
     raise AssertionError("Local settings file not defined")
 

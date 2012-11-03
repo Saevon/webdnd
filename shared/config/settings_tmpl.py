@@ -23,7 +23,7 @@ PRETTIFY_HTML = False  # DEBUG
 # Localization
 ########################################
 # WEBDND_ROOT = '/apps/webdnd'
-WEBDND_ROOT = os.path.dirname(__file__)
+WEBDND_ROOT = os.getcwd()
 DATABASE_ROOT = WEBDND_ROOT
 
 ADMINS = [
