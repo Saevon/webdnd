@@ -40,6 +40,14 @@ class WeaponItem(Item):
     physical_enhancements = models.ManyToManyField('dnd.PhysicalEnhancement', null=True, blank=True)
     magical_enhancements = models.ManyToManyField('dnd.MagicEnhancement', null=True, blank=True)
 
+    WEAPON_PLUSES = (
+        ('0', '+0'),
+        ('1', '+1'),
+        ('2', '+2'),
+        ('3', '+3'),
+        ('4', '+4'),
+        ('5', '+5')
+    )
     magical_bonus = models.CharField(max_length=1, choices=WEAPON_PLUSES, default='0')
 
     def print_material(self):

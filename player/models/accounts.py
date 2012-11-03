@@ -2,7 +2,6 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 
-from webdnd.player.constants.account import ACCOUNT_PREFERENCES
 from webdnd.player.models.abstract import AbstractPlayerModel
 from shared.views import ModelMixin
 
@@ -33,6 +32,10 @@ class Preference(AbstractPlayerModel):
 
     class Meta(AbstractPlayerModel.Meta):
         unique_together = ('user', 'preference')
+
+    ACCOUNT_PREFERENCES = (
+        ('namo', 'name_order'),
+    )
 
     preference = models.CharField(
         max_length=settings.STND_ID_CHAR_LIMIT,

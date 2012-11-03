@@ -2,7 +2,6 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from webdnd.player.constants.campaign import ROLEPLAYING_SYSTEMS
 from webdnd.player.models.abstract import AbstractPlayerModel
 
 
@@ -23,6 +22,9 @@ class Campaign(AbstractPlayerModel):
         null=False
     )
 
+    ROLEPLAYING_SYSTEMS = (
+        ('dnd35', 'D&D 3.5'),
+    )
     rp_system = models.CharField(
         max_length=settings.STND_ID_CHAR_LIMIT,
         choices=ROLEPLAYING_SYSTEMS,

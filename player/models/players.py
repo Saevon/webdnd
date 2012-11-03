@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 from webdnd.player.models.abstract import AbstractPlayerModel
 from webdnd.player.models.alignment import Alignment
 from webdnd.player.models.campaigns import Campaign
-from webdnd.player.constants.constants import CHARACTER_STATUSES
 
 import re
 
@@ -95,9 +94,15 @@ class Character(AbstractPlayerModel):
         null=False
     )
 
+    STATUSES = (
+        ('main', 'Main'),
+        ('dead', 'Dead'),
+        ('unsd', 'Unused'),
+        ('comp', 'Companion'),
+    )
     status = models.CharField(
         max_length=settings.STND_ID_CHAR_LIMIT,
-        choices=CHARACTER_STATUSES,
+        choices=STATUSES,
         blank=False,
         null=False
     )

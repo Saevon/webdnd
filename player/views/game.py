@@ -7,7 +7,6 @@ from django.views.generic import View
 from django.contrib.auth.models import User
 from django.db.models import Q
 
-from webdnd.player.constants.campaign import ROLEPLAYING_SYSTEMS
 from webdnd.player.models.campaigns import Campaign
 from webdnd.player.models.players import Character
 from webdnd.player.models.players import Player
@@ -74,7 +73,7 @@ class CampaignEditView(LoginRequiredMixin, View):
         out = {
             'players': players,
             'friends': request.user.friends.exclude(id=request.user.id),
-            'systems': ROLEPLAYING_SYSTEMS,
+            'systems': Campaign.ROLEPLAYING_SYSTEMS,
             'create': created,
             'campaign': campaign,
         }
