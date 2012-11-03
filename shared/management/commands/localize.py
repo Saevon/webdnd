@@ -12,7 +12,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         print 'Copying template file'
-        subprocess.call(['cp', 'shared/config/settings_tmpl.py', 'local_settings.py'])
+        subprocess.call(['cp', 'shared/config/settings_tmpl.py', 'shared/config/local_settings.py'])
 
         print 'Generating secret key'
         values = {
@@ -20,7 +20,7 @@ class Command(BaseCommand):
         }
 
         print 'Rendering Template'
-        with open('local_settings.py', 'r') as in_file:
+        with open('shared/config/local_settings.py', 'r') as in_file:
             tmpl = in_file.read()
-        with open('local_settings.py', 'w') as out_file:
+        with open('shared/config/local_settings.py', 'w') as out_file:
             out_file.write(tmpl % values)

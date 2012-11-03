@@ -23,7 +23,7 @@ PRETTIFY_HTML = False  # DEBUG
 # Localization
 ########################################
 # WEBDND_ROOT = '/apps/webdnd'
-WEBDND_ROOT = os.path.dirname(__file__)
+WEBDND_ROOT = os.getcwd()
 DATABASE_ROOT = WEBDND_ROOT
 
 ADMINS = [
@@ -79,7 +79,7 @@ show_toolbar = None
 DEBUG_TOOLBAR_CONFIG = {
     # Shows an Intermidiate page upon redirect to debug
     # variables
-    'INTERCEPT_REDIRECTS': True,
+    'INTERCEPT_REDIRECTS': False,
     'SHOW_TOOLBAR_CALLBACK': show_toolbar,
     # Don't show django code in SQL backtraces
     'HIDE_DJANGO_SQL': True,
