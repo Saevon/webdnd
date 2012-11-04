@@ -39,6 +39,7 @@ SECRET_KEY = '%(SECRET_KEY)s'
 
 # Order of enabled toolbar panels
 DEBUG_TOOLBAR_PANELS = (
+    # --
     'webdnd.shared.utils.debug_toolbars.DividerDebugPanel',
     # --
 
@@ -66,7 +67,6 @@ DEBUG_TOOLBAR_PANELS = (
 # Only works if the original show_toolbar function is used (None)
 INTERNAL_IPS = (
     '127.0.0.1',
-    'localhost',
 )
 # Required to get debug toolbar to work
 DATABASE_ENGINE = 'django.db.backends.sqlite3'
