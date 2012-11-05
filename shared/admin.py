@@ -14,5 +14,6 @@ def fk_link(field):
 
         return '<a href="%s">%s</a>' % (url, attr)
 
+    link.__name__ = field
     link.allow_tags = True
     return link
