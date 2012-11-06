@@ -16,4 +16,5 @@ def fk_link(field):
 
     link.__name__ = field
     link.allow_tags = True
+    link.admin_order_field = field
     return link
