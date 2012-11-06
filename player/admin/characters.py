@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from webdnd.player.admin.alignments import AlignmentMoralListFilter, AlignmentOrderListFilter
 from webdnd.player.models.characters import Character
 from webdnd.shared.admin import fk_link
 
@@ -14,7 +15,7 @@ class CharacterAdmin(admin.ModelAdmin):
     )
 
     list_display = ('name', 'status', 'nick', 'alignment', fk_link('user'))
-    list_filter = ('user', 'status', 'alignment')
+    list_filter = ('user', 'status', AlignmentMoralListFilter, AlignmentOrderListFilter)
     list_editable = ('status',)
 
     search_fields = ('user', 'name', 'nick', 'status', 'alignment')

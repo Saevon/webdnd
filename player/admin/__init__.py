@@ -23,5 +23,6 @@ admin.site.register(Campaign, CampaignAdmin)
 admin.site.register(Player, PlayerAdmin)
 
 admin.site.register(Character, CharacterAdmin)
-admin.site.register(Alignment)
+# alignments can't be edited directly
+admin.site.unregister(Alignment)
 
