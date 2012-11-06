@@ -8,8 +8,8 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 
 from webdnd.player.models.campaigns import Campaign
-from webdnd.player.models.players import Character
-from webdnd.player.models.players import Player
+from webdnd.player.models.characters import Character
+from webdnd.player.models.campaigns import Player
 from webdnd.shared.views import LoginRequiredMixin
 
 

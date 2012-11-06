@@ -11,7 +11,7 @@ from webdnd.shared.views import LoginRequiredMixin
 from webdnd.shared.utils.quotes import blurb
 from webdnd.shared.views import AjaxApi
 
-from webdnd.player.models.players import Character
+from webdnd.player.models.characters import Character
 from webdnd.player.views.index import UserIndex
 from webdnd.player.views.game import my_campaigns
 

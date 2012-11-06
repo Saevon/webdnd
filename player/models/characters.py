@@ -1,24 +1,23 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.auth.models import User
 
 from webdnd.player.models.abstract import AbstractPlayerModel
-from webdnd.player.models.alignment import Alignment
-from webdnd.player.models.campaign import Player
+from webdnd.player.models.alignments import Alignment
 
 
 class Character(AbstractPlayerModel):
     '''
-    A character in a campaign, contains any non-system specific details
+    A character, contains any non-system specific details
     that a character requires.
     '''
 
-    player = models.ForeignKey(
-        Player,
+    user = models.ForeignKey(
+        User,
         related_name='characters',
         blank=False,
         null=False
     )
-
     name = models.CharField(
         max_length=settings.STND_CHAR_LIMIT,
         blank=False,

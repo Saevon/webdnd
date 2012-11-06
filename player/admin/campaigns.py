@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from webdnd.player.models.campaigns import Campaign
-from webdnd.player.models.players import Player
+from webdnd.player.models.campaigns import Player
 from webdnd.shared.admin import fk_link
 
 
@@ -20,7 +20,8 @@ class PlayerAdmin(admin.ModelAdmin):
     model = Player
     fieldsets = (
         ('Mapping', {'fields': ('user', 'campaign')}),
-        ('Options', {'fields': ('cur_char', 'can_dm', 'is_spectator', 'color',)}),
+        ('Options', {'fields': ('can_dm', 'is_spectator', 'color')}),
+        ('Characters', {'fields': ('characters',)}),
     )
 
     list_display = ('__unicode__', fk_link('campaign'), fk_link('user'), 'can_dm', 'is_spectator',)

@@ -3,6 +3,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 
 from webdnd.player.models.abstract import AbstractPlayerModel
+from webdnd.player.models.characters import Character
 import re
 
 
@@ -62,11 +63,9 @@ class Player(AbstractPlayerModel):
         null=False
     )
 
-    # The current character you are playing
-    cur_char = models.ForeignKey(
-        'Character',
-        # TODO: does this mean it is disabled?? it should be
-        related_name='-',
+    characters = models.ManyToManyField(
+        Character,
+        related_name='players',
         blank=True,
         null=True
     )
