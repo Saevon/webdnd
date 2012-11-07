@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.shortcuts import render_to_response as django_render_response
+from django.template.loader import render_to_string as django_render_to_string
 from django.views.generic import View
 
 from webdnd.shared.utils.decorators import json_return
@@ -10,6 +11,9 @@ from webdnd.shared.utils.api import api_output
 def render_to_response(template_name, *args, **kwargs):
     response = django_render_response(template_name, *args, **kwargs)
     return response
+
+def render_to_string(template_name, *args, **kwargs):
+    return django_render_to_string(template_name, *args, **kwargs)
 
 
 class LoginRequiredMixin(object):

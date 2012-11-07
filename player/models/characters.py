@@ -3,7 +3,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 
 from webdnd.player.models.abstract import AbstractPlayerModel
-from webdnd.player.models.alignments import Alignment
+from webdnd.player.models.alignments import Alignment, AlignmentField
 
 
 class Character(AbstractPlayerModel):
@@ -77,16 +77,16 @@ class Character(AbstractPlayerModel):
     # NULL means you're not using it, and its disabled by default
     persoa_id = models.PositiveIntegerField(blank=True, null=True)
 
-    alignment = models.OneToOneField(
-        Alignment,
-        related_name='character',
-        blank=False,
-        null=False
-    )
+    alignment = AlignmentField()
 
 
     def __unicode__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if self.alignment is None:
+            self.alignment = Alignment.objects.create()
+        super(Character, self).save(*args, **kwargs)
 
 
 

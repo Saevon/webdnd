@@ -1,0 +1,21 @@
+
+<div class="alignment-widget">
+    <div class="align-select-box">
+        &nbsp;
+    </div>
+    <div class="control-group">
+        <input type="text" class="align-text" value="{{ align_text }}"/>
+        {% if align.id %}
+            <input type="hidden" value="{{ align.id }}" name="alignment-id"/>
+        {% endif %}
+        <input type="text" class="align-moral" value="{{ align.align_moral }}" name="alignment-moral"/>
+        <input type="text" class="align-order" value="{{ align.align_order }}" name="alignment-order"/>
+    </div>
+</div>
+
+<style>
+    .align-select-box {
+        width: 200px;
+        height: 200px;
+    }
+</style>
