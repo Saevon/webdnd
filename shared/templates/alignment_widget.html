@@ -1,7 +1,36 @@
 
 <div class="alignment-widget">
-    <div class="align-select-box">
-        &nbsp;
+    <div class="align-select-border">
+        <div class="align-select-box">
+            <div class="align-area">
+                <div class="align-sub">CE</div>
+            </div>
+            <div class="align-area">
+                <div class="align-sub">TE</div>
+            </div>
+            <div class="align-area">
+                <div class="align-sub">LE</div>
+            </div>
+            <div class="align-area">
+                <div class="align-sub">TC</div>
+            </div>
+            <div class="align-area">
+                <div class="align-sub">TN</div>
+            </div>
+            <div class="align-area">
+                <div class="align-sub">TL</div>
+            </div>
+            <div class="align-area">
+                <div class="align-sub">CG</div>
+            </div>
+            <div class="align-area">
+                <div class="align-sub">TG</div>
+            </div>
+            <div class="align-area">
+                <div class="align-sub">LG</div>
+            </div>
+            <i class="icon-screenshot align-pointer"></i>
+        </div>
     </div>
     <div class="control-group">
         <input type="text" class="align-text" value="{{ align_text }}"/>
@@ -14,8 +43,42 @@
 </div>
 
 <style>
+    .align-select-border {
+        clear: both;
+    }
     .align-select-box {
         width: 200px;
         height: 200px;
+        background-color: #DDD;
+        position: relative;
+        border: 5px solid #EEE;
+    }
+    .align-select-box:hover {
+        cursor: pointer;
+    }
+    .align-area {
+        display: inline-block;
+        width: 30%;
+        height: 30%;
+        border: 1px dashed #CCC;
+        position: relative;
+    }
+    .align-sub {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+    }
+    .align-pointer {
+        position: absolute;
+    }
+    .align-pointer:before {
+        content: "o";
+        color: red;
     }
 </style>
+
+<script type="text/javascript">
+    $(function() {
+        alignment.elem($('.alignment-widget')).events();
+    });
+</script>
