@@ -1,5 +1,5 @@
 from django.db import models
-from django.forms import Widget
+from django import forms
 from django.core.exceptions import ValidationError
 
 from webdnd.shared.views import render_to_string
@@ -7,7 +7,7 @@ from webdnd.player.models.alignments import Alignment
 import re
 
 
-class AlignmentWidget(Widget):
+class AlignmentWidget(forms.Widget):
 
     class Media:
         css = {
@@ -49,26 +49,39 @@ class AlignmentWidget(Widget):
         return align.id
 
 
-class AlignmentField(models.OneToOneField):
-
-    description = 'Stores a D&D style alignment'
-
+class AlignmentFormField(forms.ModelChoiceField):
     widget = AlignmentWidget
+
+
+class AlignmentField(models.OneToOneField):
+    __metaclass__ = models.SubfieldBase
+    description = 'Stores a D&D style alignment'
 
     def __init__(self, *args, **kwargs):
         args = ('Alignment',)
-        kwargs['related_name'] = 'owner'
-        kwargs['blank'] = False
-        kwargs['null'] = False
+        defaults = {
+            'related_name': 'owner',
+            'blank': False,
+            'null': False,
+        }
 
-        super(AlignmentField, self).__init__(*args, **kwargs)
+        defaults.update(kwargs)
+        super(AlignmentField, self).__init__(*args, **defaults)
+
+    def formfield(self, **kwargs):
+        # This is a fairly standard way to set up some defaults
+        # while letting the caller override them.
+        defaults = {'form_class': AlignmentFormField}
+        defaults.update(kwargs)
+
+        return super(AlignmentField, self).formfield(**defaults)
 
 
-class ColorWidget(Widget):
+class ColorWidget(forms.Widget):
 
     class Media:
         css = {
-            'all': ('js/spectrum.css',)
+            'all': ('css/spectrum.css',)
         }
         js = ('js/jquery.js', 'js/jquery-spectrum.js',)
 
@@ -79,31 +92,43 @@ class ColorWidget(Widget):
         })
 
     def value_from_datadict(self, data, files, name):
-        return data.get(name, None)
+        return data.get(name, None)[1:]
+
+
+class ColorFormField(forms.CharField):
+    widget = ColorWidget
 
 
 # Any 3 or 6 digit hex code
 COLOR_RE = re.compile(r'#?(?P<hex>[A-Fa-f0-9]{6})')
 
 
-class ColorField(models.CharField):
-
+class ColorField(models.Field):
+    __metaclass__ = models.SubfieldBase
     description = 'Stores a 6 digit hex color'
-
-    widget = ColorWidget
 
     def __init__(self, *args, **kwargs):
         kwargs['max_length'] = 6
 
         super(ColorField, self).__init__(*args, **kwargs)
 
-    def validate(self, value):
-        if not COLOR_RE.match(value):
-            raise ValidationError(self.error_messages['invalid'])
-
     def to_python(self, value):
-        match = COLOR_RE.match(value)
-        return match.group(hex)
+        if value == '' or value is None:
+            return ''
+
+        match = COLOR_RE.match(str(value))
+        if not match:
+            raise ValidationError(self.error_messages['invalid'])
+        return match.group('hex')
+
+    def formfield(self, **kwargs):
+        # This is a fairly standard way to set up some defaults
+        # while letting the caller override them.
+        defaults = {'form_class': ColorFormField}
+        defaults.update(kwargs)
+
+        return super(ColorField, self).formfield(**defaults)
+
 
 
 
