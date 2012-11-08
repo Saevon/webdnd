@@ -2,33 +2,24 @@
 <div class="alignment-widget">
     <div class="align-select-border">
         <div class="align-select-box">
-            <div class="align-area">
-                <div class="align-sub">CE</div>
-            </div>
-            <div class="align-area">
-                <div class="align-sub">TE</div>
-            </div>
-            <div class="align-area">
-                <div class="align-sub">LE</div>
-            </div>
-            <div class="align-area">
-                <div class="align-sub">TC</div>
-            </div>
-            <div class="align-area">
-                <div class="align-sub">TN</div>
-            </div>
-            <div class="align-area">
-                <div class="align-sub">TL</div>
-            </div>
-            <div class="align-area">
-                <div class="align-sub">CG</div>
-            </div>
-            <div class="align-area">
-                <div class="align-sub">TG</div>
-            </div>
-            <div class="align-area">
-                <div class="align-sub">LG</div>
-            </div>
+            <div class="align-hl hl-1"></div>
+            <div class="align-hl hl-2"></div>
+
+            <div class="align-vl vl-1"></div>
+            <div class="align-vl vl-2"></div>
+
+            <div class="align-type" style="left: 13%; top: 13%;">CE</div>
+            <div class="align-type" style="left: 48%; top: 13%;">TE</div>
+            <div class="align-type" style="left: 80%; top: 13%;">LE</div>
+
+            <div class="align-type" style="left: 13%; top: 48%;">TC</div>
+            <div class="align-type" style="left: 48%; top: 48%;">TN</div>
+            <div class="align-type" style="left: 80%; top: 48%;">TL</div>
+
+            <div class="align-type" style="left: 13%; top: 80%;">CG</div>
+            <div class="align-type" style="left: 48%; top: 80%;">TG</div>
+            <div class="align-type" style="left: 80%; top: 80%;">LG</div>
+
             <i class="icon-screenshot align-pointer"></i>
         </div>
     </div>
@@ -43,6 +34,9 @@
 </div>
 
 <style>
+    .alignment-widget {
+        position: relative;
+    }
     .align-select-border {
         clear: both;
     }
@@ -52,21 +46,13 @@
         background-color: #DDD;
         position: relative;
         border: 5px solid #EEE;
-    }
-    .align-select-box:hover {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
         cursor: pointer;
-    }
-    .align-area {
-        display: inline-block;
-        width: 30%;
-        height: 30%;
-        border: 1px dashed #CCC;
-        position: relative;
-    }
-    .align-sub {
-        position: absolute;
-        top: 50%;
-        left: 50%;
     }
     .align-pointer {
         position: absolute;
@@ -75,6 +61,44 @@
         content: "o";
         color: red;
     }
+
+    .align-type {
+        position: absolute;
+        opacity: 0.7;
+    }
+
+    .align-hl,
+    .align-vl {
+        border: 0 dashed #FFF;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 1px;
+        height: 1px;
+    }
+    .align-hl {
+        border-top-width: 1px;
+        width: 100%;
+    }
+    .hl-1 {
+        top: 33.3%;
+    }
+    .hl-2 {
+        top: 66.6%;
+    }
+
+    .align-vl {
+        border-left-width: 1px;
+        height: 100%;
+    }
+    .vl-1 {
+        left: 33.3%;
+    }
+    .vl-2 {
+        left: 66.6%;
+    }
+
 </style>
 
 <script type="text/javascript">

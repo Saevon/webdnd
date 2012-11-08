@@ -59,7 +59,7 @@ class AlignmentWidget(Widget):
         css = {
             # 'all': ('alignment.css',)
         }
-        js = ('js/jquery.js', 'player/js/alignment.js',)
+        js = ('js/jquery.js', 'js/jquery-draggable.js', 'player/js/alignment.js',)
 
     def render(self, name, value, attrs=None):
         try:

@@ -4,8 +4,19 @@ alignment = {
     ratio: 2,
 
     elem: function(elem) {
+        var _this = this;
+
+        // The alignment container
         this.elem = elem;
+        elem.find('.align-select-box').draggable({
+            onstop: function(x, y) { return _this.pointer_stop(x, y); },
+            onstart: function(x, y) { return _this.pointer_start(x, y); },
+            onmove: function(x, y) { return _this.pointer_move(x, y); }
+        });
+
+        // The cursor on the alignment box
         this.pointer = elem.find('.align-pointer');
+
         return this;
     },
     update: function(order, moral) {
@@ -22,8 +33,8 @@ alignment = {
         this.elem.find('.align-text')
             .val(text);
 
-        this.pointer.css('top', (this.moral * this.ratio) - (this.pointer.width() / 2) + 'px');
-        this.pointer.css('left', (this.order * this.ratio) - (this.pointer.height() / 2) + 'px');
+        this.pointer.css('top', (this.moral * this.ratio) - (this.pointer.width()) - 2 + 'px');
+        this.pointer.css('left', (this.order * this.ratio) - (this.pointer.height() / 2) + 2 + 'px');
     },
     text: function() {
         var pre, suf;
@@ -78,42 +89,10 @@ alignment = {
             var align = _this.read($(this).val());
             _this.update(align.order, align.moral);
         });
-
-        var move = function(elem, e) {
-            var offset = elem.offset(); 
-            //or $(this).offset(); if you really just want the current element's offset
-            var x = e.pageX - offset.left - 5;
-            var y = e.pageY - offset.top - 5;
-
-            if (x < 0) {
-                x = 0;
-            } else if (x >= 200) {
-                x = 200;
-            }
-            if (y < 0) {
-                y = 0;
-            } else if (y >= 200) {
-                y = 200;
-            }
-
-            _this.update(Math.round(x / 2), Math.round(y / 2));
-        };
-
-        var clicked = false;
-        this.elem.find('.align-select-box').on('mousedown', function(e) {
-            clicked = true;
-            var elem = $(this);
-            move(elem, e);
-        });
-        $(document).on('mouseup', function() {
-            clicked = false;
-        });
-        this.elem.find('.align-select-box').on('mousemove', function(e) {
-            if (!clicked) {
-                return;
-            }
-            var elem = $(this);
-            move(elem, e);
-        });
-    }
+    },
+    pointer_move: function(x, y) {
+        this.update(Math.round(x / this.ratio), Math.round(y / this.ratio));
+    },
+    pointer_stop: function() {},
+    pointer_start: function() {}
 };
