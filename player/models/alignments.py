@@ -4,19 +4,6 @@ from django.conf import settings
 from webdnd.player.models.abstract import AbstractPlayerModel
 
 
-class AlignmentField(models.OneToOneField):
-
-    description = ''
-
-    def __init__(self, *args, **kwargs):
-        args = ('Alignment',)
-        kwargs['related_name'] = 'owner'
-        kwargs['blank'] = False
-        kwargs['null'] = False
-
-        super(AlignmentField, self).__init__(*args, **kwargs)
-
-
 class Alignment(AbstractPlayerModel):
 
     # Both on a 0-100 scale

@@ -3,7 +3,8 @@ from django.conf import settings
 from django.contrib.auth.models import User
 
 from webdnd.player.models.abstract import AbstractPlayerModel
-from webdnd.player.models.alignments import Alignment, AlignmentField
+from webdnd.player.models.alignments import Alignment
+from webdnd.shared.forms import AlignmentField
 
 
 class Character(AbstractPlayerModel):

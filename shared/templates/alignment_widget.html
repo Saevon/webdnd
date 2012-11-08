@@ -1,27 +1,25 @@
 
 <div class="alignment-widget">
-    <div class="align-select-border">
-        <div class="align-select-box">
-            <div class="align-hl hl-1"></div>
-            <div class="align-hl hl-2"></div>
+    <div class="align-select-box">
+        <div class="align-hl hl-1"></div>
+        <div class="align-hl hl-2"></div>
 
-            <div class="align-vl vl-1"></div>
-            <div class="align-vl vl-2"></div>
+        <div class="align-vl vl-1"></div>
+        <div class="align-vl vl-2"></div>
 
-            <div class="align-type" style="left: 13%; top: 13%;">CE</div>
-            <div class="align-type" style="left: 48%; top: 13%;">TE</div>
-            <div class="align-type" style="left: 80%; top: 13%;">LE</div>
+        <div class="align-type" style="left: 13%; top: 13%;">CE</div>
+        <div class="align-type" style="left: 48%; top: 13%;">TE</div>
+        <div class="align-type" style="left: 80%; top: 13%;">LE</div>
 
-            <div class="align-type" style="left: 13%; top: 48%;">TC</div>
-            <div class="align-type" style="left: 48%; top: 48%;">TN</div>
-            <div class="align-type" style="left: 80%; top: 48%;">TL</div>
+        <div class="align-type" style="left: 13%; top: 48%;">TC</div>
+        <div class="align-type" style="left: 48%; top: 48%;">TN</div>
+        <div class="align-type" style="left: 80%; top: 48%;">TL</div>
 
-            <div class="align-type" style="left: 13%; top: 80%;">CG</div>
-            <div class="align-type" style="left: 48%; top: 80%;">TG</div>
-            <div class="align-type" style="left: 80%; top: 80%;">LG</div>
+        <div class="align-type" style="left: 13%; top: 80%;">CG</div>
+        <div class="align-type" style="left: 48%; top: 80%;">TG</div>
+        <div class="align-type" style="left: 80%; top: 80%;">LG</div>
 
-            <i class="icon-screenshot align-pointer"></i>
-        </div>
+        <i class="icon-screenshot align-pointer"></i>
     </div>
     <div class="control-group">
         <input type="text" class="align-text" value="{{ align_text }}"/>
@@ -37,21 +35,14 @@
     .alignment-widget {
         position: relative;
     }
-    .align-select-border {
-        clear: both;
-    }
     .align-select-box {
+        position: relative;
         width: 200px;
         height: 200px;
+
         background-color: #DDD;
-        position: relative;
         border: 5px solid #EEE;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
+
         cursor: pointer;
     }
     .align-pointer {
@@ -104,5 +95,6 @@
 <script type="text/javascript">
     $(function() {
         alignment.elem($('.alignment-widget')).events();
+        alignment.update({{ align.align_order }}, {{ align.align_moral }});
     });
 </script>
