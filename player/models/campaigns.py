@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 from webdnd.player.models.abstract import AbstractPlayerModel
 from webdnd.player.models.characters import Character
-import re
+from webdnd.shared.forms import ColorField
 
 
 class Campaign(AbstractPlayerModel):
@@ -37,9 +37,6 @@ class Campaign(AbstractPlayerModel):
     def __unicode__(self):
         return u'%s' % self.name
 
-
-# Any 3 or 6 digit hex code
-COLOR_RE = re.compile(r'[A-Fa-f0-9]{3}([A-Fa-f0-9]{3})?')
 
 class Player(AbstractPlayerModel):
     """
@@ -77,11 +74,7 @@ class Player(AbstractPlayerModel):
     is_spectator = models.BooleanField(default=False)
 
     # Color for this user
-    color = models.CharField(
-        max_length=6,
-        blank=True,
-        null=True
-    )
+    color = ColorField(blank=True, null=True)
 
     @property
     def name(self):
@@ -89,10 +82,5 @@ class Player(AbstractPlayerModel):
 
     def __unicode__(self):
         return u'(%s) %s' % (self.campaign, self.user.name)
-
-    def save(self, *args, **kwargs):
-        if COLOR_RE.match(self.color) is None:
-            self.color = None
-        super(Player, self).save(*args, **kwargs)
 
 

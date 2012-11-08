@@ -1,8 +1,10 @@
 from django.db import models
 from django.forms import Widget
+from django.core.exceptions import ValidationError
 
 from webdnd.shared.views import render_to_string
 from webdnd.player.models.alignments import Alignment
+import re
 
 
 class AlignmentWidget(Widget):
@@ -60,4 +62,48 @@ class AlignmentField(models.OneToOneField):
         kwargs['null'] = False
 
         super(AlignmentField, self).__init__(*args, **kwargs)
+
+
+class ColorWidget(Widget):
+
+    class Media:
+        css = {
+            'all': ('js/spectrum.css',)
+        }
+        js = ('js/jquery.js', 'js/jquery-spectrum.js',)
+
+    def render(self, name, value, attrs=None):
+        return render_to_string('color_widget.html', {
+            'color': value,
+            'name': name,
+        })
+
+    def value_from_datadict(self, data, files, name):
+        return data.get(name, None)
+
+
+# Any 3 or 6 digit hex code
+COLOR_RE = re.compile(r'#?(?P<hex>[A-Fa-f0-9]{6})')
+
+
+class ColorField(models.CharField):
+
+    description = 'Stores a 6 digit hex color'
+
+    widget = ColorWidget
+
+    def __init__(self, *args, **kwargs):
+        kwargs['max_length'] = 6
+
+        super(ColorField, self).__init__(*args, **kwargs)
+
+    def validate(self, value):
+        if not COLOR_RE.match(value):
+            raise ValidationError(self.error_messages['invalid'])
+
+    def to_python(self, value):
+        match = COLOR_RE.match(value)
+        return match.group(hex)
+
+
 

@@ -1,0 +1,12 @@
+<input type="text" id="{{ name }}-color" name="{{ name }}" value="#{{ color }}"/>
+
+<script type="text/javascript">
+$(function() {
+    $('#{{ name }}-color').spectrum({
+        preferredFormat: "hex",
+        showInput: true,
+        showInitial: true,
+        shoButons: false
+    });
+});
+</script>
