@@ -1,0 +1,78 @@
+[
+    {
+        "pk": 1,
+        "model": "player.character",
+        "fields": {
+            "user": 1,
+            "name": "Trindor 'Rhino' Bigroot",
+            "nick": "Rhino",
+            "status": "main",
+            "alignment": 1
+        }
+    },
+    {
+        "pk": 1,
+        "model": "player.alignment",
+        "fields": {
+            "align_moral": 25,
+            "align_order": 78
+        }
+    },
+    {
+        "pk": 2,
+        "model": "player.character",
+        "fields": {
+            "user": 2,
+            "name": "Gorfae Aerin",
+            "nick": "Gorfae",
+            "status": "main",
+            "alignment": 2
+        }
+    },
+    {
+        "pk": 2,
+        "model": "player.alignment",
+        "fields": {
+            "align_moral": 57,
+            "align_order": 49
+        }
+    },
+    {
+        "pk": 3,
+        "model": "player.character",
+        "fields": {
+            "user": 3,
+            "name": "Aegis",
+            "nick": "Aegis",
+            "status": "main",
+            "alignment": 3
+        }
+    },
+    {
+        "pk": 3,
+        "model": "player.alignment",
+        "fields": {
+            "align_moral": 25,
+            "align_order": 15
+        }
+    },
+        {
+        "pk": 4,
+        "model": "player.character",
+        "fields": {
+            "user": 4,
+            "name": "Galthor Kaern",
+            "nick": "Galthor",
+            "status": "main",
+            "alignment": 4
+        }
+    },
+    {
+        "pk": 4,
+        "model": "player.alignment",
+        "fields": {
+            "align_moral": 76,
+            "align_order": 58
+        }
+    }
+]

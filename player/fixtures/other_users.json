@@ -1,0 +1,101 @@
+[
+    {
+        "pk": 101,
+        "model": "auth.user",
+        "fields": {
+            "username": "random1",
+            "first_name": "George",
+            "last_name": "Buff",
+            "password": "pbkdf2_sha256$10000$UcX8ZCGTjmDj$yfx3CpGcctGbXQ07euAOpbEthZt9kWCZDR5BBwX0bv0=",
+            "email": "random1.com"
+        }
+    },
+    {
+        "pk": 102,
+        "model": "auth.user",
+        "fields": {
+            "username": "random2",
+            "first_name": "Liz",
+            "last_name": "Liin",
+            "password": "pbkdf2_sha256$10000$UcX8ZCGTjmDj$yfx3CpGcctGbXQ07euAOpbEthZt9kWCZDR5BBwX0bv0=",
+            "email": "random2@kyomae.com"
+        }
+    },
+    {
+        "pk": 103,
+        "model": "auth.user",
+        "fields": {
+            "username": "random3",
+            "first_name": "Allie",
+            "last_name": "Nicko",
+            "password": "pbkdf2_sha256$10000$xMjMMP44dYT2$Zs4G2+Y3TX5EDfqmgdLu/fQjY0yDvLubqTvHSF4UcXE=",
+            "email": "random3@kyomae.com"
+        }
+    },
+    {
+        "pk": 104,
+        "model": "auth.user",
+        "fields": {
+            "username": "random4",
+            "first_name": "Josh",
+            "last_name": "Sandria",
+            "password": "pbkdf2_sha256$10000$oNAvxl37BPWp$sy8zI3QW9MCjPISye+ZbwJ4MolWs53skvO4QFiKDy4I=",
+            "email": "random4@kyomae.com"
+        }
+    },
+    {
+        "pk": 105,
+        "model": "auth.user",
+        "fields": {
+            "username": "random5",
+            "first_name": "George",
+            "last_name": "Buff",
+            "password": "pbkdf2_sha256$10000$UcX8ZCGTjmDj$yfx3CpGcctGbXQ07euAOpbEthZt9kWCZDR5BBwX0bv0=",
+            "email": "random5.com"
+        }
+    },
+    {
+        "pk": 106,
+        "model": "auth.user",
+        "fields": {
+            "username": "random6",
+            "first_name": "George",
+            "last_name": "Buff",
+            "password": "pbkdf2_sha256$10000$UcX8ZCGTjmDj$yfx3CpGcctGbXQ07euAOpbEthZt9kWCZDR5BBwX0bv0=",
+            "email": "random6.com"
+        }
+    },
+    {
+        "pk": 107,
+        "model": "auth.user",
+        "fields": {
+            "username": "random7",
+            "first_name": "George",
+            "last_name": "Buff",
+            "password": "pbkdf2_sha256$10000$UcX8ZCGTjmDj$yfx3CpGcctGbXQ07euAOpbEthZt9kWCZDR5BBwX0bv0=",
+            "email": "random7.com"
+        }
+    },
+    {
+        "pk": 108,
+        "model": "auth.user",
+        "fields": {
+            "username": "random8",
+            "first_name": "George",
+            "last_name": "Buff",
+            "password": "pbkdf2_sha256$10000$UcX8ZCGTjmDj$yfx3CpGcctGbXQ07euAOpbEthZt9kWCZDR5BBwX0bv0=",
+            "email": "random8.com"
+        }
+    },
+    {
+        "pk": 109,
+        "model": "auth.user",
+        "fields": {
+            "username": "random9",
+            "first_name": "George",
+            "last_name": "Buff",
+            "password": "pbkdf2_sha256$10000$UcX8ZCGTjmDj$yfx3CpGcctGbXQ07euAOpbEthZt9kWCZDR5BBwX0bv0=",
+            "email": "random9.com"
+        }
+    }
+]
