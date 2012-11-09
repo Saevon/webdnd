@@ -11,9 +11,13 @@ class AlignmentWidget(forms.Widget):
 
     class Media:
         css = {
-            # 'all': ('alignment.css',)
+            # 'all': ('css/alignment.css',)
         }
         js = ('js/jquery.js', 'js/jquery-draggable.js', 'player/js/alignment.js',)
+
+    def __init__(self, *args, **kwargs):
+        self.align = None
+        super(AlignmentWidget, self).__init__(*args, **kwargs)
 
     def render(self, name, value, attrs=None):
         try:
@@ -31,22 +35,25 @@ class AlignmentWidget(forms.Widget):
         moral = data.get('alignment-moral', None)
         order = data.get('alignment-order', None)
 
-        # See if this is an existing object, otherwise we're making it
-        try:
-            align = Alignment.objects.get(pk=pk)
-        except Alignment.DoesNotExist:
-            align = Alignment.objects.create(align_moral=50, align_order=50)
+        if self.align is None:
+            # See if this is an existing object, otherwise we're making it
+            try:
+                self.align = Alignment.objects.get(pk=pk)
+            except Alignment.DoesNotExist:
+                self.align = Alignment()
 
         # Update the object with the passed in values
         if not moral is None:
-            align.align_moral = moral
+            self.align.align_moral = moral
         if not order is None:
-            align.align_order = order
+            self.align.align_order = order
 
-        # Save this object
-        align.save()
-
-        return align.id
+        # We need to return a pk .: we need a model...
+        # But this also means on validation errors we create tons of new
+        # Alignment objects...
+        # WTF, there has got to be a better way of doing this
+        self.align.save()
+        return self.align.id
 
 
 class AlignmentFormField(forms.ModelChoiceField):
@@ -59,21 +66,23 @@ class AlignmentField(models.OneToOneField):
 
     def __init__(self, *args, **kwargs):
         args = ('Alignment',)
+
+        # Default arguments (can be overwritten)
         defaults = {
-            'related_name': 'owner',
-            'blank': False,
             'null': False,
         }
-
         defaults.update(kwargs)
+
+        # Constant changes
+        defaults.update({
+            'related_name': 'owner',
+            'blank': True,
+        })
         super(AlignmentField, self).__init__(*args, **defaults)
 
     def formfield(self, **kwargs):
-        # This is a fairly standard way to set up some defaults
-        # while letting the caller override them.
         defaults = {'form_class': AlignmentFormField}
         defaults.update(kwargs)
-
         return super(AlignmentField, self).formfield(**defaults)
 
 
@@ -103,7 +112,7 @@ class ColorFormField(forms.CharField):
 COLOR_RE = re.compile(r'#?(?P<hex>[A-Fa-f0-9]{6})')
 
 
-class ColorField(models.Field):
+class ColorField(models.CharField):
     __metaclass__ = models.SubfieldBase
     description = 'Stores a 6 digit hex color'
 
@@ -122,11 +131,13 @@ class ColorField(models.Field):
         return match.group('hex')
 
     def formfield(self, **kwargs):
-        # This is a fairly standard way to set up some defaults
-        # while letting the caller override them.
+        # Hack to override problems with the admin's default widget being used
+        from django.contrib.admin.widgets import AdminTextInputWidget
+        if kwargs.get('widget') == AdminTextInputWidget:
+            kwargs.pop('widget')
+
         defaults = {'form_class': ColorFormField}
         defaults.update(kwargs)
-
         return super(ColorField, self).formfield(**defaults)
 
 

@@ -10,7 +10,7 @@ class CharacterAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Identity', {'fields': ('user', 'name', 'nick', 'status')}),
         ('Description', {'fields': ('description', 'age', 'eye_color', 'hair_color', 'gender', 'weight')}),
-        ('Personality', {'fields': ('alignment', 'persoa_id')})
+        ('Personality', {'fields': ('alignment', 'persoa_id')}),
     )
 
     list_display = ('name', 'status', 'nick', 'alignment', fk_link('user'))
@@ -18,4 +18,3 @@ class CharacterAdmin(admin.ModelAdmin):
     list_editable = ('status',)
 
     search_fields = ('user', 'name', 'nick', 'status', 'alignment')
-

@@ -10,7 +10,7 @@ class Alignment(AbstractPlayerModel):
     align_moral = models.IntegerField(default=50, blank=False, null=False)
     align_order = models.IntegerField(default=50, blank=False, null=False)
 
-    def __unidode__(self):
+    def __unicode__(self):
         return Alignment.to_str(self.align_moral, self.align_order)
 
     def set_str(self, string):

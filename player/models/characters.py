@@ -80,17 +80,13 @@ class Character(AbstractPlayerModel):
 
     alignment = AlignmentField()
 
-
     def __unicode__(self):
         return self.name
 
     def save(self, *args, **kwargs):
-        if self.alignment is None:
-            self.alignment = Alignment.objects.create()
-        super(Character, self).save(*args, **kwargs)
-
-
-
+        if self.alignment:
+            self.alignment_id = self.alignment.id
+        return super(Character, self).save(*args, **kwargs)
 
 
 
