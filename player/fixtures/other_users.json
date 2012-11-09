@@ -48,8 +48,8 @@
         "model": "auth.user",
         "fields": {
             "username": "random5",
-            "first_name": "George",
-            "last_name": "Buff",
+            "first_name": "Sindy",
+            "last_name": "Laron",
             "password": "pbkdf2_sha256$10000$UcX8ZCGTjmDj$yfx3CpGcctGbXQ07euAOpbEthZt9kWCZDR5BBwX0bv0=",
             "email": "random5.com"
         }
@@ -59,8 +59,8 @@
         "model": "auth.user",
         "fields": {
             "username": "random6",
-            "first_name": "George",
-            "last_name": "Buff",
+            "first_name": "Mac",
+            "last_name": "Offin",
             "password": "pbkdf2_sha256$10000$UcX8ZCGTjmDj$yfx3CpGcctGbXQ07euAOpbEthZt9kWCZDR5BBwX0bv0=",
             "email": "random6.com"
         }
@@ -70,8 +70,8 @@
         "model": "auth.user",
         "fields": {
             "username": "random7",
-            "first_name": "George",
-            "last_name": "Buff",
+            "first_name": "Bill",
+            "last_name": "Charto",
             "password": "pbkdf2_sha256$10000$UcX8ZCGTjmDj$yfx3CpGcctGbXQ07euAOpbEthZt9kWCZDR5BBwX0bv0=",
             "email": "random7.com"
         }
@@ -81,8 +81,8 @@
         "model": "auth.user",
         "fields": {
             "username": "random8",
-            "first_name": "George",
-            "last_name": "Buff",
+            "first_name": "Annie",
+            "last_name": "Fillins",
             "password": "pbkdf2_sha256$10000$UcX8ZCGTjmDj$yfx3CpGcctGbXQ07euAOpbEthZt9kWCZDR5BBwX0bv0=",
             "email": "random8.com"
         }
@@ -92,8 +92,8 @@
         "model": "auth.user",
         "fields": {
             "username": "random9",
-            "first_name": "George",
-            "last_name": "Buff",
+            "first_name": "Katherine",
+            "last_name": "Kyomae",
             "password": "pbkdf2_sha256$10000$UcX8ZCGTjmDj$yfx3CpGcctGbXQ07euAOpbEthZt9kWCZDR5BBwX0bv0=",
             "email": "random9.com"
         }

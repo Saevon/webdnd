@@ -51,7 +51,7 @@
         <label class="control-label" for="input-players">Players: </label>
         <div class="controls" id="input-players">
             {% for friend in friends %}
-                <blockquote class="user span2 {% if friend.id in players %}player{% else %}non-player{% endif %}">
+                <blockquote class="user span2 {% if friend.id in players %}player{% else %}non-player{% endif %} {% if friend.id == user.id %}hide{% endif %}">
                     <span class="pull-right action text-error add">✘</span>
                     <span class="pull-right action text-success remove">✔</span>
                     <span class="username">{{ friend.name }}</span>

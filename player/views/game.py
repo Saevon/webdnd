@@ -58,9 +58,9 @@ class CampaignView(LoginRequiredMixin, View):
 
 class CampaignEditView(LoginRequiredMixin, View):
     def get(self, request, cid):
-        created = not cid
+        create = not cid
 
-        if created:
+        if create:
             players = []
             campaign = {
                 'name': '',
@@ -72,9 +72,9 @@ class CampaignEditView(LoginRequiredMixin, View):
 
         out = {
             'players': players,
-            'friends': request.user.friends.exclude(id=request.user.id),
+            'friends': request.user.friends.all(),
             'systems': Campaign.ROLEPLAYING_SYSTEMS,
-            'create': created,
+            'create': create,
             'campaign': campaign,
         }
 
@@ -88,7 +88,7 @@ class CampaignEditView(LoginRequiredMixin, View):
         name = request.POST.get('name')
         system = request.POST.get('system')
         players = request.POST.getlist('players[]')
-        create = bool(cid)
+        create = not cid
 
         # validation
         change = True
@@ -101,22 +101,25 @@ class CampaignEditView(LoginRequiredMixin, View):
 
         if change:
             if create:
-                campaign = Campaign.objects.get(id=cid)
-            else:
                 campaign = Campaign(owner=request.user)
                 campaign.save()
                 cid = campaign.id
+            else:
+                campaign = Campaign.objects.get(id=cid)
 
             campaign.name = name
             campaign.rp_system = system
             campaign.save()
 
-            cur_players = set(str(p.user.id) for p in campaign.players.all())
+            # Always add yourself to a campaign you're editing
+            players.append(request.user.id)
             keep = set()
+            cur_players = set(str(p.user.id) for p in campaign.players.all())
             for id in players:
                 Player.objects.get_or_create(user=User.objects.get(id=id), campaign=campaign)
                 keep.add(id)
             Player.objects.filter(user__id__in=cur_players - keep, campaign=campaign).delete()
+            print Player.objects.filter(campaign=campaign)
 
             text = 'Your changes have been saved.'
             if create:
@@ -147,14 +150,12 @@ class PlayView(LoginRequiredMixin, View):
 
         if request.user == campaign.owner:
             out = self._dm(request, campaign)
-            out['is_dm'] = True
         else:
             out = self._player(request, campaign)
-            out['is_dm'] = False
 
         out['campaign'] = campaign,
 
-        # Make sure syncrae know which campaign to log you into
+        # Make sure syncrae knows which campaign to log you into
         request.session['cid'] = campaign.id
 
         return render_to_response('play.html',
@@ -163,20 +164,27 @@ class PlayView(LoginRequiredMixin, View):
         )
 
     def _dm(self, request, campaign):
+        '''
+        Properties a DM requires
+        '''
+        player = campaign.players.get(user=request.user)
 
         return {
-
+            'is_dm': True,
+            'player': player,
         }
 
     def _player(self, request, campaign):
+        '''
+        Properties a Player needs
+        '''
         player = campaign.players.get(user=request.user)
 
-        if player.cur_char and player.cur_char.status != 'Dead':
-            char = player.cur_char
-        else:
-            char = False
+        # Players don't have char anymore, FIX
+        char = False
 
         return {
+            'is_dm': False,
             'player': player,
             'char': char,
         }
