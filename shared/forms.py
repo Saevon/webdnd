@@ -60,8 +60,7 @@ class AlignmentFormField(forms.ModelChoiceField):
     widget = AlignmentWidget
 
 
-class AlignmentField(models.OneToOneField):
-    __metaclass__ = models.SubfieldBase
+class AlignmentField(models.ForeignKey):
     description = 'Stores a D&D style alignment'
 
     def __init__(self, *args, **kwargs):
