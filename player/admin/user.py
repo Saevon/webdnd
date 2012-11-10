@@ -3,32 +3,34 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django import forms
 
-from webdnd.player.models.accounts import Preference
+from webdnd.player.models.accounts import UserPreference
 from webdnd.shared.admin import fk_link
 
 
 class PreferenceInline(admin.TabularInline):
-    model = Preference
-
     fields = ('preference', 'value')
     ordering = ('preference',)
-    fk_name = 'user'
+    fk_name = 'owner'
 
     max_num = 1000
     extra = 1
 
-class PreferenceAdmin(admin.ModelAdmin):
-    model = Preference
-    fields = ('user', 'preference', 'value')
 
-    list_display = ('preference', 'value', fk_link('user'))
+class PreferenceAdmin(admin.ModelAdmin):
+    fields = ('owner', 'preference', 'value')
+
+    list_display = ('preference', 'value', fk_link('owner'))
     list_editable = ('value',)
-    list_filter = ('preference', 'user')
+    list_filter = ('preference', 'owner')
 
     save_as = True
 
-    search_fields = ('preference', 'user__username', 'user__first_name', 'user__last_name', 'value')
-    ordering = ('user',)
+    search_fields = ('preference', 'owner', 'value')
+    ordering = ('owner',)
+
+
+class UserPreferenceAdmin(PreferenceAdmin):
+    model = UserPreference
 
 
 class AccountAdmin(UserAdmin):
@@ -41,5 +43,8 @@ class AccountAdmin(UserAdmin):
     )
     filter_horizontal = ('friends',)
 
-    inlines = (PreferenceInline,)
+    class UserPreferenceInline(PreferenceInline):
+        model = UserPreference
+
+    inlines = (UserPreferenceInline,)
 

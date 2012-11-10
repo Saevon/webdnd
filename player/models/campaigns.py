@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 from webdnd.player.models.abstract import AbstractPlayerModel
 from webdnd.player.models.characters import Character
+from webdnd.player.models.accounts import BasePreference
 from webdnd.shared.forms import ColorField
 
 
@@ -36,6 +37,11 @@ class Campaign(AbstractPlayerModel):
 
     def __unicode__(self):
         return u'%s' % self.name
+
+
+CAMPAIGN_PREFERENCES = (
+)
+CampaignPreference = BasePreference.generate_fk_class('campaign', CAMPAIGN_PREFERENCES)
 
 
 class Player(AbstractPlayerModel):
