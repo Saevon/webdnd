@@ -41,7 +41,7 @@ class Campaign(AbstractPlayerModel):
 
 CAMPAIGN_PREFERENCES = (
 )
-CampaignPreference = BasePreference.generate_fk_class('campaign', CAMPAIGN_PREFERENCES)
+CampaignPreference = BasePreference.generate_fk_class(Campaign, CAMPAIGN_PREFERENCES)
 
 
 class Player(AbstractPlayerModel):

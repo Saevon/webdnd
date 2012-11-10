@@ -53,10 +53,8 @@ class BasePreference(AbstractPlayerModel):
         # Make sure this doesn't try to make a table
         abstract = True
 
-    TYPES = (
-        ('user', 'User'),
-        ('camp', 'Campaign'),
-    )
+    TYPES = []
+    TYPES_TO_CLASS = {}
 
     value = models.CharField(
         max_length=settings.STND_CHAR_LIMIT,
@@ -72,21 +70,25 @@ class BasePreference(AbstractPlayerModel):
     )
 
 
-    # See this method for the other fields
+    # See this method for the other model fields
     @staticmethod
-    def generate_fk_class(class_name, preferences, model=None, main=False):
+    def generate_fk_class(model, preferences, main=False):
         '''
         Used to generate wrapper classes for different preference owner TYPES
             NOTE: add the class_name as a str to the TYPES tuple
         '''
+        BasePreference.TYPES.append((model.__name__.lower(), model.__name__))
 
-        Pref = type(class_name.capitalize() + 'Preference', (BasePreference,), {
+        BasePreference.TYPES_TO_CLASS[model.__name__.lower()] = model
+
+        Pref = type(model.__name__ + 'Preference', (BasePreference,), {
             'Meta': type('Meta', (BasePreference.Meta, object,), {'managed': main}),
             '__module__': BasePreference.__module__,
 
             # Ensuring that the type is used properly
-            'TYPE': class_name.lower(),
-            'objects': TypeManager(type=class_name.lower()),
+            'TYPE': model.__name__.lower(),
+            'TYPE_DISPLAY': model.__name__,
+            'objects': TypeManager(type=model.__name__.lower()),
 
             # Fields
             'PREFERENCES': preferences,
@@ -98,7 +100,7 @@ class BasePreference(AbstractPlayerModel):
                 null=False
             ),
             'owner': models.ForeignKey(
-                (model if not model is None else class_name.capitalize()),
+                model,
                 related_name='preferences',
                 blank=False,
                 null=False
@@ -112,6 +114,9 @@ class BasePreference(AbstractPlayerModel):
 
     def get_preference_display(self):
         return self.PREF_TO_DISPLAY.get(self.preference, '?: ' + self.preference)
+
+    def get_type_display(self):
+        return self.TYPE_DISPLAY
 
     def save(self, *args, **kwargs):
         if not self.TYPE is None:
@@ -130,10 +135,10 @@ class FakeModel(AbstractPlayerModel):
 
 # Wrapper to be able to get all preferences
 # Also creates the table
-Preference = BasePreference.generate_fk_class('', tuple(), model=FakeModel, main=True)
+Preference = BasePreference.generate_fk_class(FakeModel, tuple(), main=True)
 
 
 USER_PREFERENCES = (
 )
-UserPreference = BasePreference.generate_fk_class('user', USER_PREFERENCES, model=User)
+UserPreference = BasePreference.generate_fk_class(User, USER_PREFERENCES)
 
