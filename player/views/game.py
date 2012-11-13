@@ -194,9 +194,13 @@ class PlayView(LoginRequiredMixin, View):
 
 class CharacterListView(LoginRequiredMixin, View):
     def get(self, request):
-        characters = Character.objects.filter(player__user=request.user)
+        characters = Character.objects.filter(user=request.user)
+        vis_char = Character.objects.visible(request.user)
+
         out = {
             'characters': characters,
+            'visible_characters': vis_char,
+            'has_visible_characters': len(vis_char) > 0,
         }
         return render_to_response('character_list.html',
             out,

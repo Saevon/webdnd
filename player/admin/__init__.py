@@ -1,14 +1,14 @@
 from django.contrib.auth.models import User
 from django.contrib import admin
 
-from webdnd.player.admin.user import AccountAdmin, PreferenceAdmin
+from webdnd.player.admin.user import AccountAdmin, UserPreferenceAdmin
 from webdnd.player.admin.campaigns import (
     CampaignAdmin,
     CampaignPreferenceAdmin,
     PlayerAdmin,
 )
 from webdnd.player.admin.characters import CharacterAdmin
-from webdnd.player.models.accounts import Preference
+from webdnd.player.models.accounts import UserPreference
 from webdnd.player.models.campaigns import (
     Campaign,
     CampaignPreference,
@@ -22,7 +22,7 @@ from webdnd.player.models.characters import Character
 admin.site.unregister(User)
 admin.site.register(User, AccountAdmin)
 
-admin.site.register(Preference, PreferenceAdmin)
+admin.site.register(UserPreference, UserPreferenceAdmin)
 
 admin.site.register(Campaign, CampaignAdmin)
 admin.site.register(CampaignPreference, CampaignPreferenceAdmin)

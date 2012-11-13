@@ -20,7 +20,7 @@ class AccountHomeView(LoginRequiredMixin, View):
 
     def get(self, request):
         campaigns = my_campaigns(request.user)
-        characters = Character.objects.filter(player__user=request.user, status='main')
+        characters = Character.objects.filter(user=request.user, status='main')
 
         return render_to_response(
             'account/home.html',

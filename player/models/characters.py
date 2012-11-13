@@ -1,10 +1,26 @@
 from django.db import models
+from django.db.models import Q
 from django.conf import settings
 from django.contrib.auth.models import User
 
 from webdnd.player.models.abstract import AbstractPlayerModel
-from webdnd.player.models.alignments import Alignment
 from webdnd.shared.forms import AlignmentField
+
+
+class CharactersManager(models.Manager):
+    '''
+    A Manager that returns only objects of the given type
+    '''
+
+    def visible(self, user):
+        '''
+        Returns any characters that the given user can see
+        '''
+        qs = super(CharactersManager, self).get_query_set()
+        return qs.filter(
+            Q(players__campaign__owner=user)
+            | Q(players__can_dm=True, players__user=user)
+        )
 
 
 class Character(AbstractPlayerModel):
@@ -12,6 +28,8 @@ class Character(AbstractPlayerModel):
     A character, contains any non-system specific details
     that a character requires.
     '''
+
+    objects = CharactersManager()
 
     user = models.ForeignKey(
         User,

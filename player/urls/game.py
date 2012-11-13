@@ -17,6 +17,7 @@ urlpatterns = patterns('webdnd.player.views',
     url(r'^characters/?$', CharacterListView.as_view(), name='game_character_list'),
     url(r'^character/(?P<chid>[0-9]+)/edit/?$', CharacterEditView.as_view(), name='game_character_edit'),
     url(r'^character/create/?$', CharacterEditView.as_view(), {'chid': False}, name='game_character_create'),
+    url(r'^character/(?P<chid>[0-9]+)/?$', CharacterEditView.as_view(), name='game_character_view'),
 
     # Redirect to Play view
     url(r'^campaign/(?P<cid>[0-9]+)/play/?$', PlayView.as_view(), name='game_campaign_play'),

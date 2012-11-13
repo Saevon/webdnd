@@ -1,16 +1,18 @@
-from webdnd.player.models import accounts
-from webdnd.player.models import campaigns
-from webdnd.player.models import characters
-from webdnd.player.models import alignments
+from webdnd.player.models.accounts import *
+from webdnd.player.models.campaigns import *
+from webdnd.player.models.characters import *
+from webdnd.player.models.alignments import *
 
 
 __all__ = [
-    accounts.User,
-    accounts.Preference,
+    User,
+    Preference,
+    UserPreference,
 
-    campaigns.Campaign,
-    campaigns.Player,
+    Campaign,
+    CampaignPreference,
+    Player,
 
-    characters.Character,
-    alignments.Alignment,
+    Character,
+    Alignment,
 ]

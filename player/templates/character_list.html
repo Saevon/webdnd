@@ -7,7 +7,7 @@
 
 {% block content %}
     <legend>
-        Characters
+        Your Characters
         <div class="control-group pull-right">
             <div class='controls'>
                 <a class="btn btn-success" href="{% url game_character_create %}">
@@ -19,6 +19,27 @@
     </legend>
 
     {% include '_character_list.html' %}
+
+    {% if has_visible_characters %}
+        <legend>
+            Other Characters
+        </legend>
+
+        <div class="characters">
+            {% for character in visible_characters %}
+                <div class="character user"><a class="no-underline" href="{% url game_character_view chid=character.id %}">
+                    <blockquote>
+                        <span class="btn 
+                            btn-{% if character.status == 'main' %}success{% elif character.status == 'dead' %}inverse{% elif character.status == 'unsd' %}default{% elif character.status == 'comp' %}info
+                            {% endif %}
+                            btn-mini char-status {{ character.status }}">{{ character.get_status_display }}</span>
+                        <span>{{ character.name }}</span>
+                    </blockquote>
+                </a></div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
 
 {% endblock content %}
 

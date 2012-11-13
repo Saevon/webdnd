@@ -7,7 +7,7 @@
                     btn-{% if character.status == 'main' %}success{% elif character.status == 'dead' %}inverse{% elif character.status == 'unsd' %}default{% elif character.status == 'comp' %}info
                     {% endif %}
                     btn-mini char-status {{ character.status }}">{{ character.get_status_display }}</span>
-                <span class="capitalize">{{ character.name }}</span>
+                <span>{{ character.name }}</span>
                 {# <span class="capitalize">{{ character.class }}</span> #}
             </blockquote>
         </a></div>

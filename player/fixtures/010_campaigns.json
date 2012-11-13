@@ -12,6 +12,7 @@
         "pk": 1,
         "model": "player.player",
         "fields": {
+            "characters": [1],
             "can_dm": false,
             "is_spectator": false,
             "user": 1,
@@ -23,6 +24,7 @@
         "pk": 2,
         "model": "player.player",
         "fields": {
+            "characters": [2],
             "can_dm": false,
             "is_spectator": false,
             "user": 2,
@@ -34,6 +36,7 @@
         "pk": 3,
         "model": "player.player",
         "fields": {
+            "characters": [3],
             "can_dm": false,
             "is_spectator": false,
             "user": 3,
@@ -44,6 +47,7 @@
         "pk": 4,
         "model": "player.player",
         "fields": {
+            "characters": [4],
             "can_dm": false,
             "is_spectator": false,
             "user": 4,
@@ -64,6 +68,7 @@
         "pk": 5,
         "model": "player.player",
         "fields": {
+            "characters": [2],
             "can_dm": false,
             "is_spectator": false,
             "user": 2,
@@ -74,6 +79,7 @@
         "pk": 6,
         "model": "player.player",
         "fields": {
+            "characters": [1],
             "can_dm": false,
             "is_spectator": false,
             "user": 1,

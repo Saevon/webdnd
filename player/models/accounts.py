@@ -72,7 +72,7 @@ class BasePreference(AbstractPlayerModel):
 
     # See this method for the other model fields
     @staticmethod
-    def generate_fk_class(model, preferences, main=False):
+    def generate_fk_class(model, preferences, main=False, meta=None):
         '''
         Used to generate wrapper classes for different preference owner TYPES
             NOTE: add the class_name as a str to the TYPES tuple
@@ -81,8 +81,14 @@ class BasePreference(AbstractPlayerModel):
 
         BasePreference.TYPES_TO_CLASS[model.__name__.lower()] = model
 
+        base_meta = {
+            'managed': main
+        }
+        if meta is not None:
+            base_meta.update(meta)
+
         Pref = type(model.__name__ + 'Preference', (BasePreference,), {
-            'Meta': type('Meta', (BasePreference.Meta, object,), {'managed': main}),
+            'Meta': type('Meta', (BasePreference.Meta, object,), base_meta),
             '__module__': BasePreference.__module__,
 
             # Ensuring that the type is used properly
@@ -140,5 +146,7 @@ Preference = BasePreference.generate_fk_class(FakeModel, tuple(), main=True)
 
 USER_PREFERENCES = (
 )
-UserPreference = BasePreference.generate_fk_class(User, USER_PREFERENCES)
+UserPreference = BasePreference.generate_fk_class(User, USER_PREFERENCES, meta={'app_label': 'auth'})
+
+
 
