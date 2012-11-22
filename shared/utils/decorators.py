@@ -33,10 +33,23 @@ def json_return(func):
     return wrapper
 
 
+class CacheException(Exception):
+    pass
+
+class CacheDirty(CacheException):
+    pass
+
+class CacheUnused(CacheException):
+    pass
+
+
 def cache(func):
+    '''
+    Caches multiple cache results based on a cache_key
+    '''
     cache_attr = '_%s__cache' % func.__name__
     cache_key_attr = '_%s_cache_key' % func.__name__
-    cache_reset_key = '_cache_reset'
+    cache_reset_key = '_reset_cache'
 
     @wraps(func)
     def wrapper(self, *args, **kwargs):
@@ -50,18 +63,62 @@ def cache(func):
 
         # Get the cache attributes
         cache = getattr(self, cache_attr)
-        cache_key = getattr(self, cache_key_attr, lambda *args, **kwargs: '')(*args, **kwargs)
+        unused = False
+        try:
+            cache_key = getattr(self, cache_key_attr, lambda *args, **kwargs: '')(*args, **kwargs)
+        except CacheDirty:
+            reset = True
+        except CacheUnused:
+            unused = True
 
         # Find the value
-        if not reset and cache.get(cache_key):
-            print 'cache get'
+        if unused:
+            return func(self, *args, **kwargs)
+        elif not reset and cache.get(cache_key):
             return cache.get(cache_key)
         else:
-            print 'calc'
             val = func(self, *args, **kwargs)
             cache[cache_key] = val
             return val
 
     return wrapper
+
+def dirty_cache(func):
+    '''
+    Caches the result of the given method, re-running the method only if it is marked as dirty
+    '''
+    cache_attr = '_%s__cache' % func.__name__
+    cache_dirty_attr = '_%s_dirty' % func.__name__
+    cache_reset_key = '_reset_cache'
+
+    @wraps(func)
+    def wrapper(self, *args, **kwargs):
+        # Check for a cache reset
+        reset = kwargs.get(cache_reset_key, False)
+        kwargs.pop(cache_reset_key, None)
+
+        reset = reset or getattr(self, cache_dirty_attr, False)
+        setattr(self, cache_dirty_attr, False)
+
+        # Reset the cache if needed
+        if reset:
+            try:
+                delattr(self, cache_attr)
+            except AttributeError:
+                pass
+
+        # Get the cache attributes
+        try:
+            cache = getattr(self, cache_attr)
+        except AttributeError:
+            cache = func(self, *args, **kwargs)
+            setattr(self, cache_attr, cache)
+
+        return cache
+
+    return wrapper
+
+
+
 
 
