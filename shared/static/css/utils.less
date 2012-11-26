@@ -1,0 +1,31 @@
+/*************************************************
+*
+* Some Generic css rules
+*
+*************************************************/
+
+
+
+/*************************************************
+* Mask Element
+* 
+* @what: Creates a color mask that can change the
+*        items underneath.
+*        e.g. make everything seem greyed out
+*************************************************/
+.mask {
+    // Make clicks go through the tag
+    pointer-events: none;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1000;
+}
+
+// Make sure the absolute positioning works fine
+.mask-container {
+    position: relative;
+}
