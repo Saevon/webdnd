@@ -20,12 +20,12 @@ TEST_RUNNER = "discover_runner.runner.DiscoverRunner"
 
 # location of the tests folder
 BASE_PATH = WEBDND_ROOT
-TEST_DISCOVERY_ROOT = os.path.join(WEBDND_ROOT, "tests")
+TEST_DISCOVER_ROOT = os.path.join(WEBDND_ROOT)
 TEST_DISCOVER_TOP_LEVEL = WEBDND_ROOT
 
 # Regexp pattern to match when looking for test files
 # The runner will look in these files for TestCase classes
-TEST_FILE_PATTERN = '*_test.py'
+TEST_DISCOVER_PATTERN = '*_test.py'
 
 
 # format: 'major.minor.bug name'
