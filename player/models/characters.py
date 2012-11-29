@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 
 from webdnd.player.models.abstract import AbstractPlayerModel
 from webdnd.shared.forms import AlignmentField
+from webdnd.player.modifier_obj import ModField, ReadOnlyModField, NumModField, FilteredModField
+from webdnd.shared.utils.decorators import dirty_cache
 
 
 class CharactersManager(models.Manager):
@@ -102,9 +104,40 @@ class Character(AbstractPlayerModel):
         return self.name
 
     def save(self, *args, **kwargs):
+        self._calculate_cache_dirty = True
         if self.alignment:
             self.alignment_id = self.alignment.id
         return super(Character, self).save(*args, **kwargs)
+
+    def mod_field(self):
+        return {
+            # Identity
+            'name': ReadOnlyModField(self.name),
+            'nick': ReadOnlyModField(self.nick),
+            'status': ModField(self.status),
+
+            # Description
+            'age': NumModField(self.age),
+            'backstory': ReadOnlyModField(self.backstory),
+            'deity': ReadOnlyModField(self.deity),
+            'description': ReadOnlyModField(self.description),
+            'gender': ModField(self.gender),
+            'hair_color': ModField(self.hair_color),
+            'weight': NumModField(self.weight),
+
+            # Alignment
+            'align_moral': NumModField(self.alignment.align_moral),
+            'align_order': NumModField(self.alignment.align_order),
+        }
+
+    @dirty_cache
+    def calculate(self):
+        '''
+        Applies any modifiers to the character returning the final values
+        '''
+        # TODO: no actual modifiers to use right now
+        return self.mod_field()
+
 
 
 
