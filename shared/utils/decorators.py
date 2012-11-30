@@ -37,7 +37,9 @@ class CacheException(Exception):
     pass
 
 class CacheDirty(CacheException):
-    pass
+    def __init__(self, key):
+        self.key = key
+        super(CacheDirty, self).__init__()
 
 class CacheUnused(CacheException):
     pass
@@ -66,8 +68,9 @@ def cache(func):
         unused = False
         try:
             cache_key = getattr(self, cache_key_attr, lambda *args, **kwargs: '')(*args, **kwargs)
-        except CacheDirty:
+        except CacheDirty as err:
             reset = True
+            cache_key = err.key
         except CacheUnused:
             unused = True
 
