@@ -1,9 +1,11 @@
 from django.utils import unittest
+from django.http import HttpResponse
 
 from webdnd.shared.utils.decorators import (
     cascade,
     dirty_cache,
     cache, CacheDirty, CacheUnused,
+    json_return,
 )
 
 
@@ -41,6 +43,15 @@ class Foo(object):
 
         return key
 
+    @json_return
+    def get_jr_counter(self, http=False):
+        if http:
+            self.response = HttpResponse()
+            return self.response
+        else:
+            return {'count': self.counter}
+
+
 
 class TestCascade(unittest.TestCase):
 
@@ -55,6 +66,7 @@ class TestCascade(unittest.TestCase):
 
         self.assertEqual(out, self.foo)
         self.assertEqual(out.get_count(), 12)
+
 
 
 class TestDirtyCache(unittest.TestCase):
@@ -153,4 +165,23 @@ class TestCache(unittest.TestCase):
         self.assertEqual(self.foo.get_c_counter(1, 12), 3)
         self.assertEqual(self.foo.get_c_counter(1, -100), -97)
         self.assertEqual(self.foo.get_c_counter(1, 0), -97)
+
+
+
+class TestJsonReturn(unittest.TestCase):
+
+    def setUp(self):
+        self.foo = Foo()
+
+    def test_data(self):
+        response = self.foo.get_jr_counter()
+
+        self.assertEqual(response.content, '{"count": 0}')
+
+    def test_http_response(self):
+        response = self.foo.get_jr_counter(http=True)
+        self.assertIs(response, self.foo.response)
+
+
+
 
