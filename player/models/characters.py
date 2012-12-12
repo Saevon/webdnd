@@ -104,7 +104,7 @@ class Character(AbstractPlayerModel):
         return self.name
 
     def save(self, *args, **kwargs):
-        self._calculate_cache_dirty = True
+        self._calculate_dirty = True
         if self.alignment:
             self.alignment_id = self.alignment.id
         return super(Character, self).save(*args, **kwargs)

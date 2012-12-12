@@ -4,8 +4,6 @@ MODIFIERS_ENV = '''
 def mod(character):
     # Allowed imports that the user will has access to
     from collections import defaultdict
-    # TEST: checking to see what is visible in this scope
-    print locals()
 
     if (%(cond)s):
 %(mod)s
@@ -16,10 +14,11 @@ def mod(character):
 def modifier(modifier, default):
     mod = None
     try:
-        exec(MODIFIERS_ENV % {
-            'mod': map(lambda l: ' ' * 8 + l, modifier.modifier.split('\n')),
+        code = MODIFIERS_ENV % {
+            'mod': '\n'.join(map(lambda l: ' ' * 8 + l, modifier.modifier.split('\n'))),
             'cond': modifier.condition if modifier.condition else 'True',
-        })
+        }
+        exec(code)
         return mod
     except BaseException as err:
         # TODO better error handling

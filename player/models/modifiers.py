@@ -18,6 +18,8 @@ class Modifier(models.Model):
         # Imports
         r' *(from +[a-zA-Z0-9_.]+ +)?import +[0-9a-zA-Z_]+( *\n)?',
 
+        # exec
+        r' *exec *(.*) *',
     )]))
 
     @dirty_cache
@@ -34,8 +36,6 @@ class Modifier(models.Model):
         self._compile_dirty = True
 
 
-x = Modifier(condition='', modifier='print character')
-x.compile()(character="point")
 
 
 def calculate(data):
