@@ -1,56 +1,92 @@
 from collections import defaultdict
-from webdnd.shared.utils.decorators import dirty_cache
+from itertools import chain
+from webdnd.shared.utils.decorators import cascade, dirty_cache
+
+
+class StatVal(dict):
+    '''
+    An int with some stats about it
+    '''
+
+    def __init__(self, value, stats=None):
+        super(StatVal, self).__init__(stats or {})
+        self['value'] = value
+
 
 
 class ModField(object):
 
     def __init__(self, value):
         super(ModField, self).__init__()
-        self.__label = ''
-        self.__value = {
-            'val': value,
-            'label': self.__label
-        }
+        self._label = ''
+        self._kind = ''
 
+        obj = self.StatVal(value, {'change_type': 'start'})
+        self._hist = [obj]
+        self._value = obj
+
+    def __repr__(self):
+        return '%s' % (unicode(self))
+
+    def __unicode__(self):
+        return u'"%s"' % self.get()
+
+    def StatVal(self, value='', stats=None):
+        '''
+        Returns a new personalized StatVal
+        '''
+        defaults = {
+            'label': self._label,
+            'kind': self._kind,
+        }
+        defaults.update(stats or {})
+        return StatVal(value, defaults)
+
+    @cascade
     def set(self, value):
         '''
         Changes the value of this field
         '''
-        self._get_cache_dirty = True
-        self.__value['val'] = value
-        self.__value['label'] = self.__label
+        self._get_dirty = True
+
+        val = self.StatVal(value)
+        val['change_type'] = 'set'
+
+        self._value = val
+        self._hist.append(val)
 
     def get(self):
         '''
         Returns the value of this field
         '''
-        return self.__value['val']
+        return self._value['value']
 
-    # TODO so far labels are mainly unused
-
-    def set_label(self, label):
+    @cascade
+    def set_label(self, label, kind):
         '''
         Sets the label applied to changes made by this field
         '''
-        self.__label = label
-
-    # TODO: the children need to update this
+        self._label = label
+        self._kind = kind
 
     def result(self):
         '''
         Returns the final result of this field
         '''
-        return self.__value.copy()
+        return {
+            'value': self.get(),
+            'history': self._hist
+        }
 
 
 class FilteredModField(ModField):
 
-    def __init__(self, value, func):
+    def __init__(self, value, filter):
         super(FilteredModField, self).__init__(value)
-        self.__filter = func
+        self._filter = filter
 
     def set(self, value):
-        if not self.__filter(value):
+        if not self._filter(value):
             return False
         else:
             return super(FilteredModField, self).set(value)
@@ -59,57 +95,88 @@ class FilteredModField(ModField):
 class ReadOnlyModField(ModField):
 
     def __init__(self, value):
-        self.__orig = value
+        super(ReadOnlyModField, self).__init__(value)
+        self._orig = value
+
+    def set(self, *args, **kwargs):
+        return False
 
     def get(self):
-        return self.__orig
+        return self._orig
+
+    def result(self):
+        '''
+        Returns the final result of this field
+        '''
+        raise LookupError("Can't get the value of a Read-Only Field, Use the original value.")
 
 
 class NumModField(ModField):
 
     def __init__(self, value):
+        value = int(value)
         super(NumModField, self).__init__(value)
 
-        self.__bonuses = defaultdict(0)
-        self.__unnamed_bonuses = []
+        self._penalties = defaultdict(lambda: self.StatVal())
+        self._bonuses = defaultdict(lambda: self.StatVal())
+        self._unnamed_changes = []
 
-        self.__penalties = defaultdict(0)
-        self.__unnamed_penalties = []
+        self._mult = []
+        self._mult_val = 1
 
-        self.__mult = 1
+    def __unicode__(self):
+        return u'%s' % (self.get())
 
-    def add(self, value, bonus=None):
+    def StatVal(self, value=0, stats=None):
+        return super(NumModField, self).StatVal(value, stats)
+
+    @cascade
+    def add(self, value, name=None):
         '''
         Adds a bonus with an optional name to the field
         '''
-        self._get_cache_dirty = True
-        obj = {
-            'value': value
-        }
-        if bonus is None:
-            self.__unnamed_bonuses.append(obj)
-        else:
-            self.__bonuses[bonus] = obj
+        self._get_dirty = True
+        obj = self.StatVal(value)
 
-    def sub(self, value, penalty=None):
+        # Negative bonuses are penalties
+        if value < 0:
+            obj['value'] = -1 * value
+            obj['is_bonus'] = False
+            kind = self._penalties
+        else:
+            obj['is_bonus'] = True
+            kind = self._bonuses
+
+        if name is None:
+            obj['name'] = None
+            self._unnamed_changes.append(obj)
+        else:
+            obj['name'] = name
+            kind[name] = obj
+
+        obj['change_type'] = 'add/sub'
+        self._hist.append(obj)
+
+    @cascade
+    def sub(self, value, name=None):
         '''
         Adds a penalty with an optional name to the field
         '''
-        self._get_cache_dirty = True
-        obj = {
-            'value': value
-        }
-        if penalty is None:
-            self.__unnamed_penalties.append(obj)
-        else:
-            self.__penalties[penalty] = obj
+        self.add(-1 * value, name)
 
+    @cascade
     def mul(self, value):
         '''
         Adds a D&D style multiplier to the field
         '''
-        self._get_cache_dirty = True
-        self.__mult += value - 1
+        self._get_dirty = True
+        obj = self.StatVal(value)
+
+        self._mult.append(obj)
+        self._mult_val += value - 1
+
+        obj['change_type'] = 'mul'
+        self._hist.append(obj)
 
     @dirty_cache
     def get(self):
@@ -117,51 +184,74 @@ class NumModField(ModField):
         Returns the current value of the field
         '''
         val = super(NumModField, self).get()
-        for bonus in self.__bonuses.values():
-            val += bonus['value']
-        for bonus in self.__unnamed_bonuses:
-            val += bonus['value']
-        for penalty in self.__penalties.values():
-            val -= penalty['value']
-        for penalty in self.__unnamed_penalties:
-            val -= penalty['value']
 
-        val *= self.__mult
+        for change in chain(self._bonuses.values(), self._unnamed_changes, self._penalties.values()):
+            val += change['value'] * (1 if change['is_bonus'] else -1)
+
+        val *= self._mult_val
         return val
 
 
 class DmgModField(NumModField):
 
-    def __init__(self, value):
-        super(DmgModField, self).__init__()
+    DEFAULT_DMG = 'physical'
 
-    def add(self, value, bonus='', dmg_type=None):
+    def __init__(self, value):
+        super(DmgModField, self).__init__(value)
+
+    @cascade
+    def add(self, value, name=None, dmg_type=None):
         '''
         Applies a bonus to damage
         '''
-        super(DmgModField, self).add(value, bonus)
-        if bonus is None:
-            self.__unnamed_bonuses.append(value)
-        else:
-            self.__bonuses[bonus] = {'value': value}
+        self._get_dirty = True
+        obj = self.StatVal(value)
 
-    def sub(self, value, penalty='', dmg_type=None):
+        dmg_type = DmgModField.DEFAULT_DMG if dmg_type is None else dmg_type
+        obj['dmg_type'] = dmg_type
+
+        # Negative bonuses are penalties
+        if value < 0:
+            obj['value'] = -1 * value
+            obj['is_bonus'] = False
+            kind = self._penalties
+        else:
+            obj['is_bonus'] = True
+            kind = self._bonuses
+
+        if name is None:
+            obj['name'] = None
+            self._unnamed_changes.append(obj)
+        else:
+            obj['name'] = name
+            kind[name] = obj
+
+        obj['change_type'] = 'add/sub'
+        self._hist.append(obj)
+
+    @cascade
+    def sub(self, value, name=None, dmg_type=None):
         '''
         Applies a penalty to damage
         '''
-        super(DmgModField, self).add(value, penalty)
-        if dmg_type is None:
-            # TODO: default goes here
-            self.__unnamed_penalties[-1]['dmg'] = 'Physical'
-        else:
-            self.__penalties[penalty]['dmg'] = dmg_type
+        self.add(-1 * value, name, dmg_type)
 
 
 class StatModField(NumModField):
 
     def __init__(self, value, disabled=False):
         super(StatModField, self).__init__(value)
-        self.__disabled = disabled
+        if disabled:
+            self.disable()
+        else:
+            self.__disabled = False
+
+    def __unicode__(self):
+        val = self.get()
+        if val:
+            return '%s (%s)' % (val, self.mod())
+        else:
+            return 'Disabled'
 
     def get(self):
         '''
@@ -181,17 +271,43 @@ class StatModField(NumModField):
             return 0
         return (val - (val % 2) - 10) / 2
 
+    @cascade
     def disable(self):
         '''
-        Disables the stat
+        Disables the stat, setting the stat after this will have no visible effects
         '''
         # TODO: side effects? e.g. no CON means you fail all fort saves
+        obj = self.StatVal(True)
+        obj['change_type'] = 'enable/disable'
+        self._hist.append(obj)
+
         self.__disabled = True
 
+    @cascade
     def enable(self):
         '''
         Enables the stat
         '''
+        obj = self.StatVal(False)
+        obj['change_type'] = 'enable/disable'
+        self._hist.append(obj)
+
         self.__disabled = False
 
+    def is_enabled(self):
+        '''
+        Returns True if this stat is enabled
+        '''
+        return not self.__disabled
+
+    def result(self):
+        '''
+        Returns the final result of this field
+        '''
+        result = super(StatModField, self).result()
+        result.update({
+            'enabled': self.is_enabled(),
+            'modifier': self.mod(),
+        })
+        return result
 
